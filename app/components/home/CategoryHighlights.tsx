@@ -10,12 +10,12 @@ import { cn } from "@/lib/utils";
 
 // Each category gets a unique gradient & accent for visual variety
 const CATEGORY_STYLES: Record<string, { gradient: string; icon: string }> = {
-  plywood:       { gradient: "from-[#4a3728] to-[#7c5b43]", icon: "🪵" },
-  blockboard:    { gradient: "from-[#6b4c3a] to-[#9c7556]", icon: "🟩" },
-  veneer:        { gradient: "from-[#5e402e] to-[#8f6246]", icon: "🌿" },
-  laminates:     { gradient: "from-[#3d2a1c] to-[#664630]", icon: "🎨" },
+  plywood: { gradient: "from-[#4a3728] to-[#7c5b43]", icon: "🪵" },
+  blockboard: { gradient: "from-[#6b4c3a] to-[#9c7556]", icon: "🟩" },
+  veneer: { gradient: "from-[#5e402e] to-[#8f6246]", icon: "🌿" },
+  laminates: { gradient: "from-[#3d2a1c] to-[#664630]", icon: "🎨" },
   "flush-doors": { gradient: "from-[#705039] to-[#a3795a]", icon: "🚪" },
-  mdf:           { gradient: "from-[#523827] to-[#80583d]", icon: "📐" },
+  mdf: { gradient: "from-[#523827] to-[#80583d]", icon: "📐" },
 };
 
 export function CategoryHighlights() {
@@ -88,7 +88,7 @@ export function CategoryHighlights() {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-10 p-5 md:p-6">
+                <div className="relative z-10" style={{ padding: "1.25rem 1.5rem" }}>
                   {/* Icon */}
                   <span className="text-3xl mb-3 block" aria-hidden="true">{style.icon}</span>
 
@@ -101,10 +101,10 @@ export function CategoryHighlights() {
                   </p>
 
                   {/* Link arrow */}
-                  <div className="flex items-center gap-1.5 text-[#c8956c] text-sm font-medium group-hover:gap-3 transition-all duration-200">
+                  {/* <div className="flex items-center gap-1.5 text-[#c8956c] text-sm font-medium group-hover:gap-3 transition-all duration-200">
                     <span>Shop Now</span>
                     <ArrowRight className="w-4 h-4" />
-                  </div>
+                  </div> */}
                 </div>
               </Link>
             );

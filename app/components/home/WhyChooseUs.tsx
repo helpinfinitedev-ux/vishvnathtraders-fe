@@ -64,7 +64,7 @@ export function WhyChooseUs() {
               <div
                 key={item.id}
                 className="group flex flex-col gap-4 p-6 md:p-7 rounded-[20px] bg-white border border-[#f0e8de] shadow-[0_2px_12px_rgba(28,28,28,0.05)] hover:shadow-[0_8px_32px_rgba(200,149,108,0.12)] hover:border-[#c8956c] hover:-translate-y-1 transition-all duration-300"
-                style={{ animationDelay: `${i * 60}ms` }}
+                style={{ animationDelay: `${i * 60}ms`, padding: "1.25rem 1.5rem" }}
               >
                 {/* Icon */}
                 <div className="w-12 h-12 rounded-[12px] bg-[#c8956c]/15 flex items-center justify-center group-hover:bg-[#c8956c]/25 transition-colors duration-300">
