@@ -80,20 +80,22 @@ export function DistributorCTABanner() {
 
           {/* CTAs */}
           <div className="flex flex-wrap justify-center gap-4">
+            {/* White filled pill on dark bg */}
             <Button
               variant="primary"
               size="lg"
-              className="bg-white text-[#7c4a2a] hover:bg-white/90"
+              className="bg-white! text-[#7c4a2a]! hover:bg-white/90! border-0"
               asChild
             >
               <Link href="/distributor" className="flex items-center gap-2">
-                Apply Now <ArrowRight className="w-4 h-4" />
+                Apply Now <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </Button>
+            {/* Ghost pill with white border on dark bg */}
             <Button
               variant="outline"
               size="lg"
-              className="border-white/50 text-white hover:bg-white/15 hover:text-white"
+              className="border-white/60! text-white! hover:bg-white/15! hover:text-white!"
               asChild
             >
               <Link href="/contact">Talk to Our Team</Link>
