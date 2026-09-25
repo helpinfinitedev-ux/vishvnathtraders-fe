@@ -81,7 +81,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           <div>
             {/* Badges */}
             <div className="flex flex-wrap gap-2 mb-4">
-              <Badge variant="wood">{product.grade}</Badge>
+              {/* <Badge variant="wood">{product.grade}</Badge> */}
               {!product.inStock && <Badge variant="warning">Out of Stock</Badge>}
               {product.inStock && <Badge variant="success" className="flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />

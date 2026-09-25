@@ -29,7 +29,6 @@ export function FormField({
 }: FormFieldProps) {
   const inputClass = cn(
     "w-full bg-white border transition-all duration-200",
-    inputSize === "lg" ? "px-5 py-4 rounded-[14px] text-[1.05rem]" : "px-4 py-3 rounded-[10px] text-sm",
     "text-[#1c1c1c] placeholder:text-[#9ca3af]",
     error
       ? "border-red-400 focus:ring-red-300"
@@ -38,9 +37,17 @@ export function FormField({
     className
   );
 
+  const inputStyle = inputSize === "lg" 
+    ? { padding: "1rem 1.25rem", borderRadius: "14px", fontSize: "1.05rem", minHeight: "3.5rem" }
+    : { padding: "0.75rem 1rem", borderRadius: "10px", fontSize: "0.875rem", minHeight: "2.75rem" };
+
+  const labelStyle = inputSize === "lg" 
+    ? { fontSize: "1.05rem", display: "block", marginBottom: "0.5rem" }
+    : { fontSize: "0.875rem", display: "block", marginBottom: "0.375rem" };
+
   return (
-    <div className={cn("flex flex-col", inputSize === "lg" ? "gap-2.5" : "gap-1.5")}>
-      <label htmlFor={id} className={cn("font-medium text-[#1c1c1c]", inputSize === "lg" ? "text-[1.05rem]" : "text-sm")}>
+    <div className="flex flex-col">
+      <label htmlFor={id} className="font-medium text-[#1c1c1c]" style={labelStyle}>
         {label}
         {props.required && <span className="text-[#c8956c] ml-0.5">*</span>}
       </label>
@@ -49,13 +56,15 @@ export function FormField({
         <textarea
           id={id}
           rows={rows}
-          className={cn(inputClass, "resize-y min-h-[100px]")}
+          className={cn(inputClass, "resize-y")}
+          style={{ ...inputStyle, minHeight: "100px" }}
           {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
         />
       ) : as === "select" ? (
         <select
           id={id}
           className={inputClass}
+          style={inputStyle}
           {...(props as React.SelectHTMLAttributes<HTMLSelectElement>)}
         >
           {children}
@@ -64,11 +73,12 @@ export function FormField({
         <input
           id={id}
           className={inputClass}
+          style={inputStyle}
           {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
         />
       )}
 
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </div>
   );
 }
