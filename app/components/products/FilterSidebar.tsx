@@ -9,7 +9,7 @@ import { useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { categories } from "@/data/categories";
-import { getAllGrades, getAllThicknesses, PRICE_RANGE } from "@/data/products";
+import { getAllThicknesses, PRICE_RANGE } from "@/data/products";
 import { cn } from "@/lib/utils";
 import type { ProductFilters } from "@/types";
 
@@ -80,7 +80,7 @@ function CheckItem({
 }
 
 export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps) {
-  const grades = getAllGrades();
+  // const grades = getAllGrades();
   const thicknesses = getAllThicknesses();
 
   const toggleArray = (arr: string[], value: string): string[] =>
@@ -88,7 +88,7 @@ export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps
 
   const activeCount =
     filters.categories.length +
-    filters.grades.length +
+    // filters.grades.length +
     filters.thicknesses.length +
     (filters.priceRange[0] > PRICE_RANGE[0] || filters.priceRange[1] < PRICE_RANGE[1] ? 1 : 0);
 
@@ -126,7 +126,7 @@ export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps
         ))}
       </FilterGroup>
 
-      {/* Grade */}
+      {/* Grade
       <FilterGroup title="Grade">
         {grades.map((grade) => (
           <CheckItem
@@ -139,7 +139,7 @@ export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps
             }
           />
         ))}
-      </FilterGroup>
+      </FilterGroup> */}
 
       {/* Thickness */}
       <FilterGroup title="Thickness">

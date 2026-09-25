@@ -51,15 +51,15 @@ export const categories: Category[] = [
     image: "/images/categories/flush-doors.jpg",
     productCount: 10,
   },
-  {
-    id: "cat-6",
-    slug: "mdf",
-    name: "MDF & HDF",
-    description:
-      "Medium and high density fibreboard for cabinetry, mouldings, and precision millwork.",
-    image: "/images/categories/mdf.jpg",
-    productCount: 8,
-  },
+  // {
+  //   id: "cat-6",
+  //   slug: "mdf",
+  //   name: "MDF & HDF",
+  //   description:
+  //     "Medium and high density fibreboard for cabinetry, mouldings, and precision millwork.",
+  //   image: "/images/categories/mdf.jpg",
+  //   productCount: 8,
+  // },
 ];
 
 export function getCategoryBySlug(slug: string): Category | undefined {
