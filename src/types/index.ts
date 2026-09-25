@@ -8,7 +8,7 @@ export interface Product {
   slug: string;
   name: string;
   category: string; // matches Category.slug
-  grade: string; // e.g. "MR Grade", "BWP Grade", "Marine"
+  // grade: string; // e.g. "MR Grade", "BWP Grade", "Marine"
   thickness: string[]; // e.g. ["6mm", "9mm", "12mm", "18mm"]
   sizes: string[]; // e.g. ["8x4 ft", "7x4 ft"]
   price: number; // base price (INR)

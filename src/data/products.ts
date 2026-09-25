@@ -13,7 +13,7 @@ export const products: Product[] = [
     slug: "woodcraft-bwp-marine-plywood-18mm",
     name: "WoodCraft BWP Marine Plywood",
     category: "plywood",
-    grade: "BWP Grade",
+    // grade: "BWP Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm", "25mm"],
     sizes: ["8×4 ft", "7×4 ft", "6×4 ft"],
     price: 4200,
@@ -47,7 +47,7 @@ export const products: Product[] = [
     slug: "woodcraft-mr-grade-plywood-12mm",
     name: "WoodCraft MR Grade Plywood",
     category: "plywood",
-    grade: "MR Grade",
+    // grade: "MR Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 2800,
@@ -80,7 +80,7 @@ export const products: Product[] = [
     slug: "woodcraft-fire-retardant-plywood",
     name: "WoodCraft Fire Retardant Plywood",
     category: "plywood",
-    grade: "FR Grade",
+    // grade: "FR Grade",
     thickness: ["9mm", "12mm", "18mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 5500,
@@ -114,7 +114,7 @@ export const products: Product[] = [
     slug: "woodcraft-blockboard-18mm",
     name: "WoodCraft Premium Blockboard",
     category: "blockboard",
-    grade: "BWP Grade",
+    // grade: "BWP Grade",
     thickness: ["19mm", "25mm", "32mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 3600,
@@ -148,7 +148,7 @@ export const products: Product[] = [
     slug: "woodcraft-teak-veneer",
     name: "Natural Teak Wood Veneer",
     category: "veneer",
-    grade: "Premium",
+    // grade: "Premium",
     thickness: ["0.3mm", "0.5mm", "0.8mm"],
     sizes: ["8×4 ft", "Custom"],
     price: 1800,
@@ -180,7 +180,7 @@ export const products: Product[] = [
     slug: "woodcraft-walnut-veneer",
     name: "American Walnut Veneer",
     category: "veneer",
-    grade: "Premium",
+    // grade: "Premium",
     thickness: ["0.3mm", "0.5mm"],
     sizes: ["8×4 ft", "Custom"],
     price: 2400,
@@ -207,46 +207,46 @@ export const products: Product[] = [
     createdAt: "2024-03-01T10:00:00Z",
   },
   // ── LAMINATES ──────────────────────────────────────────────────────────────
-  {
-    id: "prod-7",
-    slug: "woodcraft-hpl-laminate-1mm",
-    name: "WoodCraft High-Pressure Laminate (HPL)",
-    category: "laminates",
-    grade: "Premium HPL",
-    thickness: ["0.7mm", "1.0mm", "1.5mm"],
-    sizes: ["8×4 ft", "10×4 ft"],
-    price: 980,
-    mrp: 1200,
-    images: [
-      "/images/products/laminate-hpl-1.jpg",
-      "/images/products/laminate-hpl-2.jpg",
-    ],
-    shortDescription:
-      "High-pressure laminates in 300+ designs for furniture and interior surfaces.",
-    description:
-      "Our High-Pressure Laminates are manufactured under extreme heat and pressure for superior durability. With a scratch-resistant surface, they are ideal for kitchen cabinets, wardrobes, office furniture, and commercial countertops. Available in 300+ designs including wood, solid, stone, and metallic finishes.",
-    specifications: {
-      "IS Standard": "IS:2046",
-      "Standard": "EN 438",
-      "Surface Finish": "Matte / Gloss / Texture",
-      "Scratch Resistance": "Class 5 (EN 438-2 Clause 14)",
-      "Impact Resistance": "Class 3 (EN 438-2 Clause 20)",
-      "Moisture Resistance": "Excellent",
-      "Available Designs": "300+",
-      Certification: "ISI Certified",
-    },
-    featured: true,
-    inStock: true,
-    tags: ["HPL", "laminate", "kitchen", "furniture"],
-    createdAt: "2024-03-10T10:00:00Z",
-  },
+  // {
+  //   id: "prod-7",
+  //   slug: "woodcraft-hpl-laminate-1mm",
+  //   name: "WoodCraft High-Pressure Laminate (HPL)",
+  //   category: "laminates",
+  //   grade: "Premium HPL",
+  //   thickness: ["0.7mm", "1.0mm", "1.5mm"],
+  //   sizes: ["8×4 ft", "10×4 ft"],
+  //   price: 980,
+  //   mrp: 1200,
+  //   images: [
+  //     "/images/products/laminate-hpl-1.jpg",
+  //     "/images/products/laminate-hpl-2.jpg",
+  //   ],
+  //   shortDescription:
+  //     "High-pressure laminates in 300+ designs for furniture and interior surfaces.",
+  //   description:
+  //     "Our High-Pressure Laminates are manufactured under extreme heat and pressure for superior durability. With a scratch-resistant surface, they are ideal for kitchen cabinets, wardrobes, office furniture, and commercial countertops. Available in 300+ designs including wood, solid, stone, and metallic finishes.",
+  //   specifications: {
+  //     "IS Standard": "IS:2046",
+  //     "Standard": "EN 438",
+  //     "Surface Finish": "Matte / Gloss / Texture",
+  //     "Scratch Resistance": "Class 5 (EN 438-2 Clause 14)",
+  //     "Impact Resistance": "Class 3 (EN 438-2 Clause 20)",
+  //     "Moisture Resistance": "Excellent",
+  //     "Available Designs": "300+",
+  //     Certification: "ISI Certified",
+  //   },
+  //   featured: true,
+  //   inStock: true,
+  //   tags: ["HPL", "laminate", "kitchen", "furniture"],
+  //   createdAt: "2024-03-10T10:00:00Z",
+  // },
   // ── FLUSH DOORS ────────────────────────────────────────────────────────────
   {
     id: "prod-8",
     slug: "woodcraft-flush-door-solid-core",
     name: "WoodCraft Solid Core Flush Door",
     category: "flush-doors",
-    grade: "Premium",
+    // grade: "Premium",
     thickness: ["32mm", "35mm", "40mm"],
     sizes: ["7×3 ft", "7×2.5 ft", "6.6×2.5 ft"],
     price: 2200,
@@ -279,7 +279,7 @@ export const products: Product[] = [
     slug: "woodcraft-moisture-resistant-mdf",
     name: "WoodCraft Moisture Resistant MDF",
     category: "mdf",
-    grade: "MR Grade",
+    // grade: "MR Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm", "25mm"],
     sizes: ["8×4 ft", "8×6 ft"],
     price: 1400,
@@ -312,7 +312,7 @@ export const products: Product[] = [
     slug: "woodcraft-bwp-plywood-9mm",
     name: "WoodCraft BWP Plywood (Economy)",
     category: "plywood",
-    grade: "BWP Grade",
+    // grade: "BWP Grade",
     thickness: ["6mm", "9mm", "12mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 3200,
@@ -345,7 +345,7 @@ export const products: Product[] = [
     slug: "woodcraft-calibrated-mdf",
     name: "WoodCraft Calibrated MDF (Standard)",
     category: "mdf",
-    grade: "Standard",
+    // grade: "Standard",
     thickness: ["3mm", "6mm", "9mm", "12mm", "18mm"],
     sizes: ["8×4 ft", "8×6 ft"],
     price: 1100,
@@ -377,7 +377,7 @@ export const products: Product[] = [
     slug: "woodcraft-laminate-matte-woodgrain",
     name: "WoodCraft Matte Wood Grain Laminate",
     category: "laminates",
-    grade: "Premium HPL",
+    // grade: "Premium HPL",
     thickness: ["1.0mm", "1.5mm"],
     sizes: ["8×4 ft"],
     price: 1100,
@@ -425,9 +425,9 @@ export function getRelatedProducts(product: Product, limit = 4): Product[] {
     .slice(0, limit);
 }
 
-export function getAllGrades(): string[] {
-  return [...new Set(products.map((p) => p.grade))];
-}
+// export function getAllGrades(): string[] {
+//   return [...new Set(products.map((p) => p.grade))];
+// }
 
 export function getAllThicknesses(): string[] {
   return [...new Set(products.flatMap((p) => p.thickness))].sort();

@@ -16,11 +16,11 @@ interface ProductCardProps {
 
 export function ProductCard({ product, compact = false, className }: ProductCardProps) {
   const discount = getDiscount(product.price, product.mrp);
-  const gradeVariant = product.grade.toLowerCase().includes("bwp")
-    ? "wood"
-    : product.grade.toLowerCase().includes("fr")
-      ? "warning"
-      : "default";
+  // const gradeVariant = product.grade.toLowerCase().includes("bwp")
+  //   ? "wood"
+  //   : product.grade.toLowerCase().includes("fr")
+  //     ? "warning"
+  //     : "default";
 
   return (
     <article
@@ -91,14 +91,14 @@ export function ProductCard({ product, compact = false, className }: ProductCard
           )}
 
           {/* Grade badge — top right */}
-          <div className="absolute top-3 right-3 z-10">
+          {/* <div className="absolute top-3 right-3 z-10">
             <Badge
               variant={gradeVariant as "wood" | "warning" | "default"}
               className="capitalize text-[10px] tracking-wide shadow-sm"
             >
               {product.grade}
             </Badge>
-          </div>
+          </div> */}
         </Link>
       </div>
 

@@ -77,7 +77,7 @@ export default function ContactPage() {
           <h1 className="font-serif text-white font-semibold leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
             Get in Touch
           </h1>
-          <p className="text-white/60 max-w-xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/60 max-w-7xl mx-auto text-lg leading-relaxed">
             Have a product query, bulk order enquiry, or just want to know more? Our team is here to help.
           </p>
         </div>
@@ -121,24 +121,25 @@ export default function ContactPage() {
                 subtitle="Fill in your details and we'll get back to you within one business day."
               />
 
-              <div className="bg-[#fafaf8] rounded-[20px] border border-[#f0e8de] p-6 md:p-8" style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
+              <div className="bg-[#fafaf8] rounded-[24px] border border-[#f0e8de]" style={{ padding: "2.5rem" }}>
                 {submitted ? (
-                  <div className="flex flex-col items-center text-center py-8 gap-4">
-                    <div className="w-16 h-16 rounded-full bg-[#f2e8dc] flex items-center justify-center">
-                      <CheckCircle2 className="w-8 h-8 text-[#c8956c]" />
+                  <div className="flex flex-col items-center text-center py-10 gap-4">
+                    <div className="w-20 h-20 rounded-full bg-[#f2e8dc] flex items-center justify-center">
+                      <CheckCircle2 className="w-10 h-10 text-[#c8956c]" />
                     </div>
-                    <h2 className="font-serif text-xl font-semibold text-[#1c1c1c]">Message Sent!</h2>
-                    <p className="text-sm text-[#6b7280] leading-relaxed max-w-xs">
+                    <h2 className="font-serif text-2xl font-semibold text-[#1c1c1c]">Message Sent!</h2>
+                    <p className="text-base text-[#6b7280] leading-relaxed max-w-sm">
                       Thank you, <strong>{form.name}</strong>. We&apos;ll reply to <strong>{form.email}</strong> within 24 hours.
                     </p>
-                    <Button variant="outline" size="md" onClick={() => { setSubmitted(false); setForm(INITIAL_FORM); }}>
+                    <Button variant="outline" size="lg" onClick={() => { setSubmitted(false); setForm(INITIAL_FORM); }} className="mt-2">
                       Send Another Message
                     </Button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} noValidate aria-label="Contact form" className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <form onSubmit={handleSubmit} noValidate aria-label="Contact form" className="flex flex-col" style={{ gap: "1.5rem" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "1.5rem" }}>
                       <FormField
+                        inputSize="lg"
                         label="Your Name"
                         id="contact-name"
                         type="text"
@@ -148,6 +149,7 @@ export default function ContactPage() {
                         onChange={(e) => setField("name", (e.target as HTMLInputElement).value)}
                       />
                       <FormField
+                        inputSize="lg"
                         label="Email"
                         id="contact-email"
                         type="email"
@@ -157,8 +159,9 @@ export default function ContactPage() {
                         onChange={(e) => setField("email", (e.target as HTMLInputElement).value)}
                       />
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "1.5rem" }}>
                       <FormField
+                        inputSize="lg"
                         label="Phone"
                         id="contact-phone"
                         type="tel"
@@ -167,6 +170,7 @@ export default function ContactPage() {
                         onChange={(e) => setField("phone", (e.target as HTMLInputElement).value)}
                       />
                       <FormField
+                        inputSize="lg"
                         label="Subject"
                         id="contact-subject"
                         type="text"
@@ -177,16 +181,17 @@ export default function ContactPage() {
                       />
                     </div>
                     <FormField
+                      inputSize="lg"
                       as="textarea"
                       label="Message"
                       id="contact-message"
                       placeholder="Tell us about your requirement or query…"
-                      rows={5}
+                      rows={6}
                       required
                       value={form.message}
                       onChange={(e) => setField("message", (e.target as HTMLTextAreaElement).value)}
                     />
-                    <Button type="submit" variant="wood" size="lg" className="w-full" loading={loading}>
+                    <Button type="submit" variant="wood" size="lg" className="w-full" style={{ padding: "1.25rem", fontSize: "1.1rem", marginTop: "0.5rem" }} loading={loading}>
                       Send Message
                     </Button>
                   </form>
@@ -200,7 +205,7 @@ export default function ContactPage() {
               <div
                 id="map"
                 className="relative rounded-[20px] overflow-hidden border border-[#f0e8de] bg-[#f2e8dc] flex items-center justify-center"
-                style={{ height: 340 }}
+                style={{ height: 520 }}
                 aria-label="Office location map placeholder"
               >
                 {/* Styled map placeholder */}

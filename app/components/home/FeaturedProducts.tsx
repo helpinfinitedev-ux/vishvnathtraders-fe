@@ -30,9 +30,9 @@ export function FeaturedProducts() {
           />
           <Link
             href="/products"
-            className="shrink-0 inline-flex items-center justify-center rounded-full font-[family-name:var(--font-heading)] uppercase font-semibold tracking-[0.08em] transition-all duration-200 ease-out text-[0.78rem] px-[1.15rem] py-[0.45rem] bg-[#c8956c] text-white shadow-[0_4px_14px_-2px_rgba(200,149,108,0.35)] hover:bg-[#a8744e] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_-4px_rgba(200,149,108,0.45)]"
+            className="shrink-0 distributor-btn"
           >
-            View All Products <ArrowRight className="w-4 h-4 ml-1.5" />
+            View All Products <ArrowRight size={11} strokeWidth={2.5} />
           </Link>
         </div>
 
