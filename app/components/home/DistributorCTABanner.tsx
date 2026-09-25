@@ -35,7 +35,7 @@ export function DistributorCTABanner() {
       <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-black/10 pointer-events-none" aria-hidden="true" />
 
       <div className="container-site relative z-10" style={{ marginTop: "3.25rem", marginBottom: "3.25rem" }}>
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto text-center">
           {/* Headline */}
           <h2
             id="distributor-cta-heading"
@@ -46,14 +46,14 @@ export function DistributorCTABanner() {
           </h2>
 
           {/* Body */}
-          <p className="text-white/80 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          <p className="text-white/80 text-xl leading-relaxed mb-10 max-w-6xl mx-auto">
             Join our growing network of authorised distributors and dealers across India.
             Enjoy competitive margins, marketing support, and a premium product portfolio
             that sells itself.
           </p>
 
           {/* Benefits row */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-12">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-12">
             {[
               "Competitive Margins",
               "Marketing Support",
@@ -61,35 +61,21 @@ export function DistributorCTABanner() {
               "Dedicated Account Manager",
               "Technical Training",
             ].map((benefit) => (
-              <div key={benefit} className="flex items-center gap-2 text-sm text-white/80">
-                <span className="w-1.5 h-1.5 rounded-full bg-white/60 shrink-0" />
+              <div key={benefit} className="flex items-center gap-2 text-lg text-black/80">
+                <span className="w-1.5 h-1.5 rounded-full bg-black/60 shrink-0" />
                 {benefit}
               </div>
             ))}
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-wrap justify-center gap-4" style={{ marginTop: "1.25rem" }}>
-            {/* White filled pill on dark bg */}
-            <Button
-              variant="primary"
-              size="lg"
-              className="bg-white! text-[#7c4a2a]! hover:bg-white/90! border-0"
-              asChild
-            >
-              <Link href="/distributor" className="flex items-center gap-2">
-                Apply Now <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </Button>
-            {/* Ghost pill with white border on dark bg */}
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-white/60! text-white! hover:bg-white/15! hover:text-white!"
-              asChild
-            >
-              <Link href="/contact">Talk to Our Team</Link>
-            </Button>
+          <div className="flex flex-wrap justify-center gap-4" style={{ marginTop: "1.45rem" }}>
+            <Link href="/distributor" className="distributor-btn" style={{ backgroundColor: "#845a16ff" }}>
+              Apply Now <ArrowRight size={11} strokeWidth={2.5} />
+            </Link>
+            <Link href="/contact" className="distributor-btn" style={{ backgroundColor: "#845a16ff" }}>
+              Talk to Our Team <ArrowRight size={11} strokeWidth={2.5} />
+            </Link>
           </div>
         </div>
       </div>

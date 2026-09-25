@@ -268,3 +268,30 @@ h6 {
   font-style: italic;
   color: #4b5563;
 }
+
+/* Reusable Distributor Button UI */
+.distributor-btn {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.45rem 1.15rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: #ffffff;
+  box-shadow: var(--shadow-wood);
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: none;
+  cursor: pointer;
+}
+.distributor-btn:hover {
+  background: var(--color-accent-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -4px rgba(200, 149, 108, 0.35);
+}
