@@ -13,7 +13,7 @@ export function DistributorCTABanner() {
       aria-labelledby="distributor-cta-heading"
     >
       {/* Rich wood-tone gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#7c4a2a] via-[#c8956c] to-[#e8b07a]" aria-hidden="true" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#7c4a2a] via-[#c8956c] to-[#e8b07a]" aria-hidden="true" style={{ padding: "1.25rem 1.5rem" }} />
 
       {/* Subtle grain texture */}
       <svg
@@ -34,18 +34,8 @@ export function DistributorCTABanner() {
       <div className="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full bg-white/10 pointer-events-none" aria-hidden="true" />
       <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-black/10 pointer-events-none" aria-hidden="true" />
 
-      <div className="container-site relative z-10">
+      <div className="container-site relative z-10" style={{ marginTop: "3.25rem", marginBottom: "3.25rem" }}>
         <div className="max-w-3xl mx-auto text-center">
-          {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="h-px w-8 bg-white/50" />
-            <div className="flex items-center gap-1.5 text-white/80 text-xs font-semibold uppercase tracking-[0.15em]">
-              <MapPin className="w-3 h-3" />
-              Pan-India Distributor Network
-            </div>
-            <span className="h-px w-8 bg-white/50" />
-          </div>
-
           {/* Headline */}
           <h2
             id="distributor-cta-heading"
@@ -79,21 +69,23 @@ export function DistributorCTABanner() {
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4" style={{ marginTop: "1.25rem" }}>
+            {/* White filled pill on dark bg */}
             <Button
               variant="primary"
               size="lg"
-              className="bg-white text-[#7c4a2a] hover:bg-white/90"
+              className="bg-white! text-[#7c4a2a]! hover:bg-white/90! border-0"
               asChild
             >
               <Link href="/distributor" className="flex items-center gap-2">
-                Apply Now <ArrowRight className="w-4 h-4" />
+                Apply Now <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </Button>
+            {/* Ghost pill with white border on dark bg */}
             <Button
               variant="outline"
               size="lg"
-              className="border-white/50 text-white hover:bg-white/15 hover:text-white"
+              className="border-white/60! text-white! hover:bg-white/15! hover:text-white!"
               asChild
             >
               <Link href="/contact">Talk to Our Team</Link>

@@ -86,12 +86,13 @@ export default function ContactPage() {
       {/* Contact cards */}
       <section className="py-10 md:py-14">
         <div className="container-site">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
             {CONTACT_CARDS.map(({ icon: Icon, title, lines, href }) => (
               <a
                 key={title}
                 href={href ?? undefined}
                 className="group bg-white p-6 rounded-[18px] border border-[#f0e8de] shadow-[0_2px_12px_rgba(28,28,28,0.05)] hover:shadow-[0_6px_24px_rgba(200,149,108,0.14)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col gap-3"
+                style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}
               >
                 <div className="w-11 h-11 rounded-[12px] bg-[#f2e8dc] flex items-center justify-center group-hover:bg-[#c8956c]/20 transition-colors">
                   <Icon className="w-5 h-5 text-[#c8956c]" />
@@ -120,7 +121,7 @@ export default function ContactPage() {
                 subtitle="Fill in your details and we'll get back to you within one business day."
               />
 
-              <div className="bg-[#fafaf8] rounded-[20px] border border-[#f0e8de] p-6 md:p-8">
+              <div className="bg-[#fafaf8] rounded-[20px] border border-[#f0e8de] p-6 md:p-8" style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
                 {submitted ? (
                   <div className="flex flex-col items-center text-center py-8 gap-4">
                     <div className="w-16 h-16 rounded-full bg-[#f2e8dc] flex items-center justify-center">
@@ -231,7 +232,7 @@ export default function ContactPage() {
               </div>
 
               {/* Full address card */}
-              <div className="bg-white rounded-[18px] border border-[#f0e8de] p-6">
+              <div className="bg-white rounded-[18px] border border-[#f0e8de] p-6" style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
                 <h3 className="font-serif text-base font-semibold text-[#1c1c1c] mb-4">Corporate Office & Plant</h3>
                 <address className="not-italic space-y-2 text-sm text-[#4b5563] leading-relaxed">
                   <p>{SITE_CONFIG.address.line1}</p>

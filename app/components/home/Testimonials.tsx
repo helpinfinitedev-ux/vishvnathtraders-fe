@@ -50,6 +50,7 @@ export function Testimonials() {
           <div
             key={active}
             className="bg-white rounded-[24px] p-8 md:p-12 shadow-[0_4px_32px_rgba(200,149,108,0.12)] border border-[#f0e8de] animate-fade-up"
+            style={{ padding: "1.55rem 1.8rem" }}
           >
             {/* Stars */}
             <StarRating rating={current.rating} size="md" className="mb-6" />
