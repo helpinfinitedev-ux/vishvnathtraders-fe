@@ -53,7 +53,7 @@ function ProductsPageInner() {
   const filtered = useMemo(() => {
     return products.filter((p) => {
       if (filters.categories.length && !filters.categories.includes(p.category)) return false;
-      if (filters.grades.length && !filters.grades.includes(p.grade)) return false;
+      // if (filters.grades.length && !filters.grades.includes(p.grade)) return false;
       if (filters.thicknesses.length && !p.thickness.some((t) => filters.thicknesses.includes(t))) return false;
       if (p.price < filters.priceRange[0] || p.price > filters.priceRange[1]) return false;
       return true;
@@ -155,25 +155,7 @@ function ProductsPageInner() {
             </div>
           </div>
 
-          {/* Active filter tags */}
-          {activeTags.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              <span className="text-xs text-[#6b7280]">Active:</span>
-              {activeTags.map((tag) => (
-                <button
-                  key={tag.key}
-                  onClick={tag.clear}
-                  className="flex items-center gap-1.5 text-xs bg-[#f2e8dc] text-[#7c4a2a] px-2.5 py-1 rounded-full hover:bg-[#e8ddd4] transition-colors"
-                >
-                  {tag.label}
-                  <X className="w-3 h-3" />
-                </button>
-              ))}
-              <button onClick={clearFilters} className="text-xs text-[#c8956c] hover:underline font-medium">
-                Clear all
-              </button>
-            </div>
-          )}
+
         </div>
       </div>
 

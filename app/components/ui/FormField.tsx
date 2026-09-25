@@ -13,6 +13,7 @@ interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement | HT
   as?: "input" | "textarea" | "select";
   children?: React.ReactNode; // for select options
   rows?: number;
+  inputSize?: "sm" | "md" | "lg";
 }
 
 export function FormField({
@@ -23,12 +24,13 @@ export function FormField({
   children,
   rows = 4,
   className,
+  inputSize = "md",
   ...props
 }: FormFieldProps) {
   const inputClass = cn(
-    "w-full px-4 py-3 rounded-[10px] bg-white border",
-    "text-sm text-[#1c1c1c] placeholder:text-[#9ca3af]",
-    "transition-all duration-200",
+    "w-full bg-white border transition-all duration-200",
+    inputSize === "lg" ? "px-5 py-4 rounded-[14px] text-[1.05rem]" : "px-4 py-3 rounded-[10px] text-sm",
+    "text-[#1c1c1c] placeholder:text-[#9ca3af]",
     error
       ? "border-red-400 focus:ring-red-300"
       : "border-[#e8ddd4] focus:border-[#c8956c] focus:ring-[#c8956c]/20",
@@ -37,8 +39,8 @@ export function FormField({
   );
 
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-[#1c1c1c]">
+    <div className={cn("flex flex-col", inputSize === "lg" ? "gap-2.5" : "gap-1.5")}>
+      <label htmlFor={id} className={cn("font-medium text-[#1c1c1c]", inputSize === "lg" ? "text-[1.05rem]" : "text-sm")}>
         {label}
         {props.required && <span className="text-[#c8956c] ml-0.5">*</span>}
       </label>
