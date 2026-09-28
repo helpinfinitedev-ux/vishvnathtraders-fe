@@ -67,7 +67,7 @@ export default function DistributorPage() {
           <h1 className="font-serif text-white font-semibold leading-tight mb-5" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
             Become a WoodCraft Distributor
           </h1>
-          <p className="text-white/60 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/60 max-w-7xl mx-auto text-lg leading-relaxed">
             Join our pan-India network of authorised distributors and dealers. Premium products, strong margins, and full marketing support.
           </p>
         </div>
