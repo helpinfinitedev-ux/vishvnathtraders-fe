@@ -12,12 +12,14 @@ export const products: Product[] = [
     id: "prod-1",
     slug: "woodcraft-bwp-marine-plywood-18mm",
     name: "WoodCraft BWP Marine Plywood",
+    brand: "WoodCraft Premium",
     category: "plywood",
     // grade: "BWP Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm", "25mm"],
     sizes: ["8×4 ft", "7×4 ft", "6×4 ft"],
     price: 4200,
     mrp: 4800,
+    pricePerSqFt: 131,
     images: [
       "/images/products/plywood-bwp-1.jpg",
       "/images/products/plywood-bwp-2.jpg",
@@ -26,7 +28,7 @@ export const products: Product[] = [
     shortDescription:
       "100% waterproof BWP-grade plywood, ideal for kitchens, bathrooms, and exterior applications.",
     description:
-      "WoodCraft BWP Marine Plywood is manufactured using phenol formaldehyde resin under high temperature and pressure, making it completely waterproof. It carries ISI certification (IS:303) and is ideal for any application requiring resistance to moisture, humidity, and water immersion.",
+      "WoodCraft BWP Marine Plywood is manufactured using phenol formaldehyde resin under high temperature and pressure, making it completely waterproof. It carries ISI certification (IS:303) and is ideal for any application requiring resistance to moisture, humidity, and water immersion. The hardwood core ensures long-term durability while the Gurjan face provides a smooth, premium finish for laminates or veneers.",
     specifications: {
       "IS Standard": "IS:303",
       "Glue Type": "Phenol Formaldehyde (BWP)",
@@ -37,6 +39,26 @@ export const products: Product[] = [
       Certification: "ISI Certified",
       "Density (g/cm³)": "0.70 – 0.75",
     },
+    useCases: ["Kitchen Cabinets", "Bathroom Vanities", "Wardrobes", "Exterior Cladding", "Bed Frames", "Wall Paneling"],
+    benefits: [
+      { icon: "Droplets", title: "100% Waterproof", description: "Tested to survive 72-hour boiling water immersion without delamination." },
+      { icon: "Shield", title: "Termite Proof", description: "Factory-treated with anti-termite chemicals for long-lasting protection." },
+      { icon: "Award", title: "ISI Certified", description: "Manufactured under strict BIS standards (IS:303) with batch-level quality testing." },
+      { icon: "Timer", title: "15-Year Warranty", description: "Backed by our comprehensive 15-year warranty against manufacturing defects." },
+    ],
+    warranty: "15 Years",
+    faqs: [
+      { question: "Is BWP plywood really 100% waterproof?", answer: "Yes. BWP (Boiling Water Proof) grade plywood uses phenol formaldehyde resin which makes it completely waterproof. It can withstand prolonged water exposure, making it ideal for kitchens, bathrooms, and exterior applications." },
+      { question: "What is the difference between BWP and MR grade plywood?", answer: "BWP plywood uses phenol formaldehyde resin (waterproof), while MR plywood uses urea formaldehyde resin (moisture resistant only). BWP is suitable for wet areas, MR is for dry interiors." },
+      { question: "Can I use this plywood for modular kitchens?", answer: "Absolutely. BWP Marine Plywood is the recommended grade for modular kitchens as it withstands steam, water splashes, and high humidity without warping." },
+      { question: "What sizes are available?", answer: "Standard sizes include 8×4 ft, 7×4 ft, and 6×4 ft. Custom sizes are available on bulk orders with minimum MOQ." },
+      { question: "Is cutting and return possible?", answer: "Due to the custom nature of wood products, cut-to-size sheets cannot be returned or exchanged. Please verify measurements before ordering." },
+    ],
+    reviews: [
+      { id: "rev-1", name: "Rajesh Sharma", rating: 5, date: "2024-08-12", comment: "Excellent quality plywood. Used it for my modular kitchen and bathroom cabinets. No warping even after 6 months.", location: "Delhi" },
+      { id: "rev-2", name: "Priya Menon", rating: 4, date: "2024-07-20", comment: "Good quality BWP plywood. Delivery was on time. Slightly heavy but that's expected for marine grade.", location: "Mumbai" },
+      { id: "rev-3", name: "Amit Patel", rating: 5, date: "2024-06-15", comment: "Used this for exterior cladding on my farmhouse. Withstood monsoon rains without any issue. Highly recommended.", location: "Ahmedabad" },
+    ],
     featured: true,
     inStock: true,
     tags: ["waterproof", "marine", "exterior", "ISI"],

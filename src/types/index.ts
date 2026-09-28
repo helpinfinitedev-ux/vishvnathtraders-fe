@@ -3,6 +3,20 @@
 // All TypeScript interfaces for the data layer — backend-ready shape
 // =============================================================================
 
+export interface ProductReview {
+  id: string;
+  name: string;
+  rating: number; // 1-5
+  date: string; // ISO date
+  comment: string;
+  location?: string;
+}
+
+export interface ProductFAQ {
+  question: string;
+  answer: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -21,6 +35,14 @@ export interface Product {
   inStock: boolean;
   tags: string[];
   createdAt: string; // ISO date
+  // ── Extended fields for PDP ──
+  useCases?: string[]; // e.g. ["Kitchen Cabinets", "Wardrobes"]
+  benefits?: { icon: string; title: string; description: string }[];
+  faqs?: ProductFAQ[];
+  warranty?: string; // e.g. "15 Years"
+  reviews?: ProductReview[];
+  brand?: string;
+  pricePerSqFt?: number;
 }
 
 export interface Category {

@@ -20,6 +20,17 @@
   --color-border: #e8ddd4;
   --font-heading: "Oswald", sans-serif;
   --font-body: "Roboto Condensed", sans-serif;
+  /* 8px spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 80px;
+  --space-10: 96px;
   --shadow-sm: 0 1px 3px 0 rgba(28, 28, 28, 0.08),
     0 1px 2px -1px rgba(28, 28, 28, 0.06);
   --shadow-md: 0 4px 16px 0 rgba(28, 28, 28, 0.1),
@@ -647,5 +658,653 @@ h6 {
   .page-banner__deco-line--1,
   .page-banner__deco-line--2 {
     display: none;
+  }
+}
+
+/* ============================================================
+   PRODUCT DETAIL PAGE (PDP) COMPONENT STYLES
+   Uses --space-N tokens for consistent 8px-based spacing
+   ============================================================ */
+
+/* ── PDP Section spacing ─────────────────────────────────────── */
+.pdp-section {
+  padding-block: var(--space-8);
+}
+
+@media (max-width: 1024px) {
+  .pdp-section { padding-block: var(--space-7); }
+}
+
+@media (max-width: 640px) {
+  .pdp-section { padding-block: var(--space-6); }
+}
+
+/* ── Price Block ─────────────────────────────────────────────── */
+.pdp-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.pdp-price__current {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.pdp-price__mrp {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.pdp-price__discount {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-accent);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+.pdp-price__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin-top: var(--space-2);
+}
+
+.pdp-price__dot {
+  color: var(--color-border);
+}
+
+/* ── Variant Selector ────────────────────────────────────────── */
+.pdp-variant__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.pdp-variant__selected {
+  color: var(--color-accent);
+}
+
+.pdp-variant__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.pdp-variant__chip {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1.5px solid var(--color-border);
+  background: transparent;
+  color: #374151;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 40px;
+}
+
+.pdp-variant__chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.pdp-variant__chip--active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.pdp-variant__chip--active:hover {
+  background: var(--color-accent-dark);
+  color: #fff;
+}
+
+/* ── Specs Table ─────────────────────────────────────────────── */
+.pdp-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.pdp-specs-table tr {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pdp-specs-table tr:last-child {
+  border-bottom: none;
+}
+
+.pdp-specs-table__row--even {
+  background: var(--color-bg);
+}
+
+.pdp-specs-table__label {
+  padding: var(--space-3) var(--space-4) var(--space-3) 0;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+  width: 40%;
+  vertical-align: top;
+}
+
+.pdp-specs-table__value {
+  padding: var(--space-3) 0;
+  color: var(--color-muted);
+}
+
+/* ── Trust Badges ────────────────────────────────────────────── */
+.pdp-trust {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+
+.pdp-trust__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent-light);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(200, 149, 108, 0.15);
+}
+
+.pdp-trust__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(200, 149, 108, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent-dark);
+  flex-shrink: 0;
+}
+
+.pdp-trust__title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.pdp-trust__sub {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  margin-top: 1px;
+}
+
+/* ── FAQ Accordion ───────────────────────────────────────────── */
+.pdp-faq {
+  display: flex;
+  flex-direction: column;
+}
+
+.pdp-faq__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pdp-faq__item:last-child {
+  border-bottom: none;
+}
+
+.pdp-faq__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.pdp-faq__question {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.4;
+}
+
+.pdp-faq__chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--color-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.pdp-faq__chevron--open {
+  transform: rotate(180deg);
+  color: var(--color-accent);
+}
+
+.pdp-faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0;
+}
+
+.pdp-faq__answer--open {
+  max-height: 500px;
+  padding-bottom: var(--space-4);
+}
+
+.pdp-faq__answer p {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+/* ── Reviews ─────────────────────────────────────────────────── */
+.pdp-reviews__empty {
+  text-align: center;
+  padding: var(--space-7) var(--space-4);
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.pdp-reviews__summary {
+  margin-bottom: var(--space-6);
+}
+
+.pdp-reviews__avg {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.pdp-reviews__avg-num {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.pdp-reviews__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.pdp-reviews__count {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.pdp-reviews__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pdp-reviews__card {
+  padding: var(--space-5);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.pdp-reviews__card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.pdp-reviews__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.pdp-reviews__name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.pdp-reviews__location {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.pdp-reviews__card-rating {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.pdp-reviews__date {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+}
+
+.pdp-reviews__comment {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+/* ── Enquiry Box ─────────────────────────────────────────────── */
+.pdp-enquiry {
+  background: linear-gradient(135deg, #1c1c1c 0%, #2d2319 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  color: #fff;
+}
+
+.pdp-enquiry__header {
+  margin-bottom: var(--space-5);
+}
+
+.pdp-enquiry__title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.pdp-enquiry__sub {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+.pdp-enquiry__success {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: rgba(200, 149, 108, 0.15);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-4);
+}
+
+.pdp-enquiry__form {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.pdp-enquiry__input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.pdp-enquiry__input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.pdp-enquiry__input:focus {
+  border-color: var(--color-accent);
+}
+
+.pdp-enquiry__download {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color var(--transition);
+}
+
+.pdp-enquiry__download:hover {
+  color: #fff;
+}
+
+/* ── Sticky Action Bar (mobile only) ─────────────────────────── */
+.pdp-sticky-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .pdp-sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    display: flex;
+    background: #fff;
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+}
+
+.pdp-sticky-bar__btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 44px;
+}
+
+.pdp-sticky-bar__btn--call {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.pdp-sticky-bar__btn--whatsapp {
+  background: #25d366;
+  color: #fff;
+}
+
+.pdp-sticky-bar__btn--quote {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.pdp-sticky-bar__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Benefits Grid ───────────────────────────────────────────── */
+.pdp-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+
+.pdp-benefit {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.pdp-benefit__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.pdp-benefit__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.pdp-benefit__desc {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+/* ── Use Cases pills ─────────────────────────────────────────── */
+.pdp-usecases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.pdp-usecase-pill {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background: var(--color-accent-light);
+  color: var(--color-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid rgba(200, 149, 108, 0.2);
+}
+
+/* ── Shipping Policy ─────────────────────────────────────────── */
+.pdp-shipping {
+  padding: var(--space-5);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.pdp-shipping__title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.pdp-shipping__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.pdp-shipping__list li {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.6;
+  padding-left: var(--space-5);
+  position: relative;
+}
+
+.pdp-shipping__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.pdp-shipping__warning {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: #856404;
+  font-weight: 500;
+}
+
+/* ── PDP Card wrapper ────────────────────────────────────────── */
+.pdp-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 640px) {
+  .pdp-card {
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+  }
+}
+
+/* ── PDP Section Heading ─────────────────────────────────────── */
+.pdp-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-5);
+  position: relative;
+  padding-bottom: var(--space-3);
+}
+
+.pdp-heading::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+/* ── Mobile bottom padding for sticky bar ────────────────────── */
+@media (max-width: 768px) {
+  .pdp-page {
+    padding-bottom: 80px;
   }
 }
