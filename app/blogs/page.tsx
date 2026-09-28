@@ -6,7 +6,7 @@
 
 import { useState, useMemo } from "react";
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { BlogCard } from "@/components/blogs/BlogCard";
 import { blogPosts, getAllBlogCategories } from "@/data/blogs";
 import { cn } from "@/lib/utils";
@@ -28,20 +28,14 @@ export default function BlogsPage() {
 
   return (
     <div className="bg-[#fafaf8] min-h-screen">
-      {/* Page Header */}
-      <div className="bg-[#1c1c1c] relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a18] to-[#2d2520]" aria-hidden="true" />
-        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-[#c8956c]/8 rounded-full blur-[100px]" aria-hidden="true" />
-        <div className="container-site relative z-10 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c8956c] mb-4">Knowledge Hub</p>
-          <h1 className="font-serif text-white font-semibold leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
-            Industry Guides & Insights
-          </h1>
-          <p className="text-white/60 max-w-xl mx-auto text-lg leading-relaxed">
-            Expert guides on plywood grades, veneer selection, quality standards, and sustainable building materials.
-          </p>
-        </div>
-      </div>
+      {/* ── Page Banner ── */}
+      <PageBanner
+        title="Blog"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Blog" },
+        ]}
+      />
 
       <div className="container-site py-10 md:py-16">
         {/* Category filter chips */}

@@ -9,6 +9,7 @@ import { Phone, Mail, MapPin, Clock, CheckCircle2 } from "lucide-react";
 import { FormField } from "@/components/ui/FormField";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { SITE_CONFIG } from "@/data/siteConfig";
 import type { ContactFormData } from "@/types";
 
@@ -68,20 +69,14 @@ export default function ContactPage() {
 
   return (
     <div className="bg-[#fafaf8] min-h-screen">
-      {/* Hero */}
-      <section className="bg-[#1c1c1c] relative overflow-hidden py-20 md:py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a18] to-[#2d2520]" aria-hidden="true" />
-        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-[#c8956c]/8 rounded-full blur-[100px]" aria-hidden="true" />
-        <div className="container-site relative z-10 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c8956c] mb-4">Contact</p>
-          <h1 className="font-serif text-white font-semibold leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
-            Get in Touch
-          </h1>
-          <p className="text-white/60 max-w-7xl mx-auto text-lg leading-relaxed">
-            Have a product query, bulk order enquiry, or just want to know more? Our team is here to help.
-          </p>
-        </div>
-      </section>
+      {/* ── Page Banner ── */}
+      <PageBanner
+        title="Contact Us"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Contact" },
+        ]}
+      />
 
       {/* Contact cards */}
       <section className="py-10 md:py-14">

@@ -7,7 +7,7 @@
 
 import { useState, useMemo } from "react";
 import { LayoutGrid, List, SlidersHorizontal, X } from "lucide-react";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { FilterSidebar } from "@/components/products/FilterSidebar";
@@ -96,20 +96,22 @@ function ProductsPageInner() {
 
   return (
     <div className="bg-[#fafaf8] min-h-screen">
-      {/* Page Header */}
-      <div className="bg-white border-b border-[#f0e8de] py-8 md:py-10">
+      {/* ── Page Banner ── */}
+      <PageBanner
+        title="Products"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Products" },
+        ]}
+      />
+
+      {/* Toolbar: sort + view + filter toggle */}
+      <div className="bg-white border-b border-[#f0e8de] py-4 md:py-5">
         <div className="container-site">
-          <Breadcrumb items={[{ label: "Products" }]} className="mb-3" />
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#1c1c1c]">
-                All Products
-              </h1>
-              <p className="text-sm text-[#6b7280] mt-1">
-                {sorted.length} products found
-              </p>
-            </div>
-            {/* Sort + View toggle */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <p className="text-sm text-[#6b7280]">
+              {sorted.length} products found
+            </p>
             <div className="flex items-center gap-3">
               <select
                 value={sort}
@@ -154,8 +156,6 @@ function ProductsPageInner() {
               </Button>
             </div>
           </div>
-
-
         </div>
       </div>
 
