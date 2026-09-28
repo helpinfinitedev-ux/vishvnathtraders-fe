@@ -12,12 +12,14 @@ export const products: Product[] = [
     id: "prod-1",
     slug: "woodcraft-bwp-marine-plywood-18mm",
     name: "WoodCraft BWP Marine Plywood",
+    brand: "WoodCraft Premium",
     category: "plywood",
-    grade: "BWP Grade",
+    // grade: "BWP Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm", "25mm"],
     sizes: ["8×4 ft", "7×4 ft", "6×4 ft"],
     price: 4200,
     mrp: 4800,
+    pricePerSqFt: 131,
     images: [
       "/images/products/plywood-bwp-1.jpg",
       "/images/products/plywood-bwp-2.jpg",
@@ -26,7 +28,7 @@ export const products: Product[] = [
     shortDescription:
       "100% waterproof BWP-grade plywood, ideal for kitchens, bathrooms, and exterior applications.",
     description:
-      "WoodCraft BWP Marine Plywood is manufactured using phenol formaldehyde resin under high temperature and pressure, making it completely waterproof. It carries ISI certification (IS:303) and is ideal for any application requiring resistance to moisture, humidity, and water immersion.",
+      "WoodCraft BWP Marine Plywood is manufactured using phenol formaldehyde resin under high temperature and pressure, making it completely waterproof. It carries ISI certification (IS:303) and is ideal for any application requiring resistance to moisture, humidity, and water immersion. The hardwood core ensures long-term durability while the Gurjan face provides a smooth, premium finish for laminates or veneers.",
     specifications: {
       "IS Standard": "IS:303",
       "Glue Type": "Phenol Formaldehyde (BWP)",
@@ -37,6 +39,26 @@ export const products: Product[] = [
       Certification: "ISI Certified",
       "Density (g/cm³)": "0.70 – 0.75",
     },
+    useCases: ["Kitchen Cabinets", "Bathroom Vanities", "Wardrobes", "Exterior Cladding", "Bed Frames", "Wall Paneling"],
+    benefits: [
+      { icon: "Droplets", title: "100% Waterproof", description: "Tested to survive 72-hour boiling water immersion without delamination." },
+      { icon: "Shield", title: "Termite Proof", description: "Factory-treated with anti-termite chemicals for long-lasting protection." },
+      { icon: "Award", title: "ISI Certified", description: "Manufactured under strict BIS standards (IS:303) with batch-level quality testing." },
+      { icon: "Timer", title: "15-Year Warranty", description: "Backed by our comprehensive 15-year warranty against manufacturing defects." },
+    ],
+    warranty: "15 Years",
+    faqs: [
+      { question: "Is BWP plywood really 100% waterproof?", answer: "Yes. BWP (Boiling Water Proof) grade plywood uses phenol formaldehyde resin which makes it completely waterproof. It can withstand prolonged water exposure, making it ideal for kitchens, bathrooms, and exterior applications." },
+      { question: "What is the difference between BWP and MR grade plywood?", answer: "BWP plywood uses phenol formaldehyde resin (waterproof), while MR plywood uses urea formaldehyde resin (moisture resistant only). BWP is suitable for wet areas, MR is for dry interiors." },
+      { question: "Can I use this plywood for modular kitchens?", answer: "Absolutely. BWP Marine Plywood is the recommended grade for modular kitchens as it withstands steam, water splashes, and high humidity without warping." },
+      { question: "What sizes are available?", answer: "Standard sizes include 8×4 ft, 7×4 ft, and 6×4 ft. Custom sizes are available on bulk orders with minimum MOQ." },
+      { question: "Is cutting and return possible?", answer: "Due to the custom nature of wood products, cut-to-size sheets cannot be returned or exchanged. Please verify measurements before ordering." },
+    ],
+    reviews: [
+      { id: "rev-1", name: "Rajesh Sharma", rating: 5, date: "2024-08-12", comment: "Excellent quality plywood. Used it for my modular kitchen and bathroom cabinets. No warping even after 6 months.", location: "Delhi" },
+      { id: "rev-2", name: "Priya Menon", rating: 4, date: "2024-07-20", comment: "Good quality BWP plywood. Delivery was on time. Slightly heavy but that's expected for marine grade.", location: "Mumbai" },
+      { id: "rev-3", name: "Amit Patel", rating: 5, date: "2024-06-15", comment: "Used this for exterior cladding on my farmhouse. Withstood monsoon rains without any issue. Highly recommended.", location: "Ahmedabad" },
+    ],
     featured: true,
     inStock: true,
     tags: ["waterproof", "marine", "exterior", "ISI"],
@@ -47,7 +69,7 @@ export const products: Product[] = [
     slug: "woodcraft-mr-grade-plywood-12mm",
     name: "WoodCraft MR Grade Plywood",
     category: "plywood",
-    grade: "MR Grade",
+    // grade: "MR Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 2800,
@@ -80,7 +102,7 @@ export const products: Product[] = [
     slug: "woodcraft-fire-retardant-plywood",
     name: "WoodCraft Fire Retardant Plywood",
     category: "plywood",
-    grade: "FR Grade",
+    // grade: "FR Grade",
     thickness: ["9mm", "12mm", "18mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 5500,
@@ -114,7 +136,7 @@ export const products: Product[] = [
     slug: "woodcraft-blockboard-18mm",
     name: "WoodCraft Premium Blockboard",
     category: "blockboard",
-    grade: "BWP Grade",
+    // grade: "BWP Grade",
     thickness: ["19mm", "25mm", "32mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 3600,
@@ -148,7 +170,7 @@ export const products: Product[] = [
     slug: "woodcraft-teak-veneer",
     name: "Natural Teak Wood Veneer",
     category: "veneer",
-    grade: "Premium",
+    // grade: "Premium",
     thickness: ["0.3mm", "0.5mm", "0.8mm"],
     sizes: ["8×4 ft", "Custom"],
     price: 1800,
@@ -180,7 +202,7 @@ export const products: Product[] = [
     slug: "woodcraft-walnut-veneer",
     name: "American Walnut Veneer",
     category: "veneer",
-    grade: "Premium",
+    // grade: "Premium",
     thickness: ["0.3mm", "0.5mm"],
     sizes: ["8×4 ft", "Custom"],
     price: 2400,
@@ -207,46 +229,46 @@ export const products: Product[] = [
     createdAt: "2024-03-01T10:00:00Z",
   },
   // ── LAMINATES ──────────────────────────────────────────────────────────────
-  {
-    id: "prod-7",
-    slug: "woodcraft-hpl-laminate-1mm",
-    name: "WoodCraft High-Pressure Laminate (HPL)",
-    category: "laminates",
-    grade: "Premium HPL",
-    thickness: ["0.7mm", "1.0mm", "1.5mm"],
-    sizes: ["8×4 ft", "10×4 ft"],
-    price: 980,
-    mrp: 1200,
-    images: [
-      "/images/products/laminate-hpl-1.jpg",
-      "/images/products/laminate-hpl-2.jpg",
-    ],
-    shortDescription:
-      "High-pressure laminates in 300+ designs for furniture and interior surfaces.",
-    description:
-      "Our High-Pressure Laminates are manufactured under extreme heat and pressure for superior durability. With a scratch-resistant surface, they are ideal for kitchen cabinets, wardrobes, office furniture, and commercial countertops. Available in 300+ designs including wood, solid, stone, and metallic finishes.",
-    specifications: {
-      "IS Standard": "IS:2046",
-      "Standard": "EN 438",
-      "Surface Finish": "Matte / Gloss / Texture",
-      "Scratch Resistance": "Class 5 (EN 438-2 Clause 14)",
-      "Impact Resistance": "Class 3 (EN 438-2 Clause 20)",
-      "Moisture Resistance": "Excellent",
-      "Available Designs": "300+",
-      Certification: "ISI Certified",
-    },
-    featured: true,
-    inStock: true,
-    tags: ["HPL", "laminate", "kitchen", "furniture"],
-    createdAt: "2024-03-10T10:00:00Z",
-  },
+  // {
+  //   id: "prod-7",
+  //   slug: "woodcraft-hpl-laminate-1mm",
+  //   name: "WoodCraft High-Pressure Laminate (HPL)",
+  //   category: "laminates",
+  //   grade: "Premium HPL",
+  //   thickness: ["0.7mm", "1.0mm", "1.5mm"],
+  //   sizes: ["8×4 ft", "10×4 ft"],
+  //   price: 980,
+  //   mrp: 1200,
+  //   images: [
+  //     "/images/products/laminate-hpl-1.jpg",
+  //     "/images/products/laminate-hpl-2.jpg",
+  //   ],
+  //   shortDescription:
+  //     "High-pressure laminates in 300+ designs for furniture and interior surfaces.",
+  //   description:
+  //     "Our High-Pressure Laminates are manufactured under extreme heat and pressure for superior durability. With a scratch-resistant surface, they are ideal for kitchen cabinets, wardrobes, office furniture, and commercial countertops. Available in 300+ designs including wood, solid, stone, and metallic finishes.",
+  //   specifications: {
+  //     "IS Standard": "IS:2046",
+  //     "Standard": "EN 438",
+  //     "Surface Finish": "Matte / Gloss / Texture",
+  //     "Scratch Resistance": "Class 5 (EN 438-2 Clause 14)",
+  //     "Impact Resistance": "Class 3 (EN 438-2 Clause 20)",
+  //     "Moisture Resistance": "Excellent",
+  //     "Available Designs": "300+",
+  //     Certification: "ISI Certified",
+  //   },
+  //   featured: true,
+  //   inStock: true,
+  //   tags: ["HPL", "laminate", "kitchen", "furniture"],
+  //   createdAt: "2024-03-10T10:00:00Z",
+  // },
   // ── FLUSH DOORS ────────────────────────────────────────────────────────────
   {
     id: "prod-8",
     slug: "woodcraft-flush-door-solid-core",
     name: "WoodCraft Solid Core Flush Door",
     category: "flush-doors",
-    grade: "Premium",
+    // grade: "Premium",
     thickness: ["32mm", "35mm", "40mm"],
     sizes: ["7×3 ft", "7×2.5 ft", "6.6×2.5 ft"],
     price: 2200,
@@ -279,7 +301,7 @@ export const products: Product[] = [
     slug: "woodcraft-moisture-resistant-mdf",
     name: "WoodCraft Moisture Resistant MDF",
     category: "mdf",
-    grade: "MR Grade",
+    // grade: "MR Grade",
     thickness: ["6mm", "9mm", "12mm", "18mm", "25mm"],
     sizes: ["8×4 ft", "8×6 ft"],
     price: 1400,
@@ -312,7 +334,7 @@ export const products: Product[] = [
     slug: "woodcraft-bwp-plywood-9mm",
     name: "WoodCraft BWP Plywood (Economy)",
     category: "plywood",
-    grade: "BWP Grade",
+    // grade: "BWP Grade",
     thickness: ["6mm", "9mm", "12mm"],
     sizes: ["8×4 ft", "7×4 ft"],
     price: 3200,
@@ -345,7 +367,7 @@ export const products: Product[] = [
     slug: "woodcraft-calibrated-mdf",
     name: "WoodCraft Calibrated MDF (Standard)",
     category: "mdf",
-    grade: "Standard",
+    // grade: "Standard",
     thickness: ["3mm", "6mm", "9mm", "12mm", "18mm"],
     sizes: ["8×4 ft", "8×6 ft"],
     price: 1100,
@@ -377,7 +399,7 @@ export const products: Product[] = [
     slug: "woodcraft-laminate-matte-woodgrain",
     name: "WoodCraft Matte Wood Grain Laminate",
     category: "laminates",
-    grade: "Premium HPL",
+    // grade: "Premium HPL",
     thickness: ["1.0mm", "1.5mm"],
     sizes: ["8×4 ft"],
     price: 1100,
@@ -425,9 +447,9 @@ export function getRelatedProducts(product: Product, limit = 4): Product[] {
     .slice(0, limit);
 }
 
-export function getAllGrades(): string[] {
-  return [...new Set(products.map((p) => p.grade))];
-}
+// export function getAllGrades(): string[] {
+//   return [...new Set(products.map((p) => p.grade))];
+// }
 
 export function getAllThicknesses(): string[] {
   return [...new Set(products.flatMap((p) => p.thickness))].sort();

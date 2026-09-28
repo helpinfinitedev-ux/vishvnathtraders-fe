@@ -5,6 +5,7 @@
 import type { Metadata } from "next";
 import { CheckCircle2, Award, Users, TreePine } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { DistributorCTABanner } from "@/components/home/DistributorCTABanner";
 import { certifications } from "@/data/siteConfig";
 
@@ -55,39 +56,48 @@ function ProcessStep({
 export default function AboutPage() {
   return (
     <>
+      {/* ── Page Banner ── */}
+      <PageBanner
+        title="About Us"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "About" },
+        ]}
+      />
+
       {/* ── Brand Story ── */}
       <section className="section-pad bg-white">
         <div className="container-site">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
             <div>
               <SectionHeading eyebrow="Our Story" title="Built from the Ground Up" />
-              <div className="space-y-4 text-[#4b5563] leading-relaxed">
-                <p>
+              <div className="space-y-4 text-[#4b5563] leading-relaxed ">
+                <p className="text-md">
                   WoodCraft Premium was founded in 1994 in Yamuna Nagar, Haryana — the heartland of India&apos;s plywood manufacturing
                   industry. What started as a single production line has grown into a state-of-the-art manufacturing facility
                   spanning over 12 acres, with an annual production capacity of 2 million square metres.
                 </p>
-                <p>
+                <p className="text-md">
                   Our founder&apos;s vision was simple but ambitious: to manufacture wood products that met international quality
                   standards while remaining accessible to India&apos;s growing construction and furniture industry. Three decades later,
                   that vision drives everything we do.
                 </p>
-                <p>
+                <p className="text-md">
                   Today, WoodCraft Premium supplies architects, interior designers, modular kitchen manufacturers, institutional
                   buyers, and a network of 500+ authorised distributors across 28 states.
                 </p>
               </div>
 
               {/* Values checklist */}
-              <ul className="mt-8 space-y-3">
+              <ul className="mt-8 space-y-4 text-md">
                 {[
                   "ISI-certified manufacturing at every product line",
                   "In-house quality testing laboratory",
                   "Responsibly sourced, FSC-certified raw materials",
                   "Zero-defect production philosophy",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm text-[#374151]">
-                    <CheckCircle2 className="w-4 h-4 text-[#c8956c] mt-0.5 shrink-0" />
+                  <li key={item} className="flex items-start gap-4 text-md text-black">
+                    <CheckCircle2 className="w-5 h-5 text-[#c8956c] mt-0.5 shrink-0" />
                     {item}
                   </li>
                 ))}

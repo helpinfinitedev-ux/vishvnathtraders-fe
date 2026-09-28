@@ -3,12 +3,26 @@
 // All TypeScript interfaces for the data layer — backend-ready shape
 // =============================================================================
 
+export interface ProductReview {
+  id: string;
+  name: string;
+  rating: number; // 1-5
+  date: string; // ISO date
+  comment: string;
+  location?: string;
+}
+
+export interface ProductFAQ {
+  question: string;
+  answer: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
   name: string;
   category: string; // matches Category.slug
-  grade: string; // e.g. "MR Grade", "BWP Grade", "Marine"
+  // grade: string; // e.g. "MR Grade", "BWP Grade", "Marine"
   thickness: string[]; // e.g. ["6mm", "9mm", "12mm", "18mm"]
   sizes: string[]; // e.g. ["8x4 ft", "7x4 ft"]
   price: number; // base price (INR)
@@ -21,6 +35,14 @@ export interface Product {
   inStock: boolean;
   tags: string[];
   createdAt: string; // ISO date
+  // ── Extended fields for PDP ──
+  useCases?: string[]; // e.g. ["Kitchen Cabinets", "Wardrobes"]
+  benefits?: { icon: string; title: string; description: string }[];
+  faqs?: ProductFAQ[];
+  warranty?: string; // e.g. "15 Years"
+  reviews?: ProductReview[];
+  brand?: string;
+  pricePerSqFt?: number;
 }
 
 export interface Category {

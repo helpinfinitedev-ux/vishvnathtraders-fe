@@ -27,10 +27,11 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "mb-10 md:mb-14",
-        centered && "text-center",
+        "mb-14 md:mb-20 flex flex-col",
+        centered ? "items-center text-center" : "items-start text-left",
         className
       )}
+      style={{ marginBottom: '4rem' }}
     >
       {eyebrow && (
         <p
@@ -44,7 +45,7 @@ export function SectionHeading({
       )}
 
       {/* Title with accent bar */}
-      <div className={cn("relative inline-block", centered && "mx-auto")}>
+      <div className={cn("relative flex flex-col", centered ? "items-center text-center" : "items-start text-left")}>
         <h2
           id={id}
           className={cn(
@@ -58,7 +59,7 @@ export function SectionHeading({
         <span
           className={cn(
             "block mt-3 h-[3px] w-14 rounded-full bg-gradient-to-r from-[#c8956c] to-transparent",
-            centered && "mx-auto"
+            centered ? "mx-auto" : "ml-0"
           )}
           aria-hidden="true"
         />
@@ -67,10 +68,10 @@ export function SectionHeading({
       {subtitle && (
         <p
           className={cn(
-            "mt-4 max-w-2xl text-base md:text-lg leading-relaxed",
-            centered && "mx-auto",
+            "mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-balance ",
             light ? "text-white/70" : "text-[#6b7280]"
           )}
+          style={{ marginTop: '1.5rem' }}
         >
           {subtitle}
         </p>

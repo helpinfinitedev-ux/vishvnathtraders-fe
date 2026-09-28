@@ -81,14 +81,14 @@ export default function DistributorPage() {
             title="Distributor Benefits"
             centered
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-0" >
             {BENEFITS.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-[#fafaf8] p-6 rounded-[18px] border border-[#f0e8de] text-center">
+              <div key={title} className="bg-[#fafaf8] p-6 rounded-[18px] border border-[#f0e8de] text-center" style={{ paddingTop: "1.55rem", paddingBottom: "1.55rem", paddingRight: "1.55rem", paddingLeft: "1.55rem" }}>
                 <div className="w-12 h-12 rounded-[12px] bg-[#f2e8dc] flex items-center justify-center mx-auto mb-4">
                   <Icon className="w-5.5 h-5.5 text-[#c8956c]" />
                 </div>
                 <h3 className="font-serif text-base font-semibold text-[#1c1c1c] mb-1.5">{title}</h3>
-                <p className="text-sm text-[#6b7280] leading-relaxed">{desc}</p>
+                <p className="text-lg text-[#6b7280] leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -98,52 +98,64 @@ export default function DistributorPage() {
       {/* Enquiry Form */}
       <section className="section-pad bg-[#fafaf8]" id="enquiry-form">
         <div className="container-site">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_560px] gap-12 lg:gap-16 items-start">
             {/* Left — info */}
-            <div>
-              <SectionHeading
-                eyebrow="Apply Now"
-                title="Send Us Your Enquiry"
-                subtitle="Fill in the form and our partnership team will get back to you within 48 hours."
-              />
+            <div className="flex flex-col sticky top-24" style={{ marginTop: "4px", marginLeft: "1rem" }}>
+              <div className="mb-2">
+                <span className="text-sm font-bold tracking-widest text-[#c8956c] uppercase mb-3 block">
+                  Apply Now
+                </span>
+                <h2 className="font-serif text-4xl lg:text-5xl font-semibold text-[#1c1c1c] leading-tight mb-4">
+                  Send Us Your Enquiry
+                </h2>
+                <p className="text-lg lg:text-xl text-[#6b7280] leading-relaxed max-w-lg" style={{ marginTop: "4px" }} >
+                  Join our growing network of premium plywood and veneer distributors. Fill in the form and our partnership team will get back to you within 48 hours.
+                </p>
+              </div>
 
-              <div className="space-y-4 mt-6">
-                {[
-                  "Minimum investment requirements shared on request",
-                  "Territory mapping and market analysis provided",
-                  "Complete onboarding training and product certification",
-                  "Point-of-sale marketing materials and samples provided",
-                  "Quarterly performance-linked incentives",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3 text-sm text-[#4b5563]">
-                    <CheckCircle2 className="w-4 h-4 text-[#c8956c] mt-0.5 shrink-0" />
-                    {item}
-                  </div>
-                ))}
+              <div className="mt-10 bg-white rounded-[24px] p-8 lg:p-10 border border-[#f0e8de] shadow-[0_8px_30px_rgba(28,28,28,0.04)]" style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+                <h3 className="font-serif text-2xl font-semibold text-[#1c1c1c] mb-8" style={{ marginBottom: "2rem", marginLeft: "2rem", marginTop: "2rem" }}>What you get as a partner:</h3>
+                <div className="flex flex-col gap-6 " style={{ marginLeft: "2rem", marginBottom: "2rem" }}>
+                  {[
+                    "Minimum investment requirements shared on request",
+                    "Territory mapping and market analysis provided",
+                    "Complete onboarding training and product certification",
+                    "Point-of-sale marketing materials and samples provided",
+                    "Quarterly performance-linked incentives",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-5 text-lg text-[#4b5563]">
+                      <div className="w-8 h-8 rounded-full bg-[#f2e8dc] flex items-center justify-center shrink-0 mt-0.5">
+                        <CheckCircle2 className="w-5 h-5 text-[#c8956c]" />
+                      </div>
+                      <span className="leading-relaxed font-medium" >{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* Right — form */}
-            <div className="bg-white rounded-[24px] border border-[#f0e8de] p-7 md:p-9 shadow-[0_4px_24px_rgba(28,28,28,0.07)]">
+            <div className="bg-white rounded-[24px] border border-[#f0e8de] shadow-[0_4px_24px_rgba(28,28,28,0.07)]" style={{ padding: "2.5rem" }}>
               {submitted ? (
-                <div className="flex flex-col items-center text-center py-8 gap-4">
-                  <div className="w-16 h-16 rounded-full bg-[#f2e8dc] flex items-center justify-center">
-                    <CheckCircle2 className="w-8 h-8 text-[#c8956c]" />
+                <div className="flex flex-col items-center text-center py-10 gap-4">
+                  <div className="w-20 h-20 rounded-full bg-[#f2e8dc] flex items-center justify-center">
+                    <CheckCircle2 className="w-10 h-10 text-[#c8956c]" />
                   </div>
-                  <h2 className="font-serif text-xl font-semibold text-[#1c1c1c]">Enquiry Received!</h2>
-                  <p className="text-sm text-[#6b7280] leading-relaxed max-w-xs">
+                  <h2 className="font-serif text-2xl font-semibold text-[#1c1c1c]">Enquiry Received!</h2>
+                  <p className="text-base text-[#6b7280] leading-relaxed max-w-sm">
                     Thank you, <strong>{form.name}</strong>. Our partnership team will contact you within 48 hours.
                   </p>
-                  <Button variant="wood" size="md" onClick={() => setSubmitted(false)}>
+                  <Button variant="wood" size="lg" onClick={() => setSubmitted(false)} className="mt-2">
                     Submit Another Enquiry
                   </Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate aria-label="Distributor enquiry form">
-                  <h2 className="font-serif text-xl font-semibold text-[#1c1c1c] mb-6">Distributor / Dealer Enquiry</h2>
+                <form onSubmit={handleSubmit} noValidate aria-label="Distributor enquiry form" className="flex flex-col" style={{ gap: "1rem" }}>
+                  <h2 className="font-serif text-2xl font-semibold text-[#1c1c1c] mb-2">Distributor / Dealer Enquiry</h2>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "1rem" }}>
                     <FormField
+                      inputSize="lg"
                       label="Full Name"
                       id="name"
                       type="text"
@@ -153,6 +165,7 @@ export default function DistributorPage() {
                       onChange={(e) => setField("name", (e.target as HTMLInputElement).value)}
                     />
                     <FormField
+                      inputSize="lg"
                       label="Business Name"
                       id="businessName"
                       type="text"
@@ -161,7 +174,11 @@ export default function DistributorPage() {
                       value={form.businessName}
                       onChange={(e) => setField("businessName", (e.target as HTMLInputElement).value)}
                     />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "1rem" }}>
                     <FormField
+                      inputSize="lg"
                       label="Phone Number"
                       id="phone"
                       type="tel"
@@ -171,6 +188,7 @@ export default function DistributorPage() {
                       onChange={(e) => setField("phone", (e.target as HTMLInputElement).value)}
                     />
                     <FormField
+                      inputSize="lg"
                       label="Email Address"
                       id="email"
                       type="email"
@@ -179,7 +197,11 @@ export default function DistributorPage() {
                       value={form.email}
                       onChange={(e) => setField("email", (e.target as HTMLInputElement).value)}
                     />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: "1.5rem" }}>
                     <FormField
+                      inputSize="lg"
                       label="City"
                       id="city"
                       type="text"
@@ -189,6 +211,7 @@ export default function DistributorPage() {
                       onChange={(e) => setField("city", (e.target as HTMLInputElement).value)}
                     />
                     <FormField
+                      inputSize="lg"
                       as="select"
                       label="State"
                       id="state"
@@ -201,8 +224,9 @@ export default function DistributorPage() {
                     </FormField>
                   </div>
 
-                  <div className="mb-4">
+                  <div>
                     <FormField
+                      inputSize="lg"
                       as="select"
                       label="Enquiry Type"
                       id="enquiryType"
@@ -217,23 +241,24 @@ export default function DistributorPage() {
                     </FormField>
                   </div>
 
-                  <div className="mb-6">
+                  <div>
                     <FormField
+                      inputSize="lg"
                       as="textarea"
                       label="Message"
                       id="message"
                       placeholder="Tell us about your business, the products you're interested in, and your target area…"
-                      rows={4}
+                      rows={2}
                       value={form.message}
                       onChange={(e) => setField("message", (e.target as HTMLTextAreaElement).value)}
                     />
                   </div>
 
-                  <Button type="submit" variant="wood" size="lg" className="w-full" loading={loading}>
+                  <Button type="submit" variant="wood" size="lg" className="w-full" style={{ padding: "1.25rem", fontSize: "1.1rem", marginTop: "0.5rem" }} loading={loading}>
                     Submit Enquiry
                   </Button>
 
-                  <p className="text-xs text-[#9ca3af] text-center mt-4">
+                  <p className="text-sm text-[#9ca3af] text-center mt-2">
                     We respect your privacy. Your information will not be shared with third parties.
                   </p>
                 </form>

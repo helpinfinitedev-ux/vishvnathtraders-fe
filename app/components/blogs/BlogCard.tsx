@@ -18,10 +18,10 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
   return (
     <article
       className={cn(
-        "group flex flex-col bg-white rounded-[18px] overflow-hidden border border-[#f0e8de]",
+        "group flex flex-col h-full bg-white rounded-[20px] overflow-hidden border border-[#f0e8de]",
         "shadow-[0_2px_12px_rgba(28,28,28,0.05)]",
-        "hover:shadow-[0_8px_28px_rgba(200,149,108,0.14)]",
-        "hover:-translate-y-1 transition-all duration-300",
+        "hover:shadow-[0_6px_24px_rgba(200,149,108,0.12)]",
+        "hover:-translate-y-0.5 transition-all duration-300",
         className
       )}
     >
@@ -30,7 +30,7 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
         <div
           className={cn(
             "relative overflow-hidden bg-gradient-to-br from-[#2d2520] to-[#1c1c1c]",
-            featured ? "h-64 md:h-72" : "h-48"
+            featured ? "h-[300px] md:h-[400px] lg:h-[480px]" : "aspect-[16/10]"
           )}
         >
           {/* Wood-grain decorative overlay */}
@@ -52,16 +52,21 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
           </svg>
 
           {/* Category pill overlay */}
-          <div className="absolute bottom-4 left-4">
-            <Badge variant="wood">{post.category}</Badge>
+          <div className="absolute bottom-6 left-6">
+            <div className="bg-[#c8956c] text-white px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">
+              {post.category}
+            </div>
           </div>
         </div>
       </Link>
 
       {/* Content */}
-      <div className="flex flex-col flex-1 p-5 md:p-6">
+      <div className={cn(
+        "flex flex-col flex-1",
+        featured ? "p-6 sm:p-8" : "p-5 sm:p-6"
+      )}>
         {/* Meta */}
-        <div className="flex items-center gap-4 mb-3">
+        <div className={cn("flex items-center gap-4", featured ? "mb-3" : "mb-2.5")}>
           <div className="flex items-center gap-1.5 text-xs text-[#9ca3af]">
             <Calendar className="w-3 h-3" />
             {formatDate(post.date)}
@@ -76,9 +81,9 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
         <Link href={`/blogs/${post.slug}`}>
           <h3
             className={cn(
-              "font-serif font-semibold text-[#1c1c1c] leading-snug mb-2.5",
+              "font-serif font-semibold text-[#1c1c1c] leading-snug line-clamp-2",
               "hover:text-[#c8956c] transition-colors duration-200",
-              featured ? "text-xl md:text-2xl" : "text-base md:text-lg"
+              featured ? "text-2xl md:text-3xl lg:text-4xl mb-3" : "text-lg md:text-xl mb-2"
             )}
           >
             {post.title}
@@ -86,13 +91,13 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
         </Link>
 
         {/* Excerpt */}
-        <p className="text-sm text-[#6b7280] leading-relaxed mb-5 flex-1">
-          {truncate(post.excerpt, featured ? 30 : 20)}
+        <p className="text-sm text-[#6b7280] leading-relaxed mb-5 line-clamp-3">
+          {post.excerpt}
         </p>
 
         {/* Author + Read more */}
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#f5f0ea]">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c8956c] to-[#a8744e] flex items-center justify-center shrink-0">
               <span className="text-white text-[10px] font-semibold">{post.author.charAt(0)}</span>
             </div>

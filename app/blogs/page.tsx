@@ -6,7 +6,7 @@
 
 import { useState, useMemo } from "react";
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { PageBanner } from "@/components/ui/PageBanner";
 import { BlogCard } from "@/components/blogs/BlogCard";
 import { blogPosts, getAllBlogCategories } from "@/data/blogs";
 import { cn } from "@/lib/utils";
@@ -27,68 +27,64 @@ export default function BlogsPage() {
   const [featuredPost, ...restPosts] = filtered;
 
   return (
-    <div className="bg-[#fafaf8] min-h-screen">
-      {/* Page Header */}
-      <div className="bg-[#1c1c1c] relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a18] to-[#2d2520]" aria-hidden="true" />
-        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-[#c8956c]/8 rounded-full blur-[100px]" aria-hidden="true" />
-        <div className="container-site relative z-10 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#c8956c] mb-4">Knowledge Hub</p>
-          <h1 className="font-serif text-white font-semibold leading-tight mb-4" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>
-            Industry Guides & Insights
-          </h1>
-          <p className="text-white/60 max-w-xl mx-auto text-lg leading-relaxed">
-            Expert guides on plywood grades, veneer selection, quality standards, and sustainable building materials.
-          </p>
-        </div>
-      </div>
+    <>
+      {/* ── Page Banner ── */}
+      <PageBanner
+        title="Blog"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Blog" },
+        ]}
+      />
 
-      <div className="container-site py-10 md:py-16">
-        {/* Category filter chips */}
-        <div className="flex flex-wrap gap-2 mb-10" role="tablist" aria-label="Filter by blog category">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              role="tab"
-              aria-selected={activeCategory === cat}
-              onClick={() => setActiveCategory(cat)}
-              className={cn(
-                "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                activeCategory === cat
-                  ? "bg-[#c8956c] text-white"
-                  : "bg-white border border-[#e8ddd4] text-[#6b7280] hover:border-[#c8956c] hover:text-[#c8956c]"
-              )}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {filtered.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-4xl mb-4">📰</p>
-            <p className="text-[#6b7280]">No posts in this category yet.</p>
+      <section className="section-pad bg-[#fafaf8] min-h-screen">
+        <div className="container-site">
+          {/* Category filter chips */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 items-center mb-12 md:mb-16" style={{ marginBottom: "40px" }} role="tablist" aria-label="Filter by blog category">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                role="tab"
+                aria-selected={activeCategory === cat}
+                onClick={() => setActiveCategory(cat)}
+                className={cn(
+                  "px-10 py-4 md:px-12 md:py-4 rounded-full text-sm sm:text-base font-bold tracking-widest uppercase transition-all duration-300 relative text-center",
+                  activeCategory === cat
+                    ? "bg-gradient-to-b from-[#e3b895] to-[#a8744e] text-white shadow-[0_8px_16px_-4px_rgba(200,149,108,0.6),inset_0_3px_4px_rgba(255,255,255,0.4),inset_0_-3px_4px_rgba(0,0,0,0.2)] border border-[#905e3b] scale-[1.02]"
+                    : "bg-gradient-to-b from-[#ffffff] to-[#e8ddd4] text-[#6b7280] shadow-[0_6px_12px_-4px_rgba(0,0,0,0.08),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)] border border-[#d0c5bc] hover:text-[#a8744e] hover:-translate-y-0.5 hover:shadow-[0_8px_16px_-4px_rgba(200,149,108,0.25),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)]"
+                )}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
-        ) : (
-          <>
-            {/* Featured post (first) */}
-            {featuredPost && (
-              <div className="mb-8">
-                <BlogCard post={featuredPost} featured />
-              </div>
-            )}
 
-            {/* Rest of posts grid */}
-            {restPosts.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {restPosts.map((post) => (
-                  <BlogCard key={post.id} post={post} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    </div>
+          {filtered.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-[20px] border border-[#f0e8de]">
+              <p className="text-4xl mb-4">📰</p>
+              <p className="text-[#6b7280]">No posts in this category yet.</p>
+            </div>
+          ) : (
+            <>
+              {/* Featured post (first) */}
+              {featuredPost && (
+                <div className="mb-10 md:mb-12">
+                  <BlogCard post={featuredPost} featured />
+                </div>
+              )}
+
+              {/* Rest of posts grid */}
+              {restPosts.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
+                  {restPosts.map((post) => (
+                    <BlogCard key={post.id} post={post} />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+    </>
   );
 }
