@@ -7,7 +7,6 @@ import Link from "next/link";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Badge } from "@/components/ui/Badge";
-import { BlogCard } from "@/components/blogs/BlogCard";
 import { getBlogBySlug, getRecentBlogs } from "@/data/blogs";
 import { formatDate } from "@/lib/utils";
 
@@ -64,16 +63,18 @@ export default async function BlogDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="container-site py-10 md:py-16">
+      {/* Body */}
+      <div className="container-site py-12 md:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 md:gap-16">
-          {/* ── Article body ── */}
+
+          {/* Article body */}
           <article>
             {/* Excerpt */}
             <p className="text-lg text-[#4b5563] leading-relaxed border-l-4 border-[#c8956c] pl-5 mb-8 italic">
               {post.excerpt}
             </p>
 
-            {/* Content — HTML string rendered safely */}
+            {/* Content */}
             <div
               className="prose-woodcraft"
               dangerouslySetInnerHTML={{ __html: post.content }}
@@ -87,7 +88,7 @@ export default async function BlogDetailPage({ params }: Props) {
             </div>
 
             {/* Author card */}
-            <div className="mt-8 p-5 bg-[#f2e8dc] rounded-[16px] flex items-start gap-4">
+            <div className="bg-[#f2e8dc] rounded-[16px] flex items-start gap-4" style={{ marginTop: '32px', padding: '24px' }}>
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c8956c] to-[#a8744e] flex items-center justify-center shrink-0">
                 <span className="text-white font-semibold text-lg">{post.author.charAt(0)}</span>
               </div>
@@ -101,7 +102,7 @@ export default async function BlogDetailPage({ params }: Props) {
             </div>
 
             {/* Navigation */}
-            <div className="flex gap-4 mt-8">
+            <div className="flex gap-4" style={{ marginTop: '40px', paddingTop: '24px', borderTop: '1px solid #f0e8de', paddingBottom: '16px' }}>
               <Link href="/blogs" className="flex items-center gap-2 text-sm text-[#6b7280] hover:text-[#c8956c] transition-colors">
                 <ArrowLeft className="w-4 h-4" />
                 Back to Blogs
@@ -109,10 +110,10 @@ export default async function BlogDetailPage({ params }: Props) {
             </div>
           </article>
 
-          {/* ── Sidebar ── */}
-          <aside className="lg:sticky lg:top-24 self-start space-y-8">
+          {/* Sidebar */}
+          <aside className="lg:sticky lg:top-24 self-start" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {/* Recent posts */}
-            <div className="bg-white rounded-[18px] border border-[#f0e8de] p-6">
+            <div className="bg-white rounded-[18px] border border-[#f0e8de]" style={{ padding: '28px' }}>
               <h2 className="font-serif text-base font-semibold text-[#1c1c1c] mb-5">Recent Articles</h2>
               <div className="flex flex-col gap-4">
                 {recent.map((b) => (
@@ -130,7 +131,7 @@ export default async function BlogDetailPage({ params }: Props) {
             </div>
 
             {/* CTA sidebar card */}
-            <div className="bg-gradient-to-br from-[#7c4a2a] to-[#c8956c] rounded-[18px] p-6 text-white">
+            <div className="bg-gradient-to-br from-[#7c4a2a] to-[#c8956c] rounded-[18px] text-white" style={{ padding: '28px' }}>
               <h3 className="font-serif text-lg font-semibold mb-2">Need Product Advice?</h3>
               <p className="text-sm text-white/75 leading-relaxed mb-4">
                 Our technical team can help you choose the right plywood grade for your project.
@@ -145,6 +146,9 @@ export default async function BlogDetailPage({ params }: Props) {
           </aside>
         </div>
       </div>
+
+      {/* Bottom spacer before footer */}
+      <div style={{ height: '48px' }} />
     </div>
   );
 }

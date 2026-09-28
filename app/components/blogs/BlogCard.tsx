@@ -4,8 +4,7 @@
 
 import Link from "next/link";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
-import { formatDate, truncate, cn } from "@/lib/utils";
+import { formatDate, cn } from "@/lib/utils";
 import type { BlogPost } from "@/types";
 
 interface BlogCardProps {
@@ -25,7 +24,7 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
         className
       )}
     >
-      {/* Cover image placeholder */}
+      {/* Cover image */}
       <Link href={`/blogs/${post.slug}`} aria-label={`Read: ${post.title}`}>
         <div
           className={cn(
@@ -51,20 +50,20 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
             ))}
           </svg>
 
-          {/* Category pill overlay */}
-          <div className="absolute bottom-6 left-6">
-            <div className="bg-[#c8956c] text-white px-4 py-2 rounded-full text-xs sm:text-sm font-medium shadow-md">
+          {/* Category pill */}
+          <div className="absolute bottom-4 left-5">
+            <div className="bg-[#c8956c] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-md">
               {post.category}
             </div>
           </div>
         </div>
       </Link>
 
-      {/* Content */}
-      <div className={cn(
-        "flex flex-col flex-1",
-        featured ? "p-6 sm:p-8" : "p-5 sm:p-6"
-      )}>
+      {/* Content — padded so nothing touches card edges */}
+      <div
+        className="flex flex-col flex-1"
+        style={{ padding: featured ? '32px' : '24px' }}
+      >
         {/* Meta */}
         <div className={cn("flex items-center gap-4", featured ? "mb-3" : "mb-2.5")}>
           <div className="flex items-center gap-1.5 text-xs text-[#9ca3af]">

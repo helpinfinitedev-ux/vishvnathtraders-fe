@@ -40,7 +40,12 @@ export default function BlogsPage() {
       <section className="section-pad bg-[#fafaf8] min-h-screen">
         <div className="container-site">
           {/* Category filter chips */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6 items-center mb-12 md:mb-16" style={{ marginBottom: "40px" }} role="tablist" aria-label="Filter by blog category">
+          <div
+            className="flex flex-wrap justify-center gap-3 md:gap-4 items-center"
+            style={{ marginBottom: '56px' }}
+            role="tablist"
+            aria-label="Filter by blog category"
+          >
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -48,7 +53,7 @@ export default function BlogsPage() {
                 aria-selected={activeCategory === cat}
                 onClick={() => setActiveCategory(cat)}
                 className={cn(
-                  "px-10 py-4 md:px-12 md:py-4 rounded-full text-sm sm:text-base font-bold tracking-widest uppercase transition-all duration-300 relative text-center",
+                  "px-8 py-3 md:px-10 rounded-full text-sm sm:text-base font-bold tracking-widest uppercase transition-all duration-300 relative text-center",
                   activeCategory === cat
                     ? "bg-gradient-to-b from-[#e3b895] to-[#a8744e] text-white shadow-[0_8px_16px_-4px_rgba(200,149,108,0.6),inset_0_3px_4px_rgba(255,255,255,0.4),inset_0_-3px_4px_rgba(0,0,0,0.2)] border border-[#905e3b] scale-[1.02]"
                     : "bg-gradient-to-b from-[#ffffff] to-[#e8ddd4] text-[#6b7280] shadow-[0_6px_12px_-4px_rgba(0,0,0,0.08),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)] border border-[#d0c5bc] hover:text-[#a8744e] hover:-translate-y-0.5 hover:shadow-[0_8px_16px_-4px_rgba(200,149,108,0.25),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)]"
