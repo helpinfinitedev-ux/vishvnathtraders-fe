@@ -93,7 +93,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
       });
       showToast(`Added "${item.name}" to cart`);
-      setIsCartOpen(true); // Open drawer on add
     },
     [showToast]
   );
