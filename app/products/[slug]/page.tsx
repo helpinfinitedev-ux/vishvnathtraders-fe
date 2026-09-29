@@ -36,6 +36,7 @@ import { StickyActionBar } from "@/components/products/StickyActionBar";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { getCategoryBySlug } from "@/data/categories";
 import { SITE_CONFIG } from "@/data/siteConfig";
+import { useCart } from "@/context/CartContext";
 
 // ── Icon map for benefits ─────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -72,6 +73,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const [selectedThickness, setSelectedThickness] = useState(product.thickness[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   const category = getCategoryBySlug(product.category);
   const related = getRelatedProducts(product);
@@ -227,9 +229,19 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                   className="flex-1 flex items-center justify-center gap-2"
                   disabled={!product.inStock}
                   style={{ padding: "14px 24px", minHeight: "48px" }}
+                  onClick={() => addToCart({
+                    productId: product.slug,
+                    name: product.name,
+                    price: product.price,
+                    mrp: product.mrp,
+                    image: product.images[0] || "",
+                    quantity,
+                    thickness: selectedThickness,
+                    size: selectedSize
+                  })}
                 >
                   <ShoppingCart className="w-4 h-4" />
-                  {product.inStock ? "Get Best Price" : "Out of Stock"}
+                  {product.inStock ? "Add to Cart" : "Out of Stock"}
                 </Button>
                 <Button
                   variant="outline"
@@ -395,9 +407,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ── 11. Mobile Sticky Action Bar ── */}
       <StickyActionBar
+        productId={product.slug}
         productName={product.name}
+        price={product.price}
+        mrp={product.mrp}
+        image={product.images[0] || ""}
         selectedThickness={selectedThickness}
         selectedSize={selectedSize}
         inStock={product.inStock}

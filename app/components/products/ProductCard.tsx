@@ -3,10 +3,11 @@
 // =============================================================================
 
 import Link from "next/link";
-import { Package, ExternalLink } from "lucide-react";
+import { Package, ExternalLink, ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { cn, formatPrice, getDiscount } from "@/lib/utils";
 import type { Product } from "@/types";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
@@ -21,6 +22,23 @@ export function ProductCard({ product, compact = false, className }: ProductCard
   //   : product.grade.toLowerCase().includes("fr")
   //     ? "warning"
   //     : "default";
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!product.inStock) return;
+    
+    addToCart({
+      productId: product.slug,
+      name: product.name,
+      price: product.price,
+      mrp: product.mrp,
+      image: product.images[0] || "",
+      quantity: 1,
+      thickness: product.thickness?.[0],
+      size: product.sizes?.[0],
+    });
+  };
 
   return (
     <article
@@ -146,29 +164,40 @@ export function ProductCard({ product, compact = false, className }: ProductCard
             )}
           </div>
 
-          {/* View button */}
-          <Link
-            href={`/products/${product.slug}`}
-            className={cn(
-              "shrink-0 inline-flex items-center justify-center gap-1.5 rounded-full",
-              "font-[family-name:var(--font-heading)] uppercase font-bold",
-              "tracking-[0.09em] transition-all duration-200 ease-out",
-              "text-[0.85rem]",
-              product.inStock
-                ? "bg-[#c8956c] text-white shadow-[0_4px_14px_-2px_rgba(200,149,108,0.35)] hover:bg-[#a8744e] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_-4px_rgba(200,149,108,0.45)]"
-                : "bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed pointer-events-none"
-            )}
-            style={{ padding: "0.55rem 1.4rem" }}
-            aria-disabled={!product.inStock}
-          >
+          {/* Action buttons */}
+          <div className="flex items-center gap-2 shrink-0">
             {product.inStock ? (
-              <>
-                VIEW <ExternalLink size={14} strokeWidth={2.5} />
-              </>
-            ) : (
-              "Sold Out"
-            )}
-          </Link>
+              <button
+                onClick={handleAddToCart}
+                className={cn(
+                  "inline-flex items-center justify-center rounded-full",
+                  "bg-[#c8956c] text-white hover:bg-[#a8744e] transition-colors",
+                  "shadow-[0_4px_14px_-2px_rgba(200,149,108,0.35)]"
+                )}
+                style={{ width: "36px", height: "36px" }}
+                aria-label={`Add ${product.name} to cart`}
+              >
+                <ShoppingCart size={16} strokeWidth={2.5} />
+              </button>
+            ) : null}
+            
+            <Link
+              href={`/products/${product.slug}`}
+              className={cn(
+                "inline-flex items-center justify-center gap-1.5 rounded-full",
+                "font-[family-name:var(--font-heading)] uppercase font-bold",
+                "tracking-[0.09em] transition-all duration-200 ease-out",
+                "text-[0.85rem]",
+                product.inStock
+                  ? "bg-[#f9f3ec] text-[#c8956c] hover:bg-[#c8956c] hover:text-white"
+                  : "bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed pointer-events-none"
+              )}
+              style={{ padding: "0.55rem 1.1rem" }}
+              aria-disabled={!product.inStock}
+            >
+              {product.inStock ? "VIEW" : "Sold Out"}
+            </Link>
+          </div>
         </div>
       </div>
     </article>
