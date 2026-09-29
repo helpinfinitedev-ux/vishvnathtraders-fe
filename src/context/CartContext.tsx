@@ -1,5 +1,11 @@
 "use client";
 
+// =============================================================================
+// CartContext — global cart state with localStorage persistence
+// Provides: add, remove, updateQuantity, clearCart, cartCount, cartTotal
+// Toast notification on add. Drawer open/close state.
+// =============================================================================
+
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 
 export interface CartItem {
@@ -32,6 +38,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastVisible, setToastVisible] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -56,9 +63,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
+    setToastVisible(true);
     setTimeout(() => {
-      setToastMessage(null);
-    }, 3000);
+      setToastVisible(false);
+      // Remove message after fade-out animation completes
+      setTimeout(() => setToastMessage(null), 300);
+    }, 2500);
   }, []);
 
   const addToCart = useCallback(
@@ -72,14 +82,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (existingItemIndex >= 0) {
           // Increase quantity if item exists
           const newItems = [...prev];
-          newItems[existingItemIndex].quantity += item.quantity;
+          newItems[existingItemIndex] = {
+            ...newItems[existingItemIndex],
+            quantity: newItems[existingItemIndex].quantity + item.quantity,
+          };
           return newItems;
         } else {
           // Add new item
           return [...prev, { ...item, cartItemId }];
         }
       });
-      showToast(`Added ${item.name} to cart`);
+      showToast(`Added "${item.name}" to cart`);
       setIsCartOpen(true); // Open drawer on add
     },
     [showToast]
@@ -118,10 +131,36 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
-      {/* Toast Notification */}
+      {/* Toast Notification — uses CSS keyframe for smooth slide-up + fade */}
       {toastMessage && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[100] bg-[#1c1c1c] text-white px-6 py-3 rounded-full shadow-xl animate-in slide-in-from-bottom-5 fade-in duration-300">
-          <p className="text-sm font-medium">{toastMessage}</p>
+        <div
+          style={{
+            position: "fixed",
+            bottom: "var(--space-5)",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 200,
+            background: "var(--color-primary)",
+            color: "#fff",
+            padding: "var(--space-3) var(--space-6)",
+            borderRadius: "var(--radius-full)",
+            boxShadow: "var(--shadow-lg)",
+            fontFamily: "var(--font-body)",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            whiteSpace: "nowrap",
+            pointerEvents: "none",
+            opacity: toastVisible ? 1 : 0,
+            transition: "opacity 0.3s ease, transform 0.3s ease",
+            animation: toastVisible ? "fadeUp 0.3s ease-out" : "none",
+          }}
+          role="status"
+          aria-live="polite"
+        >
+          <p style={{ margin: 0, display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+            <span style={{ color: "var(--color-accent)" }}>✓</span>
+            {toastMessage}
+          </p>
         </div>
       )}
     </CartContext.Provider>
