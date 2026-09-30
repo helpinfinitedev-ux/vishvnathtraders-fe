@@ -20,8 +20,8 @@ export default function HomePage() {
   return (
     <>
       <HeroBanner />
-      <FeaturedProducts />
       <CategoryHighlights />
+      <FeaturedProducts />
       <WhyChooseUs />
       <Testimonials />
       <DistributorCTABanner />

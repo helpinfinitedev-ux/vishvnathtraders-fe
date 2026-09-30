@@ -345,11 +345,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       {/* Already shown inline above via TrustBadges */}
 
       {/* ── 6. Bulk Enquiry + Brochure ── */}
-      <section className="pdp-section bg-white">
+      {/* <section className="pdp-section bg-white">
         <div className="container-site" style={{ maxWidth: "720px" }}>
           <EnquiryBox productName={product.name} />
         </div>
-      </section>
+      </section> */}
 
       {/* ── 7. Reviews ── */}
       <section className="pdp-section">

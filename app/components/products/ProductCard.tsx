@@ -1,10 +1,16 @@
 // =============================================================================
-// ProductCard — vertical card with proper padding and contained layout
+// ProductCard — vertical card
+//  • Discount tag: white pill with percent icon (top-left of image)
+//  • Bottom section: price row + full-width "View details" button
 // No cart functionality here — Add to Cart lives on the product detail page
+//
+// NOTE: padding / margin are set with inline styles on purpose. On your site
+// Tailwind padding & margin classes were not applying (tags had no padding,
+// text touched the divider), so inline styles guarantee the spacing.
 // =============================================================================
 
 import Link from "next/link";
-import { Package } from "lucide-react";
+import { BadgePercent, Package } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { cn, formatPrice, getDiscount } from "@/lib/utils";
 import type { Product } from "@/types";
@@ -31,8 +37,8 @@ export function ProductCard({ product, compact = false, className }: ProductCard
         className
       )}
     >
-      {/* ── IMAGE PANEL (Contained with inner margin/rounding) ── */}
-      <div className="p-3 pb-0">
+      {/* ── IMAGE PANEL ── */}
+      <div style={{ padding: "0.75rem 0.75rem 0 0.75rem" }}>
         <Link
           href={`/products/${product.slug}`}
           aria-label={`View ${product.name}`}
@@ -74,14 +80,20 @@ export function ProductCard({ product, compact = false, className }: ProductCard
           {/* Hover gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-          {/* Discount badge — top left */}
+          {/* Discount tag — white pill with icon (top left) */}
           {discount > 0 && product.inStock && (
-            <div className="absolute top-3 left-3 z-10">
-              <Badge variant="wood">{discount}% OFF</Badge>
+            <div className="absolute z-10" style={{ top: "0.75rem", left: "0.75rem" }}>
+              <span
+                className="inline-flex items-center rounded-full bg-white text-[#7a4a25] font-semibold text-[13px] leading-none whitespace-nowrap shadow-[0_2px_8px_rgba(74,55,40,0.12)]"
+                style={{ padding: "0.45rem 0.8rem 0.45rem 0.6rem", gap: "0.35rem" }}
+              >
+                <BadgePercent className="w-4 h-4" strokeWidth={2} aria-hidden="true" />
+                {discount}% OFF
+              </span>
             </div>
           )}
           {!product.inStock && (
-            <div className="absolute top-3 left-3 z-10">
+            <div className="absolute z-10" style={{ top: "0.75rem", left: "0.75rem" }}>
               <Badge variant="warning">Out of Stock</Badge>
             </div>
           )}
@@ -92,7 +104,10 @@ export function ProductCard({ product, compact = false, className }: ProductCard
       <div className="flex flex-col flex-1" style={{ padding: "1rem 1.25rem 1.25rem 1.25rem" }}>
         {/* Category */}
         {product.category && (
-          <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#c8956c] mb-1.5">
+          <p
+            className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#c8956c]"
+            style={{ marginBottom: "0.35rem" }}
+          >
             {product.category}
           </p>
         )}
@@ -101,10 +116,11 @@ export function ProductCard({ product, compact = false, className }: ProductCard
         <Link href={`/products/${product.slug}`}>
           <h3
             className={cn(
-              "font-serif font-semibold text-[#1c1c1c] leading-snug mb-2",
+              "font-serif font-semibold text-[#1c1c1c] leading-snug",
               "hover:text-[#c8956c] transition-colors duration-200",
               compact ? "text-sm line-clamp-1" : "text-[1.05rem] line-clamp-2"
             )}
+            style={{ marginBottom: "0.5rem" }}
           >
             {product.name}
           </h3>
@@ -112,42 +128,51 @@ export function ProductCard({ product, compact = false, className }: ProductCard
 
         {/* Short description */}
         {!compact && (
-          <p className="text-xs md:text-sm text-[#6b7280] leading-relaxed line-clamp-2 mb-4">
+          <p
+            className="text-xs md:text-sm text-[#6b7280] leading-relaxed line-clamp-2"
+            style={{ marginBottom: "1.25rem" }}
+          >
             {product.shortDescription}
           </p>
         )}
 
-        {/* ── Price + View Row ── */}
-        <div className="mt-auto flex items-center justify-between gap-3 pt-3.5 border-t border-[#f5ede4]">
-          {/* Price block */}
-          <div className="min-w-0">
-            <p className="font-bold text-[#1c1c1c] text-lg leading-none">
+        {/* ── Price + full-width button ── */}
+        <div
+          className="mt-auto border-t border-[#f5ede4]"
+          style={{ paddingTop: "1rem" }}
+        >
+          {/* Price row: current price, per-sheet, old price on one line */}
+          <div className="flex items-baseline flex-wrap" style={{ columnGap: "0.5rem" }}>
+            <p className="font-bold text-[#1c1c1c] text-xl leading-none">
               {formatPrice(product.price)}
-              <span className="text-[10px] text-[#9ca3af] font-normal ml-1">/sheet</span>
+              <span
+                className="text-[11px] text-[#9ca3af] font-normal"
+                style={{ marginLeft: "0.25rem" }}
+              >
+                /sheet
+              </span>
             </p>
             {product.mrp > product.price && (
-              <p className="text-xs text-[#9ca3af] line-through mt-1">
+              <p className="text-sm text-[#9ca3af] line-through leading-none">
                 {formatPrice(product.mrp)}
               </p>
             )}
           </div>
 
-          {/* View button */}
+          {/* View button — full width */}
           <Link
             href={`/products/${product.slug}`}
             className={cn(
-              "inline-flex items-center justify-center gap-1.5 rounded-full shrink-0",
-              "font-[family-name:var(--font-heading)] uppercase font-bold",
-              "tracking-[0.09em] transition-all duration-200 ease-out",
-              "text-[0.85rem]",
+              "flex w-full items-center justify-center rounded-xl",
+              "text-sm font-semibold transition-colors duration-200",
               product.inStock
-                ? "bg-[#f9f3ec] text-[#c8956c] hover:bg-[#c8956c] hover:text-white"
+                ? "bg-[#c8956c] text-white hover:bg-[#b8825a]"
                 : "bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed pointer-events-none"
             )}
-            style={{ padding: "0.55rem 1.1rem" }}
+            style={{ marginTop: "0.9rem", padding: "0.75rem 1rem" }}
             aria-disabled={!product.inStock}
           >
-            {product.inStock ? "VIEW" : "Sold Out"}
+            {product.inStock ? "View details" : "Sold out"}
           </Link>
         </div>
       </div>
