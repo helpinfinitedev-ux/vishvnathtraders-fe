@@ -9,6 +9,7 @@ import { CategoryHighlights } from "@/components/home/CategoryHighlights";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { Testimonials } from "@/components/home/Testimonials";
 import { DistributorCTABanner } from "@/components/home/DistributorCTABanner";
+import { BlogHighlights } from "@/components/home/BlogHighlights";
 
 export const metadata: Metadata = {
   title: "WoodCraft Premium | ISI Certified Plywood & Wood Products",
@@ -24,6 +25,7 @@ export default function HomePage() {
       <FeaturedProducts />
       <WhyChooseUs />
       <Testimonials />
+      <BlogHighlights />
       <DistributorCTABanner />
     </>
   );
