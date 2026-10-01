@@ -29,9 +29,9 @@ export function ProductCard({ product, compact = false, className }: ProductCard
       className={cn(
         "group relative flex flex-col bg-white",
         "rounded-[22px]",
-        "border border-[#efe6dc]",
-        "shadow-[0_2px_16px_rgba(28,28,28,0.06)]",
-        "hover:shadow-[0_14px_44px_rgba(200,149,108,0.18)]",
+        "border border-[var(--ivory)]",
+        "shadow-[0_2px_16px_rgba(33, 26, 25,0.06)]",
+        "hover:shadow-[0_14px_44px_rgba(111, 23, 38,0.18)]",
         "hover:-translate-y-1.5",
         "transition-all duration-300 ease-out",
         className
@@ -44,7 +44,7 @@ export function ProductCard({ product, compact = false, className }: ProductCard
           aria-label={`View ${product.name}`}
           className={cn(
             "relative shrink-0 block overflow-hidden rounded-[16px]",
-            "bg-gradient-to-br from-[#f8efe6] via-[#f2e4d4] to-[#e8d5c0]",
+            "bg-gradient-to-br from-[var(--ivory)] via-[var(--ivory)] to-[var(--ivory)]",
             compact ? "h-44" : "h-52"
           )}
         >
@@ -59,7 +59,7 @@ export function ProductCard({ product, compact = false, className }: ProductCard
               <path
                 key={i}
                 d={`M0 ${i * 16} Q${50 + i * 5} ${i * 16 - 14} 100% ${i * 16}`}
-                stroke="#c8956c"
+                stroke="var(--burgundy)"
                 strokeWidth="1.5"
                 fill="none"
                 opacity="0.7"
@@ -71,7 +71,7 @@ export function ProductCard({ product, compact = false, className }: ProductCard
           <div className="absolute inset-0 flex items-center justify-center">
             <Package
               className={cn(
-                "text-[#c8956c]/45 transition-transform duration-300 group-hover:scale-110",
+                "text-[var(--burgundy)]/45 transition-transform duration-300 group-hover:scale-110",
                 compact ? "w-12 h-12" : "w-14 h-14"
               )}
             />
@@ -105,7 +105,7 @@ export function ProductCard({ product, compact = false, className }: ProductCard
         {/* Category */}
         {product.category && (
           <p
-            className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#c8956c]"
+            className="text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--burgundy)]"
             style={{ marginBottom: "0.35rem" }}
           >
             {product.category}
@@ -116,8 +116,8 @@ export function ProductCard({ product, compact = false, className }: ProductCard
         <Link href={`/products/${product.slug}`}>
           <h3
             className={cn(
-              "font-serif font-semibold text-[#1c1c1c] leading-snug",
-              "hover:text-[#c8956c] transition-colors duration-200",
+              "font-serif font-semibold text-[var(--ink)] leading-snug",
+              "hover:text-[var(--burgundy)] transition-colors duration-200",
               compact ? "text-sm line-clamp-1" : "text-[1.05rem] line-clamp-2"
             )}
             style={{ marginBottom: "0.5rem" }}
@@ -129,7 +129,7 @@ export function ProductCard({ product, compact = false, className }: ProductCard
         {/* Short description */}
         {!compact && (
           <p
-            className="text-xs md:text-sm text-[#6b7280] leading-relaxed line-clamp-2"
+            className="text-xs md:text-sm text-[var(--ink-soft)] leading-relaxed line-clamp-2"
             style={{ marginBottom: "1.25rem" }}
           >
             {product.shortDescription}
@@ -138,22 +138,22 @@ export function ProductCard({ product, compact = false, className }: ProductCard
 
         {/* ── Price + full-width button ── */}
         <div
-          className="mt-auto border-t border-[#f5ede4]"
+          className="mt-auto border-t border-[var(--ivory)]"
           style={{ paddingTop: "1rem" }}
         >
           {/* Price row: current price, per-sheet, old price on one line */}
           <div className="flex items-baseline flex-wrap" style={{ columnGap: "0.5rem" }}>
-            <p className="font-bold text-[#1c1c1c] text-xl leading-none">
+            <p className="font-bold text-[var(--ink)] text-xl leading-none">
               {formatPrice(product.price)}
               <span
-                className="text-[11px] text-[#9ca3af] font-normal"
+                className="text-[11px] text-[var(--ink-soft)] font-normal"
                 style={{ marginLeft: "0.25rem" }}
               >
                 /sheet
               </span>
             </p>
             {product.mrp > product.price && (
-              <p className="text-sm text-[#9ca3af] line-through leading-none">
+              <p className="text-sm text-[var(--ink-soft)] line-through leading-none">
                 {formatPrice(product.mrp)}
               </p>
             )}
@@ -166,8 +166,8 @@ export function ProductCard({ product, compact = false, className }: ProductCard
               "flex w-full items-center justify-center rounded-xl",
               "text-sm font-semibold transition-colors duration-200",
               product.inStock
-                ? "bg-[#c8956c] text-white hover:bg-[#b8825a]"
-                : "bg-[#e5e7eb] text-[#9ca3af] cursor-not-allowed pointer-events-none"
+                ? "bg-[var(--burgundy)] text-white hover:bg-[var(--burgundy)]"
+                : "bg-[#e5e7eb] text-[var(--ink-soft)] cursor-not-allowed pointer-events-none"
             )}
             style={{ marginTop: "0.9rem", padding: "0.75rem 1rem" }}
             aria-disabled={!product.inStock}

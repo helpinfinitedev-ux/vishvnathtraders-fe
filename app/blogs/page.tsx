@@ -55,8 +55,8 @@ export default function BlogsPage() {
                 className={cn(
                   "px-8 py-3 md:px-10 rounded-full text-sm sm:text-base font-bold tracking-widest uppercase transition-all duration-300 relative text-center",
                   activeCategory === cat
-                    ? "bg-gradient-to-b from-[#e3b895] to-[#a8744e] text-white shadow-[0_8px_16px_-4px_rgba(200,149,108,0.6),inset_0_3px_4px_rgba(255,255,255,0.4),inset_0_-3px_4px_rgba(0,0,0,0.2)] border border-[#905e3b] scale-[1.02]"
-                    : "bg-gradient-to-b from-[#ffffff] to-[#e8ddd4] text-[#6b7280] shadow-[0_6px_12px_-4px_rgba(0,0,0,0.08),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)] border border-[#d0c5bc] hover:text-[#a8744e] hover:-translate-y-0.5 hover:shadow-[0_8px_16px_-4px_rgba(200,149,108,0.25),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)]"
+                    ? "bg-gradient-to-b from-[#e3b895] to-[#a8744e] text-white shadow-[0_8px_16px_-4px_rgba(111, 23, 38,0.6),inset_0_3px_4px_rgba(255,255,255,0.4),inset_0_-3px_4px_rgba(0,0,0,0.2)] border border-[#905e3b] scale-[1.02]"
+                    : "bg-gradient-to-b from-[#ffffff] to-[#e8ddd4] text-[var(--ink-soft)] shadow-[0_6px_12px_-4px_rgba(0,0,0,0.08),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)] border border-[#d0c5bc] hover:text-[#a8744e] hover:-translate-y-0.5 hover:shadow-[0_8px_16px_-4px_rgba(111, 23, 38,0.25),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)]"
                 )}
               >
                 {cat}
@@ -67,7 +67,7 @@ export default function BlogsPage() {
           {filtered.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-[20px] border border-[#f0e8de]">
               <p className="text-4xl mb-4">📰</p>
-              <p className="text-[#6b7280]">No posts in this category yet.</p>
+              <p className="text-[var(--ink-soft)]">No posts in this category yet.</p>
             </div>
           ) : (
             <>

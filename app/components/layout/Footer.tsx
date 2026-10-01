@@ -53,9 +53,9 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1c1c1c] text-white" role="contentinfo">
+    <footer className="bg-[var(--ink)] text-white" role="contentinfo">
       {/* Top decorative wood-grain border */}
-      <div className="h-1 bg-gradient-to-r from-[#c8956c] via-[#e8b088] to-[#c8956c]" aria-hidden="true" />
+      <div className="h-1 bg-gradient-to-r from-[var(--burgundy)] via-[#e8b088] to-[var(--burgundy)]" aria-hidden="true" />
 
       <div className="container-site py-16 md:py-20" style={{ marginTop: "3.25rem", marginBottom: "3.25rem" }}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
@@ -65,7 +65,7 @@ export function Footer() {
             {/* Logo */}
             <div className="flex items-center gap-2.5 mb-5">
               <svg width="36" height="36" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-                <rect width="38" height="38" rx="8" fill="#c8956c" />
+                <rect width="38" height="38" rx="8" fill="var(--burgundy)" />
                 <path d="M8 12 Q19 10 30 12" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
                 <path d="M8 17 Q19 15 30 17" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
                 <path d="M8 22 Q19 20 30 22" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
@@ -74,7 +74,7 @@ export function Footer() {
               </svg>
               <div className="flex flex-col">
                 <span className="font-serif text-[1.05rem] font-semibold text-white">WoodCraft</span>
-                <span className="text-[0.6rem] text-[#c8956c] tracking-[0.12em] uppercase font-medium">Premium</span>
+                <span className="text-[0.6rem] text-[var(--burgundy)] tracking-[0.12em] uppercase font-medium">Premium</span>
               </div>
             </div>
 
@@ -91,7 +91,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[#c8956c] transition-colors duration-200"
+                  className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-[var(--burgundy)] transition-colors duration-200"
                 >
                   <Icon />
                 </a>
@@ -107,7 +107,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/60 hover:text-[#c8956c] transition-colors duration-150"
+                    className="text-sm text-white/60 hover:text-[var(--burgundy)] transition-colors duration-150"
                   >
                     {link.label}
                   </Link>
@@ -124,7 +124,7 @@ export function Footer() {
                 <li key={cat.slug}>
                   <Link
                     href={`/products?category=${cat.slug}`}
-                    className="text-sm text-white/60 hover:text-[#c8956c] transition-colors duration-150"
+                    className="text-sm text-white/60 hover:text-[var(--burgundy)] transition-colors duration-150"
                   >
                     {cat.name}
                   </Link>
@@ -140,24 +140,24 @@ export function Footer() {
               <li>
                 <a
                   href={`tel:${SITE_CONFIG.phone}`}
-                  className="flex items-start gap-3 text-sm text-white/60 hover:text-[#c8956c] transition-colors"
+                  className="flex items-start gap-3 text-sm text-white/60 hover:text-[var(--burgundy)] transition-colors"
                 >
-                  <Phone className="w-4 h-4 mt-0.5 shrink-0 text-[#c8956c]" />
+                  <Phone className="w-4 h-4 mt-0.5 shrink-0 text-[var(--burgundy)]" />
                   {SITE_CONFIG.phone}
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${SITE_CONFIG.email}`}
-                  className="flex items-start gap-3 text-sm text-white/60 hover:text-[#c8956c] transition-colors"
+                  className="flex items-start gap-3 text-sm text-white/60 hover:text-[var(--burgundy)] transition-colors"
                 >
-                  <Mail className="w-4 h-4 mt-0.5 shrink-0 text-[#c8956c]" />
+                  <Mail className="w-4 h-4 mt-0.5 shrink-0 text-[var(--burgundy)]" />
                   {SITE_CONFIG.email}
                 </a>
               </li>
               <li>
                 <div className="flex items-start gap-3 text-sm text-white/60">
-                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-[#c8956c]" />
+                  <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-[var(--burgundy)]" />
                   <address className="not-italic">
                     {SITE_CONFIG.address.line1},<br />
                     {SITE_CONFIG.address.line2},<br />

@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 function StatCard({ value, label }: { value: string; label: string }) {
   return (
     <div className="text-center p-6 bg-[#fafaf8] rounded-[16px] border border-[#f0e8de]">
-      <p className="font-serif text-3xl md:text-4xl font-semibold text-[#c8956c] mb-1">{value}</p>
-      <p className="text-sm text-[#6b7280]">{label}</p>
+      <p className="font-serif text-3xl md:text-4xl font-semibold text-[var(--burgundy)] mb-1">{value}</p>
+      <p className="text-sm text-[var(--ink-soft)]">{label}</p>
     </div>
   );
 }
@@ -40,14 +40,14 @@ function ProcessStep({
   return (
     <div className="flex gap-5  ">
       <div className="flex flex-col items-center">
-        <div className="w-10 h-10 rounded-full bg-[#c8956c] flex items-center justify-center shrink-0">
+        <div className="w-10 h-10 rounded-full bg-[var(--burgundy)] flex items-center justify-center shrink-0">
           <span className="text-white font-semibold text-sm">{step}</span>
         </div>
         {!last && <div className="w-px flex-1 bg-[#e8ddd4] mt-2 min-h-[40px]" />}
       </div>
       <div className="pb-8">
-        <h3 className="font-serif text-lg font-semibold text-[#1c1c1c] mb-1.5">{title}</h3>
-        <p className="text-sm text-[#6b7280] leading-relaxed">{description}</p>
+        <h3 className="font-serif text-lg font-semibold text-[var(--ink)] mb-1.5">{title}</h3>
+        <p className="text-sm text-[var(--ink-soft)] leading-relaxed">{description}</p>
       </div>
     </div>
   );
@@ -97,7 +97,7 @@ export default function AboutPage() {
                   "Zero-defect production philosophy",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-4 text-md text-black">
-                    <CheckCircle2 className="w-5 h-5 text-[#c8956c] mt-0.5 shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-[var(--burgundy)] mt-0.5 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -133,13 +133,13 @@ export default function AboutPage() {
                 body: "We are committed to using FSC-certified timber and reducing our environmental footprint through responsible manufacturing practices.",
               },
             ].map(({ icon: Icon, title, body }) => (
-              <div key={title} className="bg-white p-8 rounded-[20px] border border-[#f0e8de] text-center shadow-[0_2px_12px_rgba(28,28,28,0.05)]"
+              <div key={title} className="bg-white p-8 rounded-[20px] border border-[#f0e8de] text-center shadow-[0_2px_12px_rgba(33, 26, 25,0.05)]"
                 style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
                 <div className="w-14 h-14 rounded-[14px] bg-[#f2e8dc] flex items-center justify-center mx-auto mb-5 ">
-                  <Icon className="w-6 h-6 text-[#c8956c]" />
+                  <Icon className="w-6 h-6 text-[var(--burgundy)]" />
                 </div>
-                <h3 className="font-serif text-xl font-semibold text-[#1c1c1c] mb-3">{title}</h3>
-                <p className="text-sm text-[#6b7280] leading-relaxed">{body}</p>
+                <h3 className="font-serif text-xl font-semibold text-[var(--ink)] mb-3">{title}</h3>
+                <p className="text-sm text-[var(--ink-soft)] leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -191,14 +191,14 @@ export default function AboutPage() {
             {certifications.map((cert) => (
               <div
                 key={cert.id}
-                className="bg-white p-6 rounded-[18px] border border-[#f0e8de] shadow-[0_2px_12px_rgba(28,28,28,0.05)] hover:shadow-[0_6px_24px_rgba(200,149,108,0.12)] hover:-translate-y-0.5 transition-all duration-300"
+                className="bg-white p-6 rounded-[18px] border border-[#f0e8de] shadow-[0_2px_12px_rgba(33, 26, 25,0.05)] hover:shadow-[0_6px_24px_rgba(111, 23, 38,0.12)] hover:-translate-y-0.5 transition-all duration-300"
                 style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
                 <div className="w-14 h-14 rounded-[12px] bg-[#f2e8dc] flex items-center justify-center mb-4 text-2xl">
                   🏆
                 </div>
-                <h3 className="font-serif text-base font-semibold text-[#1c1c1c] mb-1">{cert.name}</h3>
-                <p className="text-xs text-[#c8956c] font-medium mb-2">Since {cert.year}</p>
-                <p className="text-xs text-[#6b7280] leading-relaxed">{cert.description}</p>
+                <h3 className="font-serif text-base font-semibold text-[var(--ink)] mb-1">{cert.name}</h3>
+                <p className="text-xs text-[var(--burgundy)] font-medium mb-2">Since {cert.year}</p>
+                <p className="text-xs text-[var(--ink-soft)] leading-relaxed">{cert.description}</p>
               </div>
             ))}
           </div>

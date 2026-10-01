@@ -16,7 +16,7 @@ export function HeroBanner() {
       {/* ── Background ── */}
       <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
         {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#fafaf8] to-[#f5ede4]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#fafaf8] to-[var(--ivory)]" />
 
         {/* Wood-grain SVG texture overlay */}
         <svg
@@ -34,7 +34,7 @@ export function HeroBanner() {
         </svg>
 
         {/* Ambient warm glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] rounded-full bg-[#c8956c]/10 blur-[140px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] rounded-full bg-[var(--burgundy)]/10 blur-[140px]" />
 
         {/* Diagonal wood plank lines */}
         <div className="absolute right-0 top-0 bottom-0 w-[45%] opacity-25 hidden lg:block">
@@ -45,7 +45,7 @@ export function HeroBanner() {
               style={{
                 top: `${i * 16 - 4}%`,
                 height: "14%",
-                background: `linear-gradient(180deg, transparent, rgba(200,149,108,${0.04 + i * 0.01}), transparent)`,
+                background: `linear-gradient(180deg, transparent, rgba(111, 23, 38,${0.04 + i * 0.01}), transparent)`,
                 transform: "skewY(-3deg)",
               }}
             />
@@ -59,11 +59,11 @@ export function HeroBanner() {
 
           {/* Headline */}
           <h1
-            className="font-serif text-[#1c1c1c] font-semibold tracking-tight leading-[1.08] mb-8 animate-fade-up"
+            className="font-serif text-[var(--ink)] font-semibold tracking-tight leading-[1.08] mb-8 animate-fade-up"
             style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)", animationDelay: "80ms", marginTop: "5rem" }}
           >
             Engineered for{" "}
-            <span className="italic text-[#c8956c] font-normal">Excellence.</span>
+            <span className="italic text-[var(--burgundy)] font-normal">Excellence.</span>
             <br />
             Built to Last.
           </h1>
@@ -92,7 +92,7 @@ export function HeroBanner() {
                 gap: "0.35rem",
                 padding: "0.55rem 1.4rem",
                 borderRadius: "9999px",
-                background: "#c8956c",
+                background: "var(--burgundy)",
                 color: "#ffffff",
                 fontFamily: "var(--font-heading)",
                 fontSize: "0.8rem",
@@ -100,20 +100,20 @@ export function HeroBanner() {
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 textDecoration: "none",
-                boxShadow: "0 4px 14px -2px rgba(200,149,108,0.35)",
+                boxShadow: "0 4px 14px -2px rgba(111, 23, 38,0.35)",
                 transition: "background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
                 el.style.background = "#a8744e";
                 el.style.transform = "translateY(-2px)";
-                el.style.boxShadow = "0 8px 24px -4px rgba(200,149,108,0.55)";
+                el.style.boxShadow = "0 8px 24px -4px rgba(111, 23, 38,0.55)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "#c8956c";
+                el.style.background = "var(--burgundy)";
                 el.style.transform = "translateY(0)";
-                el.style.boxShadow = "0 4px 14px -2px rgba(200,149,108,0.35)";
+                el.style.boxShadow = "0 4px 14px -2px rgba(111, 23, 38,0.35)";
               }}
             >
               Explore Products
@@ -130,7 +130,7 @@ export function HeroBanner() {
                 gap: "0.3rem",
                 padding: "0.55rem 1.4rem",
                 borderRadius: "9999px",
-                background: "#1c1c1c",
+                background: "var(--ink)",
                 color: "#ffffff",
                 fontFamily: "var(--font-heading)",
                 fontSize: "0.8rem",
@@ -138,20 +138,20 @@ export function HeroBanner() {
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 textDecoration: "none",
-                boxShadow: "0 2px 8px rgba(28,28,28,0.18)",
+                boxShadow: "0 2px 8px rgba(33, 26, 25,0.18)",
                 transition: "background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
                 el.style.background = "#2a2a2a";
                 el.style.transform = "translateY(-2px)";
-                el.style.boxShadow = "0 6px 18px rgba(28,28,28,0.28)";
+                el.style.boxShadow = "0 6px 18px rgba(33, 26, 25,0.28)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
-                el.style.background = "#1c1c1c";
+                el.style.background = "var(--ink)";
                 el.style.transform = "translateY(0)";
-                el.style.boxShadow = "0 2px 8px rgba(28,28,28,0.18)";
+                el.style.boxShadow = "0 2px 8px rgba(33, 26, 25,0.18)";
               }}
             >
               Get a Quote

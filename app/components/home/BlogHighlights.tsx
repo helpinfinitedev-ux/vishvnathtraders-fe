@@ -65,9 +65,9 @@ export function BlogHighlights() {
                 className={cn(
                   "group flex flex-col rounded-[28px]",
                   "transition-transform duration-300 hover:-translate-y-1.5",
-                  "shadow-[0_6px_24px_rgba(28,28,28,0.10)]",
-                  "hover:shadow-[0_16px_40px_rgba(28,28,28,0.16)]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8956c] focus-visible:ring-offset-2"
+                  "shadow-[0_6px_24px_rgba(33, 26, 25,0.10)]",
+                  "hover:shadow-[0_16px_40px_rgba(33, 26, 25,0.16)]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--burgundy)] focus-visible:ring-offset-2"
                 )}
                 style={{
                   backgroundColor: CARD_COLORS[index % CARD_COLORS.length],

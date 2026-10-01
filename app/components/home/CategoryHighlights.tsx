@@ -45,7 +45,7 @@ export function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
     >
       <div className="container-site">
         {/* One box around all tiles: equal padding inside = equal gap between tiles */}
-        <div className="rounded-[28px] border border-[#eadfd3] bg-[#faf5ef] p-4 md:p-5 shadow-[0_8px_30px_rgba(74,55,40,0.08)]">
+        <div className="rounded-[28px] border border-[var(--ivory)] bg-[#faf5ef] p-4 md:p-5 shadow-[0_8px_30px_rgba(74,55,40,0.08)]">
           <div
             className={cn(
               "grid grid-cols-2 gap-4 md:gap-5",
@@ -69,12 +69,12 @@ export function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
                     "group flex flex-col items-center justify-center gap-3 md:gap-4",
                     "rounded-3xl border-2 px-3 py-8 md:py-12 min-h-[130px] md:min-h-[190px] text-center",
                     "transition-colors duration-200",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c8956c] focus-visible:ring-offset-2",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--burgundy)] focus-visible:ring-offset-2",
                     isActive
                       ? // active = dark brown, so it stands out from the tan tiles
-                      "bg-[#4a3728] border-[#4a3728] text-white"
+                      "bg-[var(--maroon)] border-[var(--maroon)] text-white"
                       : // default = tan filled, hover = white with tan border
-                      "bg-[#c8956c] border-[#c8956c] text-white hover:bg-white hover:text-[#c8956c]"
+                      "bg-[var(--burgundy)] border-[var(--burgundy)] text-white hover:bg-white hover:text-[var(--burgundy)]"
                   )}
                 >
                   <Icon className="w-9 h-9 md:w-12 md:h-12" strokeWidth={1.6} aria-hidden="true" />

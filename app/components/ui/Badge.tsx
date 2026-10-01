@@ -14,11 +14,11 @@ interface BadgeProps {
 }
 
 const BADGE_VARIANTS: Record<BadgeVariant, string> = {
-  default: "bg-[#f2e8dc] text-[#1c1c1c]",
-  wood: "bg-[#c8956c] text-white",
+  default: "bg-[#f2e8dc] text-[var(--ink)]",
+  wood: "bg-[var(--burgundy)] text-white",
   success: "bg-emerald-50 text-emerald-700 border border-emerald-200",
   warning: "bg-amber-50 text-amber-700 border border-amber-200",
-  outline: "border border-[#e8ddd4] text-[#6b7280]",
+  outline: "border border-[#e8ddd4] text-[var(--ink-soft)]",
 };
 
 export function Badge({ children, variant = "default", className }: BadgeProps) {

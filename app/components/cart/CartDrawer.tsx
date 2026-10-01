@@ -113,7 +113,7 @@ export function CartDrawer() {
             {/* Close button */}
             <button
               onClick={() => setIsCartOpen(false)}
-              className="p-2 -mr-2 text-[#6b7280] hover:text-[#1c1c1c] hover:bg-[#f9f3ec] rounded-full transition-colors"
+              className="p-2 -mr-2 text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--ivory)] rounded-full transition-colors"
               aria-label="Close cart"
             >
               <X className="w-5 h-5" />
@@ -201,7 +201,7 @@ export function CartDrawer() {
                         height: "96px",
                         borderRadius: "var(--radius-md)",
                         background: "var(--color-accent-light)",
-                        border: "1px solid #f5ede4",
+                        border: "1px solid var(--ivory)",
                       }}
                     >
                       <Image
@@ -223,7 +223,7 @@ export function CartDrawer() {
                         <Link
                           href={`/products/${item.productId}`}
                           onClick={() => setIsCartOpen(false)}
-                          className="font-medium leading-snug line-clamp-2 hover:text-[#c8956c] transition-colors"
+                          className="font-medium leading-snug line-clamp-2 hover:text-[var(--burgundy)] transition-colors"
                           style={{
                             color: "var(--color-primary)",
                             fontSize: "0.875rem",
@@ -234,7 +234,7 @@ export function CartDrawer() {
                         </Link>
                         <button
                           onClick={() => removeFromCart(item.cartItemId)}
-                          className="p-1 text-[#9ca3af] hover:text-red-500 hover:bg-red-50 rounded-md transition-colors shrink-0"
+                          className="p-1 text-[var(--ink-soft)] hover:text-red-500 hover:bg-red-50 rounded-md transition-colors shrink-0"
                           aria-label={`Remove ${item.name} from cart`}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -294,7 +294,7 @@ export function CartDrawer() {
                               updateQuantity(item.cartItemId, item.quantity - 1)
                             }
                             disabled={item.quantity <= 1}
-                            className="flex items-center justify-center text-[#6b7280] hover:bg-[#f2e8dc] hover:text-[#1c1c1c] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="flex items-center justify-center text-[var(--ink-soft)] hover:bg-[#f2e8dc] hover:text-[var(--ink)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                             style={{ width: "36px", height: "36px", minWidth: "40px", minHeight: "40px" }}
                             aria-label="Decrease quantity"
                           >
@@ -314,7 +314,7 @@ export function CartDrawer() {
                             onClick={() =>
                               updateQuantity(item.cartItemId, item.quantity + 1)
                             }
-                            className="flex items-center justify-center text-[#6b7280] hover:bg-[#f2e8dc] hover:text-[#1c1c1c] transition-colors"
+                            className="flex items-center justify-center text-[var(--ink-soft)] hover:bg-[#f2e8dc] hover:text-[var(--ink)] transition-colors"
                             style={{ width: "36px", height: "36px", minWidth: "40px", minHeight: "40px" }}
                             aria-label="Increase quantity"
                           >
@@ -362,7 +362,7 @@ export function CartDrawer() {
             <p
               className="text-xs text-center"
               style={{
-                color: "#9ca3af",
+                color: "var(--ink-soft)",
                 marginBottom: "var(--space-4)",
               }}
             >
@@ -383,7 +383,7 @@ export function CartDrawer() {
                 letterSpacing: "0.06em",
                 border: "none",
                 cursor: "pointer",
-                boxShadow: "0 4px 14px -2px rgba(200,149,108,0.35)",
+                boxShadow: "0 4px 14px -2px rgba(111, 23, 38,0.35)",
                 minHeight: "48px",
               }}
               onMouseEnter={(e) => {
@@ -392,7 +392,7 @@ export function CartDrawer() {
                 (e.currentTarget as HTMLElement).style.transform =
                   "translateY(-1px)";
                 (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 8px 24px -4px rgba(200,149,108,0.45)";
+                  "0 8px 24px -4px rgba(111, 23, 38,0.45)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLElement).style.background =
@@ -400,7 +400,7 @@ export function CartDrawer() {
                 (e.currentTarget as HTMLElement).style.transform =
                   "translateY(0)";
                 (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 4px 14px -2px rgba(200,149,108,0.35)";
+                  "0 4px 14px -2px rgba(111, 23, 38,0.35)";
               }}
               onClick={() => {
                 alert("Checkout functionality to be implemented.");

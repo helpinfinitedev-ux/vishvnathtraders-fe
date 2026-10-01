@@ -35,7 +35,7 @@ export function EnquiryBox({ productName, className }: EnquiryBoxProps) {
 
       {submitted ? (
         <div className="pdp-enquiry__success">
-          <CheckCircle2 className="w-8 h-8 text-[#c8956c]" />
+          <CheckCircle2 className="w-8 h-8 text-[var(--burgundy)]" />
           <p>Thank you! We&apos;ll call you back within 2 hours.</p>
         </div>
       ) : (

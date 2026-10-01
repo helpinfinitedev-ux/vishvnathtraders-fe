@@ -18,8 +18,8 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
     <article
       className={cn(
         "group flex flex-col h-full bg-white rounded-[20px] overflow-hidden border border-[#f0e8de]",
-        "shadow-[0_2px_12px_rgba(28,28,28,0.05)]",
-        "hover:shadow-[0_6px_24px_rgba(200,149,108,0.12)]",
+        "shadow-[0_2px_12px_rgba(33, 26, 25,0.05)]",
+        "hover:shadow-[0_6px_24px_rgba(111, 23, 38,0.12)]",
         "hover:-translate-y-0.5 transition-all duration-300",
         className
       )}
@@ -28,7 +28,7 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
       <Link href={`/blogs/${post.slug}`} aria-label={`Read: ${post.title}`}>
         <div
           className={cn(
-            "relative overflow-hidden bg-gradient-to-br from-[#2d2520] to-[#1c1c1c]",
+            "relative overflow-hidden bg-gradient-to-br from-[var(--maroon)] to-[var(--ink)]",
             featured ? "h-[300px] md:h-[400px] lg:h-[480px]" : "aspect-[16/10]"
           )}
         >
@@ -43,7 +43,7 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
               <path
                 key={i}
                 d={`M0 ${i * 20} Q50 ${i * 20 - 8} 100% ${i * 20}`}
-                stroke="#c8956c"
+                stroke="var(--burgundy)"
                 strokeWidth="2"
                 fill="none"
               />
@@ -52,7 +52,7 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
 
           {/* Category pill */}
           <div className="absolute bottom-4 left-5">
-            <div className="bg-[#c8956c] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-md">
+            <div className="bg-[var(--burgundy)] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-md">
               {post.category}
             </div>
           </div>
@@ -66,11 +66,11 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
       >
         {/* Meta */}
         <div className={cn("flex items-center gap-4", featured ? "mb-3" : "mb-2.5")}>
-          <div className="flex items-center gap-1.5 text-xs text-[#9ca3af]">
+          <div className="flex items-center gap-1.5 text-xs text-[var(--ink-soft)]">
             <Calendar className="w-3 h-3" />
             {formatDate(post.date)}
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-[#9ca3af]">
+          <div className="flex items-center gap-1.5 text-xs text-[var(--ink-soft)]">
             <Clock className="w-3 h-3" />
             {post.readTime} min read
           </div>
@@ -80,8 +80,8 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
         <Link href={`/blogs/${post.slug}`}>
           <h3
             className={cn(
-              "font-serif font-semibold text-[#1c1c1c] leading-snug line-clamp-2",
-              "hover:text-[#c8956c] transition-colors duration-200",
+              "font-serif font-semibold text-[var(--ink)] leading-snug line-clamp-2",
+              "hover:text-[var(--burgundy)] transition-colors duration-200",
               featured ? "text-2xl md:text-3xl lg:text-4xl mb-3" : "text-lg md:text-xl mb-2"
             )}
           >
@@ -90,21 +90,21 @@ export function BlogCard({ post, featured = false, className }: BlogCardProps) {
         </Link>
 
         {/* Excerpt */}
-        <p className="text-sm text-[#6b7280] leading-relaxed mb-5 line-clamp-3">
+        <p className="text-sm text-[var(--ink-soft)] leading-relaxed mb-5 line-clamp-3">
           {post.excerpt}
         </p>
 
         {/* Author + Read more */}
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#f5f0ea]">
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#c8956c] to-[#a8744e] flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--burgundy)] to-[#a8744e] flex items-center justify-center shrink-0">
               <span className="text-white text-[10px] font-semibold">{post.author.charAt(0)}</span>
             </div>
-            <span className="text-xs text-[#6b7280] truncate max-w-[120px]">{post.author}</span>
+            <span className="text-xs text-[var(--ink-soft)] truncate max-w-[120px]">{post.author}</span>
           </div>
           <Link
             href={`/blogs/${post.slug}`}
-            className="flex items-center gap-1 text-xs font-medium text-[#c8956c] hover:gap-2 transition-all duration-200"
+            className="flex items-center gap-1 text-xs font-medium text-[var(--burgundy)] hover:gap-2 transition-all duration-200"
           >
             Read More <ArrowRight className="w-3 h-3" />
           </Link>

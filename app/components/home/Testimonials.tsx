@@ -50,7 +50,7 @@ export function Testimonials() {
             {/* Main testimonial card */}
             <div
               key={active}
-              className="bg-white flex flex-col items-center text-center rounded-[24px] p-8 md:p-12 shadow-[0_4px_32px_rgba(200,149,108,0.12)] border border-[#f0e8de] animate-fade-up w-full"
+              className="bg-white flex flex-col items-center text-center rounded-[24px] p-8 md:p-12 shadow-[0_4px_32px_rgba(111, 23, 38,0.12)] border border-[#f0e8de] animate-fade-up w-full"
               style={{ padding: "1.55rem 1.8rem" }}
             >
               {/* Stars */}
@@ -59,22 +59,22 @@ export function Testimonials() {
               </div>
 
               {/* Quote */}
-              <blockquote className="font-serif text-xl md:text-2xl text-[#1c1c1c] leading-relaxed italic mb-8 max-w-2xl mx-auto w-full">
+              <blockquote className="font-serif text-xl md:text-2xl text-[var(--ink)] leading-relaxed italic mb-8 max-w-2xl mx-auto w-full">
                 &ldquo;{current.message}&rdquo;
               </blockquote>
 
               {/* Attribution */}
               <div className="flex flex-col items-center gap-3">
                 {/* Avatar placeholder */}
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c8956c] to-[#a8744e] flex items-center justify-center shrink-0 mb-1">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--burgundy)] to-[#a8744e] flex items-center justify-center shrink-0 mb-1">
                   <span className="text-white font-semibold text-lg">
                     {current.name.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-[#1c1c1c] text-sm">{current.name}</p>
-                  <p className="text-xs text-[#c8956c]">{current.role}</p>
-                  <p className="text-xs text-[#9ca3af]">{current.company}</p>
+                  <p className="font-semibold text-[var(--ink)] text-sm">{current.name}</p>
+                  <p className="text-xs text-[var(--burgundy)]">{current.role}</p>
+                  <p className="text-xs text-[var(--ink-soft)]">{current.company}</p>
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@ export function Testimonials() {
               {/* Prev button */}
               <button
                 onClick={prev}
-                className="w-10 h-10 rounded-full border border-[#e8ddd4] flex items-center justify-center text-[#6b7280] hover:border-[#c8956c] hover:text-[#c8956c] transition-colors"
+                className="w-10 h-10 rounded-full border border-[#e8ddd4] flex items-center justify-center text-[var(--ink-soft)] hover:border-[var(--burgundy)] hover:text-[var(--burgundy)] transition-colors"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -102,8 +102,8 @@ export function Testimonials() {
                     className={cn(
                       "rounded-full transition-all duration-300",
                       i === active
-                        ? "w-6 h-2 bg-[#c8956c]"
-                        : "w-2 h-2 bg-[#e8ddd4] hover:bg-[#c8956c]/50"
+                        ? "w-6 h-2 bg-[var(--burgundy)]"
+                        : "w-2 h-2 bg-[#e8ddd4] hover:bg-[var(--burgundy)]/50"
                     )}
                   />
                 ))}
@@ -112,7 +112,7 @@ export function Testimonials() {
               {/* Next button */}
               <button
                 onClick={next}
-                className="w-10 h-10 rounded-full border border-[#e8ddd4] flex items-center justify-center text-[#6b7280] hover:border-[#c8956c] hover:text-[#c8956c] transition-colors"
+                className="w-10 h-10 rounded-full border border-[#e8ddd4] flex items-center justify-center text-[var(--ink-soft)] hover:border-[var(--burgundy)] hover:text-[var(--burgundy)] transition-colors"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-4 h-4" />

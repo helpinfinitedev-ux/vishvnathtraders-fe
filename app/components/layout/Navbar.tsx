@@ -43,7 +43,7 @@ const RIGHT_LINKS = [
 function LogoMark({ size = 34 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 38 38" fill="none" aria-hidden="true">
-      <rect width="38" height="38" rx="8" fill="#c8956c" />
+      <rect width="38" height="38" rx="8" fill="var(--burgundy)" />
       <path d="M8 12 Q19 10 30 12" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
       <path d="M8 17 Q19 15 30 17" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
       <path d="M8 22 Q19 20 30 22" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
@@ -568,7 +568,7 @@ export function Navbar() {
           position: "fixed",
           inset: 0,
           zIndex: 55,
-          background: "rgba(28,28,28,0.45)",
+          background: "rgba(33, 26, 25,0.45)",
           backdropFilter: "blur(3px)",
           opacity: mobileOpen ? 1 : 0,
           visibility: mobileOpen ? "visible" : "hidden",
@@ -842,7 +842,7 @@ export function Navbar() {
         .distributor-btn:hover {
           background: var(--color-accent-dark) !important;
           transform: translateY(-2px) !important;
-          box-shadow: 0 8px 24px -4px rgba(200,149,108,0.45) !important;
+          box-shadow: 0 8px 24px -4px rgba(111, 23, 38,0.45) !important;
         }
       `}</style>
     </>
