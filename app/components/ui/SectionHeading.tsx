@@ -37,7 +37,7 @@ export function SectionHeading({
         <p
           className={cn(
             "text-xs font-semibold uppercase tracking-[0.15em] mb-3",
-            light ? "text-[#c8956c]" : "text-[#c8956c]"
+            light ? "text-[var(--burgundy)]" : "text-[var(--burgundy)]"
           )}
         >
           {eyebrow}
@@ -50,7 +50,7 @@ export function SectionHeading({
           id={id}
           className={cn(
             "font-serif text-3xl md:text-4xl lg:text-[2.625rem] font-semibold leading-tight",
-            light ? "text-white" : "text-[#1c1c1c]"
+            light ? "text-white" : "text-[var(--ink)]"
           )}
         >
           {title}
@@ -58,7 +58,7 @@ export function SectionHeading({
         {/* Accent underline bar */}
         <span
           className={cn(
-            "block mt-3 h-[3px] w-14 rounded-full bg-gradient-to-r from-[#c8956c] to-transparent",
+            "block mt-3 h-[3px] w-14 rounded-full bg-gradient-to-r from-[var(--burgundy)] to-transparent",
             centered ? "mx-auto" : "ml-0"
           )}
           aria-hidden="true"
@@ -69,7 +69,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mt-6 max-w-2xl text-base md:text-lg leading-relaxed text-balance ",
-            light ? "text-white/70" : "text-[#6b7280]"
+            light ? "text-white/70" : "text-[var(--ink-soft)]"
           )}
           style={{ marginTop: '1.5rem' }}
         >

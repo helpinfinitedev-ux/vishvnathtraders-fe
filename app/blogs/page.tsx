@@ -53,13 +53,32 @@ export default function BlogsPage() {
                 aria-selected={activeCategory === cat}
                 onClick={() => setActiveCategory(cat)}
                 className={cn(
-                  "px-8 py-3 md:px-10 rounded-full text-sm sm:text-base font-bold tracking-widest uppercase transition-all duration-300 relative text-center",
+                  "px-8 py-3 md:px-10 rounded-full text-sm sm:text-base font-bold tracking-widest uppercase transition-all duration-300 relative text-center overflow-hidden",
                   activeCategory === cat
-                    ? "bg-gradient-to-b from-[#e3b895] to-[#a8744e] text-white shadow-[0_8px_16px_-4px_rgba(200,149,108,0.6),inset_0_3px_4px_rgba(255,255,255,0.4),inset_0_-3px_4px_rgba(0,0,0,0.2)] border border-[#905e3b] scale-[1.02]"
-                    : "bg-gradient-to-b from-[#ffffff] to-[#e8ddd4] text-[#6b7280] shadow-[0_6px_12px_-4px_rgba(0,0,0,0.08),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)] border border-[#d0c5bc] hover:text-[#a8744e] hover:-translate-y-0.5 hover:shadow-[0_8px_16px_-4px_rgba(200,149,108,0.25),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)]"
+                    ? "bg-gradient-to-b from-[var(--burgundy)] to-[var(--maroon)] text-white shadow-[0_8px_16px_-4px_rgba(111,23,38,0.6),inset_0_3px_4px_rgba(255,255,255,0.2),inset_0_-3px_4px_rgba(0,0,0,0.2)] border border-[var(--maroon)] scale-[1.02]"
+                    : "bg-gradient-to-b from-[#ffffff] to-[var(--ivory)] text-[var(--ink-soft)] shadow-[0_6px_12px_-4px_rgba(0,0,0,0.08),inset_0_3px_4px_rgba(255,255,255,0.9),inset_0_-3px_4px_rgba(0,0,0,0.05)] border border-[var(--line)] hover:text-[var(--burgundy)] hover:-translate-y-0.5 hover:shadow-md"
                 )}
               >
-                {cat}
+                {/* Wood-grain decorative overlay for active tab */}
+                {activeCategory === cat && (
+                  <svg
+                    className="absolute inset-0 w-full h-full opacity-[0.12] pointer-events-none mix-blend-overlay"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    {[0, 1, 2, 3].map((i) => (
+                      <path
+                        key={i}
+                        d={`M0 ${8 + i * 12} Q50 ${2 + i * 12} 100% ${8 + i * 12}`}
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        fill="none"
+                      />
+                    ))}
+                  </svg>
+                )}
+                <span className="relative z-10">{cat}</span>
               </button>
             ))}
           </div>
@@ -67,7 +86,7 @@ export default function BlogsPage() {
           {filtered.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-[20px] border border-[#f0e8de]">
               <p className="text-4xl mb-4">📰</p>
-              <p className="text-[#6b7280]">No posts in this category yet.</p>
+              <p className="text-[var(--ink-soft)]">No posts in this category yet.</p>
             </div>
           ) : (
             <>

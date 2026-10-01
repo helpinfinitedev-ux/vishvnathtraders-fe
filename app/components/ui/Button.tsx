@@ -21,7 +21,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
   // dark filled — matches Navbar primary
   primary: [
-    "bg-[#1c1c1c] text-white",
+    "bg-[var(--ink)] text-white",
     "hover:bg-[#2a2a2a] hover:-translate-y-[2px] hover:shadow-lg",
     "active:bg-[#111] active:translate-y-0 active:scale-[0.98]",
     "shadow-md",
@@ -29,32 +29,32 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
 
   // soft warm fill
   secondary: [
-    "bg-[#f2e8dc] text-[#1c1c1c]",
+    "bg-[#f2e8dc] text-[var(--ink)]",
     "hover:bg-[#e8ddd4] hover:-translate-y-[2px] hover:shadow-md",
     "active:bg-[#ddd4c8] active:translate-y-0 active:scale-[0.98]",
   ].join(" "),
 
   // wood accent border → fills on hover
   outline: [
-    "border-2 border-[#c8956c] text-[#1c1c1c] bg-transparent",
-    "hover:bg-[#c8956c] hover:text-white hover:-translate-y-[2px] hover:shadow-md",
+    "border-2 border-[var(--burgundy)] text-[var(--ink)] bg-transparent",
+    "hover:bg-[var(--burgundy)] hover:text-white hover:-translate-y-[2px] hover:shadow-md",
     "active:translate-y-0 active:scale-[0.98]",
   ].join(" "),
 
   // transparent / ghost
   ghost: [
-    "text-[#1c1c1c] bg-transparent",
+    "text-[var(--ink)] bg-transparent",
     "hover:bg-[#f2e8dc] hover:-translate-y-[1px]",
     "active:bg-[#e8ddd4] active:scale-[0.98]",
   ].join(" "),
 
   // wood accent filled — matches Navbar Distributor pill & HeroBanner primary
   wood: [
-    "bg-[#c8956c] text-white",
+    "bg-[var(--burgundy)] text-white",
     "hover:bg-[#a8744e] hover:-translate-y-[2px]",
-    "hover:shadow-[0_8px_24px_-4px_rgba(200,149,108,0.55)]",
+    "hover:shadow-[0_8px_24px_-4px_rgba(111, 23, 38,0.55)]",
     "active:bg-[#906040] active:translate-y-0 active:scale-[0.98]",
-    "shadow-[0_4px_14px_-2px_rgba(200,149,108,0.35)]",
+    "shadow-[0_4px_14px_-2px_rgba(111, 23, 38,0.35)]",
   ].join(" "),
 };
 
@@ -79,7 +79,7 @@ const BASE =
   "transition-all duration-200 ease-out " +
   "cursor-pointer select-none whitespace-nowrap " +
   "focus-visible:outline-none focus-visible:ring-2 " +
-  "focus-visible:ring-[#c8956c] focus-visible:ring-offset-2 " +
+  "focus-visible:ring-[var(--burgundy)] focus-visible:ring-offset-2 " +
   "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none";
 
 // ── Component ───────────────────────────────────────────────────────────────────

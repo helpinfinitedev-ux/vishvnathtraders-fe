@@ -19,7 +19,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
   return (
     <div className="flex flex-col gap-4">
       {/* Main image */}
-      <div className="relative aspect-square bg-gradient-to-br from-[#f5ede4] to-[#e8ddd4] rounded-[20px] overflow-hidden group border border-[#f0e8de]">
+      <div className="relative aspect-square bg-gradient-to-br from-[var(--ivory)] to-[#e8ddd4] rounded-[20px] overflow-hidden group border border-[#f0e8de]">
         {/* Wood-grain placeholder */}
         <svg
           className="absolute inset-0 w-full h-full opacity-20"
@@ -31,7 +31,7 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
             <path
               key={i}
               d={`M0 ${i * 9} Q${50 + i * 3} ${i * 9 - 5} 100% ${i * 9}`}
-              stroke="#c8956c"
+              stroke="var(--burgundy)"
               strokeWidth="1.5"
               fill="none"
               opacity="0.5"
@@ -39,13 +39,13 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
           ))}
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <Package className="w-24 h-24 text-[#c8956c]/30" />
+          <Package className="w-24 h-24 text-[var(--burgundy)]/30" />
         </div>
 
         {/* Zoom icon on hover */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center shadow-sm">
-            <ZoomIn className="w-4 h-4 text-[#1c1c1c]" />
+            <ZoomIn className="w-4 h-4 text-[var(--ink)]" />
           </div>
         </div>
 
@@ -67,14 +67,14 @@ export function ProductImageGallery({ images, productName }: ProductImageGallery
               onClick={() => setActiveIndex(i)}
               className={cn(
                 "relative shrink-0 w-20 h-20 rounded-[12px] overflow-hidden border-2 transition-all duration-200",
-                "bg-gradient-to-br from-[#f5ede4] to-[#e8ddd4]",
+                "bg-gradient-to-br from-[var(--ivory)] to-[#e8ddd4]",
                 "flex items-center justify-center",
                 i === activeIndex
-                  ? "border-[#c8956c] shadow-[0_0_0_2px_rgba(200,149,108,0.25)]"
+                  ? "border-[var(--burgundy)] shadow-[0_0_0_2px_rgba(111, 23, 38,0.25)]"
                   : "border-transparent hover:border-[#e8ddd4]"
               )}
             >
-              <Package className="w-8 h-8 text-[#c8956c]/40" aria-hidden="true" />
+              <Package className="w-8 h-8 text-[var(--burgundy)]/40" aria-hidden="true" />
             </button>
           ))}
         </div>

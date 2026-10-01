@@ -33,7 +33,7 @@ const ACTIONS: FloatingAction[] = [
     icon: Phone,
     label: "Call Us",
     href: `tel:${SITE_CONFIG.phone}`,
-    bgColor: "bg-[#1c1c1c]",
+    bgColor: "bg-[var(--ink)]",
     hoverColor: "hover:bg-[#333]",
   },
   {
@@ -41,7 +41,7 @@ const ACTIONS: FloatingAction[] = [
     icon: Mail,
     label: "Email Us",
     href: `mailto:${SITE_CONFIG.email}`,
-    bgColor: "bg-[#c8956c]",
+    bgColor: "bg-[var(--burgundy)]",
     hoverColor: "hover:bg-[#a8744e]",
   },
 ];
@@ -80,7 +80,7 @@ export function FloatingContactIcons() {
           <span
             className={cn(
               "absolute right-14 whitespace-nowrap",
-              "bg-[#1c1c1c] text-white text-xs font-medium",
+              "bg-[var(--ink)] text-white text-xs font-medium",
               "px-2.5 py-1 rounded-[6px]",
               "pointer-events-none select-none",
               "transition-all duration-200",
@@ -92,7 +92,7 @@ export function FloatingContactIcons() {
             {label}
             {/* Tooltip arrow */}
             <span
-              className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-[#1c1c1c]"
+              className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-[var(--ink)]"
               aria-hidden="true"
             />
           </span>

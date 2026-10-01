@@ -13,7 +13,7 @@ export function DistributorCTABanner() {
       aria-labelledby="distributor-cta-heading"
     >
       {/* Rich wood-tone gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#7c4a2a] via-[#c8956c] to-[#e8b07a]" aria-hidden="true" style={{ padding: "1.25rem 1.5rem" }} />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#7c4a2a] via-[var(--burgundy)] to-[#e8b07a]" aria-hidden="true" style={{ padding: "1.25rem 1.5rem" }} />
 
       {/* Subtle grain texture */}
       <svg

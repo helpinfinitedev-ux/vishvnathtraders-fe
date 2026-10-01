@@ -48,13 +48,13 @@ function FilterGroup({
         className="flex items-center justify-between w-full text-left outline-none group"
         aria-expanded={open}
       >
-        <span className="font-semibold text-[#1c1c1c]" style={{ fontSize: "0.95rem" }}>{title}</span>
+        <span className="font-semibold text-[var(--ink)]" style={{ fontSize: "0.95rem" }}>{title}</span>
         <div className="flex items-center gap-2">
           {selectedValue && !open && (
             <span className="text-gray-400 font-medium" style={{ fontSize: "0.8rem" }}>{selectedValue}</span>
           )}
           <ChevronDown
-            className={cn("w-4 h-4 text-[#9ca3af] transition-transform duration-300", open && "rotate-180")}
+            className={cn("w-4 h-4 text-[var(--ink-soft)] transition-transform duration-300", open && "rotate-180")}
           />
         </div>
       </button>
@@ -81,7 +81,7 @@ function CheckItem({
       className="flex items-center justify-between cursor-pointer group"
       style={{ padding: "0.4rem 0" }}
     >
-      <span className="text-[#4b5563] group-hover:text-[#1c1c1c] transition-colors capitalize font-medium" style={{ fontSize: "0.85rem" }}>
+      <span className="text-[#4b5563] group-hover:text-[var(--ink)] transition-colors capitalize font-medium" style={{ fontSize: "0.85rem" }}>
         {label}
       </span>
       <input
@@ -142,7 +142,7 @@ export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps
         <div style={{ width: "2rem", height: "0.25rem", backgroundColor: "#e5e7eb", borderRadius: "9999px", margin: "0 auto 0.75rem auto" }} />
 
         <div className="flex items-center justify-center relative">
-          <h2 className="font-sans font-bold text-[#1c1c1c]" style={{ fontSize: "1.05rem" }}>Filter</h2>
+          <h2 className="font-sans font-bold text-[var(--ink)]" style={{ fontSize: "1.05rem" }}>Filter</h2>
           <button className="absolute right-0 text-gray-400 hover:text-black transition-colors" onClick={onClear}>
             <X className="w-4 h-4" />
           </button>
@@ -244,7 +244,7 @@ export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps
                 type="number"
                 readOnly
                 value={filters.priceRange[0]}
-                className="w-full bg-transparent font-semibold outline-none text-[#1c1c1c]"
+                className="w-full bg-transparent font-semibold outline-none text-[var(--ink)]"
                 style={{ fontSize: "0.85rem" }}
               />
             </div>
@@ -255,7 +255,7 @@ export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps
                 type="number"
                 readOnly
                 value={filters.priceRange[1]}
-                className="w-full bg-transparent font-semibold outline-none text-[#1c1c1c]"
+                className="w-full bg-transparent font-semibold outline-none text-[var(--ink)]"
                 style={{ fontSize: "0.85rem" }}
               />
             </div>

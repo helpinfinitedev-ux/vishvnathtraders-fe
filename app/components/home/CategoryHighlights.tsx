@@ -1,114 +1,90 @@
 // =============================================================================
-// CategoryHighlights — 6-up category card grid on the home page
+// CategoryHighlights — simple icon tiles (active / hovered tile fills with tan)
 // =============================================================================
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import {
+  DoorClosed,
+  Layers,
+  LayoutGrid,
+  Leaf,
+  Package,
+  Palette,
+  Ruler,
+  type LucideIcon,
+} from "lucide-react";
 import { categories } from "@/data/categories";
 import { cn } from "@/lib/utils";
 
-// Each category gets a unique gradient & accent for visual variety
-const CATEGORY_STYLES: Record<string, { gradient: string; icon: string }> = {
-  plywood: { gradient: "from-[#4a3728] to-[#7c5b43]", icon: "🪵" },
-  blockboard: { gradient: "from-[#6b4c3a] to-[#9c7556]", icon: "🟩" },
-  veneer: { gradient: "from-[#5e402e] to-[#8f6246]", icon: "🌿" },
-  laminates: { gradient: "from-[#3d2a1c] to-[#664630]", icon: "🎨" },
-  "flush-doors": { gradient: "from-[#705039] to-[#a3795a]", icon: "🚪" },
-  mdf: { gradient: "from-[#523827] to-[#80583d]", icon: "📐" },
+// One lucide icon per category slug
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  doors: DoorClosed,
+  louvers: LayoutGrid,
+  "charcoal-sheets": Leaf,
+  "uv-sheets": Palette,
+  plywood: Layers,
+  laminates: Ruler,
 };
 
-export function CategoryHighlights() {
+type CategoryHighlightsProps = {
+  /**
+   * Slug of the currently selected category (e.g. "plywood").
+   * On /products you can pass searchParams.category here.
+   * Leave undefined on the home page: all tiles stay tan, and turn white on hover.
+   */
+  activeSlug?: string;
+};
+
+export function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
   return (
     <section
-      className="section-pad bg-white"
-      aria-labelledby="categories-heading"
+      className="bg-white"
+      // inline so no global "section" CSS can override the spacing
+      style={{ paddingTop: "3.5rem", paddingBottom: "3.5rem" }}
+      aria-label="Product categories"
     >
       <div className="container-site">
-        <SectionHeading
-          id="categories-heading"
-          eyebrow="Product Range"
-          title="Our Categories"
-          subtitle="From structural plywood to decorative laminates — everything you need for world-class interiors."
-          centered
-        />
+        {/* One box around all tiles: equal padding inside = equal gap between tiles */}
+        <div className="rounded-[28px] border border-[var(--ivory)] bg-[#faf5ef] p-4 md:p-5 shadow-[0_8px_30px_rgba(74,55,40,0.08)]">
+          <div
+            className={cn(
+              "grid grid-cols-2 gap-4 md:gap-5",
+              // desktop: one row, every tile exactly the same width (works for 5 or 6 categories)
+              "md:grid-flow-col md:auto-cols-fr",
+              // mobile: if the last tile is alone in its row, stretch it across both columns
+              "max-md:[&>*:last-child:nth-child(odd)]:col-span-2"
+            )}
+          >
+            {categories.map((cat) => {
+              const Icon = CATEGORY_ICONS[cat.slug] ?? Package;
+              const isActive = cat.slug === activeSlug;
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {categories.map((cat, index) => {
-            const style = CATEGORY_STYLES[cat.slug] ?? {
-              gradient: "from-[#2d2520] to-[#4a3728]",
-              icon: "📦",
-            };
-
-            return (
-              <Link
-                key={cat.id}
-                href={`/products?category=${cat.slug}`}
-                className={cn(
-                  "group relative overflow-hidden rounded-[20px]",
-                  "flex flex-col justify-end",
-                  "min-h-[200px] md:min-h-[240px]",
-                  // First card spans 2 columns on desktop
-                  index === 0 && "md:col-span-2 md:row-span-1",
-                  "transition-transform duration-300 hover:-translate-y-1",
-                  "shadow-[0_4px_20px_rgba(28,28,28,0.12)]",
-                  "hover:shadow-[0_12px_36px_rgba(28,28,28,0.18)]"
-                )}
-                aria-label={`Browse ${cat.name} — ${cat.productCount} products`}
-              >
-                {/* Background gradient */}
-                <div
+              return (
+                <Link
+                  key={cat.id}
+                  href={`/catalogue/${cat.slug}`}
+                  aria-label={`Browse ${cat.name} — ${cat.productCount} products`}
+                  aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "absolute inset-0 bg-gradient-to-br opacity-90",
-                    style.gradient
+                    "group flex flex-col items-center justify-center gap-3 md:gap-4",
+                    "rounded-3xl border-2 px-3 py-8 md:py-12 min-h-[130px] md:min-h-[190px] text-center",
+                    "transition-colors duration-200",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--burgundy)] focus-visible:ring-offset-2",
+                    isActive
+                      ? // active = dark brown, so it stands out from the tan tiles
+                      "bg-[var(--maroon)] border-[var(--maroon)] text-white"
+                      : // default = tan filled, hover = white with tan border
+                      "bg-[var(--burgundy)] border-[var(--burgundy)] text-white hover:bg-white hover:text-[var(--burgundy)]"
                   )}
-                />
-
-                {/* Wood grain overlay */}
-                <svg
-                  className="absolute inset-0 w-full h-full opacity-[0.08]"
-                  xmlns="http://www.w3.org/2000/svg"
-                  preserveAspectRatio="xMidYMid slice"
-                  aria-hidden="true"
                 >
-                  {[0, 1, 2, 3, 4, 5].map((i) => (
-                    <path
-                      key={i}
-                      d={`M0 ${i * 18} Q50 ${i * 18 - 6} 100% ${i * 18}`}
-                      stroke="#c8956c"
-                      strokeWidth="1.5"
-                      fill="none"
-                    />
-                  ))}
-                </svg>
-
-                {/* Top-right product count badge */}
-                <div className="absolute top-4 right-4 text-xs font-medium text-white/60 bg-white/10 px-2.5 py-1 rounded-full">
-                  {cat.productCount} Products
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10" style={{ padding: "1.25rem 1.5rem" }}>
-                  {/* Icon */}
-                  <span className="text-3xl mb-3 block" aria-hidden="true">{style.icon}</span>
-
-                  {/* Name */}
-                  <h3 className="font-serif text-xl font-semibold text-white mb-1">{cat.name}</h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-white/60 leading-relaxed mb-4 hidden md:block line-clamp-2">
-                    {cat.description}
-                  </p>
-
-                  {/* Link arrow */}
-                  {/* <div className="flex items-center gap-1.5 text-[#c8956c] text-sm font-medium group-hover:gap-3 transition-all duration-200">
-                    <span>Shop Now</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </div> */}
-                </div>
-              </Link>
-            );
-          })}
+                  <Icon className="w-9 h-9 md:w-12 md:h-12" strokeWidth={1.6} aria-hidden="true" />
+                  <span className="text-sm md:text-lg font-medium leading-tight">
+                    {cat.name}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

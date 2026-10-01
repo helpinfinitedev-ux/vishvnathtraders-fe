@@ -29,10 +29,10 @@ export function FormField({
 }: FormFieldProps) {
   const inputClass = cn(
     "w-full bg-white border transition-all duration-200",
-    "text-[#1c1c1c] placeholder:text-[#9ca3af]",
+    "text-[var(--ink)] placeholder:text-[var(--ink-soft)]",
     error
       ? "border-red-400 focus:ring-red-300"
-      : "border-[#e8ddd4] focus:border-[#c8956c] focus:ring-[#c8956c]/20",
+      : "border-[#e8ddd4] focus:border-[var(--burgundy)] focus:ring-[var(--burgundy)]/20",
     "focus:outline-none focus:ring-2",
     className
   );
@@ -47,9 +47,9 @@ export function FormField({
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="font-medium text-[#1c1c1c]" style={labelStyle}>
+      <label htmlFor={id} className="font-medium text-[var(--ink)]" style={labelStyle}>
         {label}
-        {props.required && <span className="text-[#c8956c] ml-0.5">*</span>}
+        {props.required && <span className="text-[var(--burgundy)] ml-0.5">*</span>}
       </label>
 
       {as === "textarea" ? (

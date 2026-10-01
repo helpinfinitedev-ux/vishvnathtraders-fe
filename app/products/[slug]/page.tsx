@@ -36,6 +36,7 @@ import { StickyActionBar } from "@/components/products/StickyActionBar";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { getCategoryBySlug } from "@/data/categories";
 import { SITE_CONFIG } from "@/data/siteConfig";
+import { useCart } from "@/context/CartContext";
 
 // ── Icon map for benefits ─────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -72,6 +73,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const [selectedThickness, setSelectedThickness] = useState(product.thickness[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
 
   const category = getCategoryBySlug(product.category);
   const related = getRelatedProducts(product);
@@ -141,10 +143,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             <div className="flex flex-col" style={{ gap: "var(--space-5)" }}>
               {/* Brand + Badges */}
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#c8956c] mb-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--burgundy)] mb-2">
                   {brand}
                 </p>
-                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[#1c1c1c] leading-tight mb-3">
+                <h1 className="font-serif text-2xl md:text-3xl font-semibold text-[var(--ink)] leading-tight mb-3">
                   {product.name}
                 </h1>
                 <div className="flex flex-wrap gap-2 mb-1">
@@ -161,7 +163,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </div>
 
               {/* Short description */}
-              <p className="text-[#6b7280] leading-relaxed text-[0.95rem]">
+              <p className="text-[var(--ink-soft)] leading-relaxed text-[0.95rem]">
                 {product.shortDescription}
               </p>
 
@@ -190,12 +192,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
               {/* Quantity */}
               <div>
-                <p className="text-sm font-semibold text-[#1c1c1c] mb-3">Quantity</p>
+                <p className="text-sm font-semibold text-[var(--ink)] mb-3">Quantity</p>
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="w-10 h-10 rounded-l-[8px] border border-[#e8ddd4] bg-white text-[#1c1c1c] font-semibold text-lg hover:bg-[#f2e8dc] transition-colors"
+                    className="w-10 h-10 rounded-l-[8px] border border-[#e8ddd4] bg-white text-[var(--ink)] font-semibold text-lg hover:bg-[#f2e8dc] transition-colors"
                     aria-label="Decrease quantity"
                   >
                     −
@@ -205,13 +207,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                     min={1}
                     value={quantity}
                     onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-                    className="w-14 h-10 text-center border-y border-[#e8ddd4] bg-white text-[#1c1c1c] font-semibold text-sm outline-none"
+                    className="w-14 h-10 text-center border-y border-[#e8ddd4] bg-white text-[var(--ink)] font-semibold text-sm outline-none"
                     aria-label="Quantity"
                   />
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
-                    className="w-10 h-10 rounded-r-[8px] border border-[#e8ddd4] bg-white text-[#1c1c1c] font-semibold text-lg hover:bg-[#f2e8dc] transition-colors"
+                    className="w-10 h-10 rounded-r-[8px] border border-[#e8ddd4] bg-white text-[var(--ink)] font-semibold text-lg hover:bg-[#f2e8dc] transition-colors"
                     aria-label="Increase quantity"
                   >
                     +
@@ -227,9 +229,19 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                   className="flex-1 flex items-center justify-center gap-2"
                   disabled={!product.inStock}
                   style={{ padding: "14px 24px", minHeight: "48px" }}
+                  onClick={() => addToCart({
+                    productId: product.slug,
+                    name: product.name,
+                    price: product.price,
+                    mrp: product.mrp,
+                    image: product.images[0] || "",
+                    quantity,
+                    thickness: selectedThickness,
+                    size: selectedSize
+                  })}
                 >
                   <ShoppingCart className="w-4 h-4" />
-                  {product.inStock ? "Get Best Price" : "Out of Stock"}
+                  {product.inStock ? "Add to Cart" : "Out of Stock"}
                 </Button>
                 <Button
                   variant="outline"
@@ -250,7 +262,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </div>
 
               {/* Share */}
-              <button className="flex items-center gap-1.5 text-sm text-[#6b7280] hover:text-[#c8956c] transition-colors self-start">
+              <button className="flex items-center gap-1.5 text-sm text-[var(--ink-soft)] hover:text-[var(--burgundy)] transition-colors self-start">
                 <Share2 className="w-3.5 h-3.5" />
                 Share this product
               </button>
@@ -293,7 +305,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               {/* Use Cases */}
               {useCases.length > 0 && (
                 <div>
-                  <h3 className="font-serif text-lg font-semibold text-[#1c1c1c] mb-4">
+                  <h3 className="font-serif text-lg font-semibold text-[var(--ink)] mb-4">
                     Ideal Use Cases
                   </h3>
                   <div className="pdp-usecases">
@@ -333,11 +345,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       {/* Already shown inline above via TrustBadges */}
 
       {/* ── 6. Bulk Enquiry + Brochure ── */}
-      <section className="pdp-section bg-white">
+      {/* <section className="pdp-section bg-white">
         <div className="container-site" style={{ maxWidth: "720px" }}>
           <EnquiryBox productName={product.name} />
         </div>
-      </section>
+      </section> */}
 
       {/* ── 7. Reviews ── */}
       <section className="pdp-section">
@@ -395,9 +407,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ── 11. Mobile Sticky Action Bar ── */}
       <StickyActionBar
+        productId={product.slug}
         productName={product.name}
+        price={product.price}
+        mrp={product.mrp}
+        image={product.images[0] || ""}
         selectedThickness={selectedThickness}
         selectedSize={selectedSize}
         inStock={product.inStock}

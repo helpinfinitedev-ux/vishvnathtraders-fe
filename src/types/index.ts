@@ -45,6 +45,21 @@ export interface Product {
   pricePerSqFt?: number;
 }
 
+export interface CatalogueProduct {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  subcategory?: string; // For doors or laminates
+  type?: string; // e.g. WPC, PVC for louvers
+  brand?: string;
+  productLine?: string; // For plywood brands
+  sizes?: string[]; // E.g. 5", 8x4 ft
+  thickness?: string[]; // E.g. 1mm, 0.8mm
+  images: string[];
+  description?: string;
+}
+
 export interface Category {
   id: string;
   slug: string;
@@ -52,6 +67,7 @@ export interface Category {
   description: string;
   image: string;
   productCount: number;
+  subcategories?: string[];
 }
 
 export interface BlogPost {

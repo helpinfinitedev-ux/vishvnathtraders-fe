@@ -9,7 +9,6 @@ import { useState, useMemo } from "react";
 import { LayoutGrid, List, SlidersHorizontal, X } from "lucide-react";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { FilterSidebar } from "@/components/products/FilterSidebar";
 import { ProductCard } from "@/components/products/ProductCard";
 import { products, PRICE_RANGE } from "@/data/products";
@@ -105,57 +104,222 @@ function ProductsPageInner() {
         ]}
       />
 
-      {/* Toolbar: sort + view + filter toggle */}
-      <div className="bg-white border-b border-[#f0e8de] py-4 md:py-5">
+      {/* ── Toolbar: sort + view + filter toggle ── */}
+      <div
+        style={{
+          background: "var(--color-surface)",
+          borderBottom: "1px solid var(--color-border)",
+          padding: "var(--space-5) 0",
+        }}
+      >
         <div className="container-site">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-            <p className="text-sm text-[#6b7280]">
-              {sorted.length} products found
+          {/* Main toolbar row */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between" style={{ gap: "var(--space-4)" }}>
+            {/* Left — product count */}
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: "0.95rem",
+                color: "var(--color-muted)",
+                fontWeight: 500,
+              }}
+            >
+              Showing{" "}
+              <span style={{ color: "var(--color-accent)", fontWeight: 700 }}>
+                {sorted.length}
+              </span>{" "}
+              products
             </p>
-            <div className="flex items-center gap-3">
-              <select
-                value={sort}
-                onChange={(e) => setSort(e.target.value as SortOption)}
-                className="text-sm border border-[#e8ddd4] rounded-[10px] px-3 py-2 text-[#374151] bg-white focus:outline-none focus:border-[#c8956c] cursor-pointer"
-                aria-label="Sort products"
-              >
-                {SORT_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
 
-              {/* View toggle */}
-              <div className="hidden md:flex items-center border border-[#e8ddd4] rounded-[10px] overflow-hidden">
+            {/* Right — controls */}
+            <div className="flex items-center" style={{ gap: "var(--space-3)" }}>
+              {/* Sort dropdown */}
+              <div style={{ position: "relative" }}>
+                <select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value as SortOption)}
+                  aria-label="Sort products"
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                    color: "var(--color-primary)",
+                    background: "var(--color-bg)",
+                    border: "1.5px solid var(--color-border)",
+                    borderRadius: "var(--radius-md)",
+                    padding: "0.625rem 2.5rem 0.625rem 1rem",
+                    cursor: "pointer",
+                    outline: "none",
+                    minHeight: "44px",
+                    transition: "border-color var(--transition), box-shadow var(--transition)",
+                    appearance: "none",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E6461' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 0.75rem center",
+                    backgroundSize: "16px",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = "var(--color-accent)";
+                    e.currentTarget.style.boxShadow = "0 0 0 3px rgba(111, 23, 38,0.12)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = "var(--color-border)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
+                  {SORT_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* View toggle — desktop only */}
+              <div
+                className="hidden md:flex items-center overflow-hidden"
+                style={{
+                  border: "1.5px solid var(--color-border)",
+                  borderRadius: "var(--radius-md)",
+                }}
+              >
                 <button
                   onClick={() => setView("grid")}
-                  className={cn("p-2.5 transition-colors", view === "grid" ? "bg-[#c8956c] text-white" : "text-[#6b7280] hover:bg-[#f2e8dc]")}
                   aria-label="Grid view"
                   aria-pressed={view === "grid"}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "44px",
+                    height: "44px",
+                    background: view === "grid" ? "var(--color-accent)" : "transparent",
+                    color: view === "grid" ? "#fff" : "var(--color-muted)",
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "all var(--transition)",
+                  }}
                 >
-                  <LayoutGrid className="w-4 h-4" />
+                  <LayoutGrid className="w-[18px] h-[18px]" />
                 </button>
+                <div style={{ width: "1px", height: "24px", background: "var(--color-border)" }} />
                 <button
                   onClick={() => setView("list")}
-                  className={cn("p-2.5 transition-colors", view === "list" ? "bg-[#c8956c] text-white" : "text-[#6b7280] hover:bg-[#f2e8dc]")}
                   aria-label="List view"
                   aria-pressed={view === "list"}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "44px",
+                    height: "44px",
+                    background: view === "list" ? "var(--color-accent)" : "transparent",
+                    color: view === "list" ? "#fff" : "var(--color-muted)",
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "all var(--transition)",
+                  }}
                 >
-                  <List className="w-4 h-4" />
+                  <List className="w-[18px] h-[18px]" />
                 </button>
               </div>
 
               {/* Mobile filter toggle */}
-              <Button
-                variant="outline"
-                size="sm"
-                className="md:hidden flex items-center gap-2"
+              <button
+                className="md:hidden"
                 onClick={() => setMobileSidebarOpen(true)}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "var(--space-2)",
+                  padding: "0.625rem 1.25rem",
+                  minHeight: "44px",
+                  background: "var(--color-accent-light)",
+                  color: "var(--color-accent-dark)",
+                  border: "1.5px solid rgba(111, 23, 38,0.25)",
+                  borderRadius: "var(--radius-md)",
+                  fontFamily: "var(--font-heading)",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                  transition: "all var(--transition)",
+                }}
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 Filters
-              </Button>
+              </button>
             </div>
           </div>
+
+          {/* Active filter tags row */}
+          {activeTags.length > 0 && (
+            <div
+              className="flex flex-wrap items-center"
+              style={{
+                gap: "var(--space-2)",
+                marginTop: "var(--space-4)",
+                paddingTop: "var(--space-4)",
+                borderTop: "1px solid var(--color-border)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "var(--color-muted)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginRight: "var(--space-1)",
+                }}
+              >
+                Active:
+              </span>
+              {activeTags.map((tag) => (
+                <button
+                  key={tag.key}
+                  onClick={tag.clear}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "var(--space-1) var(--space-3)",
+                    background: "var(--color-accent-light)",
+                    color: "var(--color-accent-dark)",
+                    border: "1px solid rgba(111, 23, 38,0.2)",
+                    borderRadius: "var(--radius-full)",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontFamily: "var(--font-body)",
+                    transition: "all var(--transition)",
+                  }}
+                  aria-label={`Remove filter: ${tag.label}`}
+                >
+                  {tag.label}
+                  <X className="w-3 h-3" />
+                </button>
+              ))}
+              <button
+                onClick={clearFilters}
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "var(--color-muted)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "2px",
+                  marginLeft: "var(--space-2)",
+                  fontFamily: "var(--font-body)",
+                  transition: "color var(--transition)",
+                }}
+              >
+                Clear all
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -172,8 +336,8 @@ function ProductsPageInner() {
             {paginated.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-24 text-center">
                 <p className="text-4xl mb-4">🪵</p>
-                <h2 className="font-serif text-xl font-semibold text-[#1c1c1c] mb-2">No products found</h2>
-                <p className="text-[#6b7280] text-sm mb-6">Try adjusting your filters to see more results.</p>
+                <h2 className="font-serif text-xl font-semibold text-[var(--ink)] mb-2">No products found</h2>
+                <p className="text-[var(--ink-soft)] text-sm mb-6">Try adjusting your filters to see more results.</p>
                 <Button variant="wood" size="md" onClick={clearFilters}>Clear Filters</Button>
               </div>
             ) : (
@@ -190,14 +354,57 @@ function ProductsPageInner() {
 
                 {/* Load more */}
                 {hasMore && (
-                  <div className="flex justify-center mt-10">
-                    <Button
-                      variant="outline"
-                      size="lg"
+                  <div style={{ display: "flex", justifyContent: "center", marginTop: "var(--space-7)" }}>
+                    <button
                       onClick={() => setPage((p) => p + 1)}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "var(--space-3)",
+                        padding: "0.875rem 2.5rem",
+                        minHeight: "48px",
+                        background: "var(--color-surface)",
+                        color: "var(--color-accent-dark)",
+                        border: "1.5px solid var(--color-border)",
+                        borderRadius: "var(--radius-full)",
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "0.85rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.07em",
+                        textTransform: "uppercase",
+                        cursor: "pointer",
+                        boxShadow: "var(--shadow-sm)",
+                        transition: "all var(--transition)",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "var(--color-accent)";
+                        e.currentTarget.style.color = "#fff";
+                        e.currentTarget.style.borderColor = "var(--color-accent)";
+                        e.currentTarget.style.transform = "translateY(-2px)";
+                        e.currentTarget.style.boxShadow = "var(--shadow-wood)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "var(--color-surface)";
+                        e.currentTarget.style.color = "var(--color-accent-dark)";
+                        e.currentTarget.style.borderColor = "var(--color-border)";
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow = "var(--shadow-sm)";
+                      }}
                     >
-                      Load More ({sorted.length - paginated.length} remaining)
-                    </Button>
+                      Load More
+                      <span
+                        style={{
+                          padding: "2px 10px",
+                          background: "var(--color-accent-light)",
+                          borderRadius: "var(--radius-full)",
+                          fontSize: "0.7rem",
+                          fontWeight: 700,
+                          color: "var(--color-accent-dark)",
+                        }}
+                      >
+                        {sorted.length - paginated.length} left
+                      </span>
+                    </button>
                   </div>
                 )}
               </>
@@ -214,7 +421,7 @@ function ProductsPageInner() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-serif text-lg font-semibold">Filters</h2>
               <button onClick={() => setMobileSidebarOpen(false)} aria-label="Close filters">
-                <X className="w-5 h-5 text-[#6b7280]" />
+                <X className="w-5 h-5 text-[var(--ink-soft)]" />
               </button>
             </div>
             <FilterSidebar filters={filters} onChange={handleFilterChange} onClear={clearFilters} />

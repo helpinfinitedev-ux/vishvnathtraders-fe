@@ -24,7 +24,7 @@ export function StarRating({ rating, max = 5, size = "sm", className }: StarRati
           className={cn(
             starSize,
             i < rating
-              ? "fill-[#c8956c] text-[#c8956c]"
+              ? "fill-[var(--burgundy)] text-[var(--burgundy)]"
               : "fill-transparent text-[#e8ddd4]"
           )}
         />

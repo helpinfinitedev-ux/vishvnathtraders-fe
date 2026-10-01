@@ -21,7 +21,7 @@ function StarRatingDisplay({ rating }: { rating: number }) {
           key={i}
           className={cn(
             "w-4 h-4",
-            i < rating ? "fill-[#c8956c] text-[#c8956c]" : "fill-none text-[#e8ddd4]"
+            i < rating ? "fill-[var(--burgundy)] text-[var(--burgundy)]" : "fill-none text-[#e8ddd4]"
           )}
         />
       ))}

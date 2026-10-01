@@ -86,16 +86,16 @@ export default function ContactPage() {
               <a
                 key={title}
                 href={href ?? undefined}
-                className="group bg-white p-6 rounded-[18px] border border-[#f0e8de] shadow-[0_2px_12px_rgba(28,28,28,0.05)] hover:shadow-[0_6px_24px_rgba(200,149,108,0.14)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col gap-3"
+                className="group bg-white p-6 rounded-[18px] border border-[#f0e8de] shadow-[0_2px_12px_rgba(33, 26, 25,0.05)] hover:shadow-[0_6px_24px_rgba(111, 23, 38,0.14)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col gap-3"
                 style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}
               >
-                <div className="w-11 h-11 rounded-[12px] bg-[#f2e8dc] flex items-center justify-center group-hover:bg-[#c8956c]/20 transition-colors">
-                  <Icon className="w-5 h-5 text-[#c8956c]" />
+                <div className="w-11 h-11 rounded-[12px] bg-[#f2e8dc] flex items-center justify-center group-hover:bg-[var(--burgundy)]/20 transition-colors">
+                  <Icon className="w-5 h-5 text-[var(--burgundy)]" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm text-[#1c1c1c] mb-1">{title}</p>
+                  <p className="font-semibold text-sm text-[var(--ink)] mb-1">{title}</p>
                   {lines.map((line) => (
-                    <p key={line} className="text-xs text-[#6b7280] leading-relaxed">{line}</p>
+                    <p key={line} className="text-xs text-[var(--ink-soft)] leading-relaxed">{line}</p>
                   ))}
                 </div>
               </a>
@@ -120,10 +120,10 @@ export default function ContactPage() {
                 {submitted ? (
                   <div className="flex flex-col items-center text-center py-10 gap-4">
                     <div className="w-20 h-20 rounded-full bg-[#f2e8dc] flex items-center justify-center">
-                      <CheckCircle2 className="w-10 h-10 text-[#c8956c]" />
+                      <CheckCircle2 className="w-10 h-10 text-[var(--burgundy)]" />
                     </div>
-                    <h2 className="font-serif text-2xl font-semibold text-[#1c1c1c]">Message Sent!</h2>
-                    <p className="text-base text-[#6b7280] leading-relaxed max-w-sm">
+                    <h2 className="font-serif text-2xl font-semibold text-[var(--ink)]">Message Sent!</h2>
+                    <p className="text-base text-[var(--ink-soft)] leading-relaxed max-w-sm">
                       Thank you, <strong>{form.name}</strong>. We&apos;ll reply to <strong>{form.email}</strong> within 24 hours.
                     </p>
                     <Button variant="outline" size="lg" onClick={() => { setSubmitted(false); setForm(INITIAL_FORM); }} className="mt-2">
@@ -211,20 +211,20 @@ export default function ContactPage() {
                 >
                   <defs>
                     <pattern id="mapgrid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#c8956c" strokeWidth="0.5" />
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="var(--burgundy)" strokeWidth="0.5" />
                     </pattern>
                   </defs>
                   <rect width="100%" height="100%" fill="url(#mapgrid)" />
                 </svg>
                 <div className="relative z-10 text-center">
-                  <MapPin className="w-10 h-10 text-[#c8956c] mx-auto mb-2" />
-                  <p className="font-semibold text-[#1c1c1c] text-sm">{SITE_CONFIG.address.city}</p>
-                  <p className="text-xs text-[#6b7280]">{SITE_CONFIG.address.state}, India</p>
+                  <MapPin className="w-10 h-10 text-[var(--burgundy)] mx-auto mb-2" />
+                  <p className="font-semibold text-[var(--ink)] text-sm">{SITE_CONFIG.address.city}</p>
+                  <p className="text-xs text-[var(--ink-soft)]">{SITE_CONFIG.address.state}, India</p>
                   <a
                     href="https://maps.google.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-block text-xs font-medium text-[#c8956c] hover:underline"
+                    className="mt-3 inline-block text-xs font-medium text-[var(--burgundy)] hover:underline"
                   >
                     Open in Google Maps →
                   </a>
@@ -233,12 +233,12 @@ export default function ContactPage() {
 
               {/* Full address card */}
               <div className="bg-white rounded-[18px] border border-[#f0e8de] p-6" style={{ paddingTop: "1.55rem", paddingBottom: "1.8rem", paddingRight: "1.8rem", paddingLeft: "1.8rem" }}>
-                <h3 className="font-serif text-base font-semibold text-[#1c1c1c] mb-4">Corporate Office & Plant</h3>
+                <h3 className="font-serif text-base font-semibold text-[var(--ink)] mb-4">Corporate Office & Plant</h3>
                 <address className="not-italic space-y-2 text-sm text-[#4b5563] leading-relaxed">
                   <p>{SITE_CONFIG.address.line1}</p>
                   <p>{SITE_CONFIG.address.line2}</p>
                   <p>{SITE_CONFIG.address.city}, {SITE_CONFIG.address.state} – {SITE_CONFIG.address.pin}</p>
-                  <p className="font-medium text-[#1c1c1c] mt-3">CIN: U20101HR1994PLC012345</p>
+                  <p className="font-medium text-[var(--ink)] mt-3">CIN: U20101HR1994PLC012345</p>
                   <p>GST: 06ABCDE1234F1Z5</p>
                 </address>
               </div>

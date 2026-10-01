@@ -10,7 +10,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
+import { Menu, X, ChevronDown, ExternalLink, ShoppingCart } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import { CartDrawer } from "@/components/cart/CartDrawer";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -21,13 +23,12 @@ const LEFT_LINKS = [
 ];
 
 const PRODUCT_DROPDOWN = [
-  { label: "All Products", href: "/products" },
-  { label: "Plywood", href: "/products?category=plywood" },
-  { label: "Blockboard", href: "/products?category=blockboard" },
-  { label: "Veneer", href: "/products?category=veneer" },
-  { label: "Laminates", href: "/products?category=laminates" },
-  { label: "Flush Doors", href: "/products?category=flush-doors" },
-  { label: "MDF & HDF", href: "/products?category=mdf" },
+  { label: "Doors", href: "/catalogue/doors" },
+  { label: "Louvers", href: "/catalogue/louvers" },
+  { label: "Charcoal Sheets", href: "/catalogue/charcoal-sheets" },
+  { label: "U.V. Sheets", href: "/catalogue/uv-sheets" },
+  { label: "Plywood", href: "/catalogue/plywood" },
+  { label: "Laminates", href: "/catalogue/laminates" },
 ];
 
 const RIGHT_LINKS = [
@@ -41,7 +42,7 @@ const RIGHT_LINKS = [
 function LogoMark({ size = 34 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 38 38" fill="none" aria-hidden="true">
-      <rect width="38" height="38" rx="8" fill="#c8956c" />
+      <rect width="38" height="38" rx="8" fill="var(--burgundy)" />
       <path d="M8 12 Q19 10 30 12" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
       <path d="M8 17 Q19 15 30 17" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
       <path d="M8 22 Q19 20 30 22" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
@@ -143,6 +144,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const productsButtonRef = useRef<HTMLButtonElement>(null);
+  const { cartCount, setIsCartOpen } = useCart();
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -414,6 +416,46 @@ export function Navbar() {
                 </Link>
               ))}
 
+              {/* Desktop Cart Icon */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="nav-link-hover"
+                aria-label={`Shopping Cart with ${cartCount} items`}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--color-primary)",
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                }}
+              >
+                <ShoppingCart size={22} />
+                {cartCount > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-8px",
+                      right: "-8px",
+                      background: "var(--color-accent)",
+                      color: "white",
+                      fontSize: "0.65rem",
+                      fontWeight: 700,
+                      minWidth: "18px",
+                      height: "18px",
+                      borderRadius: "9px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "0 4px",
+                    }}
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+
               {/* Distributor CTA pill */}
               <Link
                 href="/distributor"
@@ -446,29 +488,71 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Hamburger — visible only on mobile */}
-            <button
-              id="mobile-menu-toggle"
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-drawer"
-              onClick={() => setMobileOpen((v) => !v)}
-              className="hamburger-btn"
-              style={{
-                background: "transparent",
-                border: "1px solid var(--color-border)",
-                cursor: "pointer",
-                color: "var(--color-primary)",
-                padding: "0.4rem",
-                borderRadius: "var(--radius-sm)",
-                display: "none", // shown via CSS on mobile
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "border-color var(--transition)",
-              }}
-            >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
+            {/* Mobile Actions: Cart + Hamburger */}
+            <div className="mobile-actions" style={{ display: "none", alignItems: "center", gap: "1rem" }}>
+              {/* Mobile Cart Icon */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                aria-label={`Shopping Cart with ${cartCount} items`}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--color-primary)",
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  padding: "0.2rem",
+                }}
+              >
+                <ShoppingCart size={22} />
+                {cartCount > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-4px",
+                      right: "-6px",
+                      background: "var(--color-accent)",
+                      color: "white",
+                      fontSize: "0.65rem",
+                      fontWeight: 700,
+                      minWidth: "18px",
+                      height: "18px",
+                      borderRadius: "9px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "0 4px",
+                    }}
+                  >
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Hamburger — visible only on mobile */}
+              <button
+                id="mobile-menu-toggle"
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-drawer"
+                onClick={() => setMobileOpen((v) => !v)}
+                style={{
+                  background: "transparent",
+                  border: "1px solid var(--color-border)",
+                  cursor: "pointer",
+                  color: "var(--color-primary)",
+                  padding: "0.4rem",
+                  borderRadius: "var(--radius-sm)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "border-color var(--transition)",
+                }}
+              >
+                {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </nav>
         </div>
       </header>
@@ -483,7 +567,7 @@ export function Navbar() {
           position: "fixed",
           inset: 0,
           zIndex: 55,
-          background: "rgba(28,28,28,0.45)",
+          background: "rgba(33, 26, 25,0.45)",
           backdropFilter: "blur(3px)",
           opacity: mobileOpen ? 1 : 0,
           visibility: mobileOpen ? "visible" : "hidden",
@@ -712,20 +796,23 @@ export function Navbar() {
         />
       </aside>
 
+      {/* Cart Drawer Component */}
+      <CartDrawer />
+
       {/* ================================================================
           SCOPED CSS — responsive rules + hover effects
       ================================================================ */}
       <style>{`
-        /* Desktop: hide hamburger */
+        /* Desktop: hide mobile actions */
         @media (min-width: 768px) {
-          .hamburger-btn { display: none !important; }
+          .mobile-actions { display: none !important; }
         }
 
-        /* Mobile: hide desktop nav groups, show hamburger */
+        /* Mobile: hide desktop nav groups, show mobile actions */
         @media (max-width: 767px) {
           .nav-left { display: none !important; }
           .nav-right-links { display: none !important; }
-          .hamburger-btn { display: flex !important; }
+          .mobile-actions { display: flex !important; }
         }
 
         /* Logo hover lift */
@@ -754,7 +841,7 @@ export function Navbar() {
         .distributor-btn:hover {
           background: var(--color-accent-dark) !important;
           transform: translateY(-2px) !important;
-          box-shadow: 0 8px 24px -4px rgba(200,149,108,0.45) !important;
+          box-shadow: 0 8px 24px -4px rgba(111, 23, 38,0.45) !important;
         }
       `}</style>
     </>
