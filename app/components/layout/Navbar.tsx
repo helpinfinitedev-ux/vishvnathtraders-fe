@@ -23,13 +23,12 @@ const LEFT_LINKS = [
 ];
 
 const PRODUCT_DROPDOWN = [
-  { label: "All Products", href: "/products" },
-  { label: "Plywood", href: "/products?category=plywood" },
-  { label: "Blockboard", href: "/products?category=blockboard" },
-  { label: "Veneer", href: "/products?category=veneer" },
-  { label: "Laminates", href: "/products?category=laminates" },
-  { label: "Flush Doors", href: "/products?category=flush-doors" },
-  { label: "MDF & HDF", href: "/products?category=mdf" },
+  { label: "Doors", href: "/catalogue/doors" },
+  { label: "Louvers", href: "/catalogue/louvers" },
+  { label: "Charcoal Sheets", href: "/catalogue/charcoal-sheets" },
+  { label: "U.V. Sheets", href: "/catalogue/uv-sheets" },
+  { label: "Plywood", href: "/catalogue/plywood" },
+  { label: "Laminates", href: "/catalogue/laminates" },
 ];
 
 const RIGHT_LINKS = [

@@ -18,12 +18,12 @@ import { cn } from "@/lib/utils";
 
 // One lucide icon per category slug
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  doors: DoorClosed,
+  louvers: LayoutGrid,
+  "charcoal-sheets": Leaf,
+  "uv-sheets": Palette,
   plywood: Layers,
-  blockboard: LayoutGrid,
-  veneer: Leaf,
-  laminates: Palette,
-  "flush-doors": DoorClosed,
-  mdf: Ruler,
+  laminates: Ruler,
 };
 
 type CategoryHighlightsProps = {
@@ -62,7 +62,7 @@ export function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
               return (
                 <Link
                   key={cat.id}
-                  href={`/products?category=${cat.slug}`}
+                  href={`/catalogue/${cat.slug}`}
                   aria-label={`Browse ${cat.name} — ${cat.productCount} products`}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
