@@ -65,7 +65,7 @@ export default function RootLayout({
           <Navbar />
 
           {/* Page content — pt accounts for fixed header height */}
-          <main className="flex-1 pt-16 md:pt-20" id="main-content">
+          <main className="flex-1" id="main-content">
             {children}
           </main>
 
