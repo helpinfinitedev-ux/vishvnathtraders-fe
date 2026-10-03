@@ -59,9 +59,16 @@ export default function DistributorPage() {
   return (
     <div className="bg-[#fafaf8] min-h-screen">
       {/* Hero */}
-      <section className="bg-[var(--ink)] relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a18] to-[var(--maroon)]" aria-hidden="true" />
-        <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-[var(--burgundy)]/8 rounded-full blur-[120px]" aria-hidden="true" />
+      <section 
+        className="relative overflow-hidden py-24 md:py-32 flex items-center min-h-[400px]"
+        style={{
+          backgroundImage: "url('/plywood.avif')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
+        <div className="absolute top-0 right-0 w-[600px] h-[500px] bg-[var(--burgundy)]/20 rounded-full blur-[120px]" aria-hidden="true" />
         <div className="container-site relative z-10 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--burgundy)] mb-4">Partner With Us</p>
           <h1 className="font-serif text-white font-semibold leading-tight mb-5" style={{ fontSize: "clamp(1.8rem, 4vw, 3rem)" }}>

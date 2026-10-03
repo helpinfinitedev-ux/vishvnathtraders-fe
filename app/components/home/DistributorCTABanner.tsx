@@ -152,7 +152,7 @@ export function DistributorCTABanner() {
           {/* ───────── Image panel ───────── */}
           <div className="dcb-hero">
             <Image
-              src="/images/distributor-banner.jpg"
+              src="/CTA.avif"
               alt="WoodCraft plywood sheets in a warehouse"
               fill
               priority
@@ -162,9 +162,9 @@ export function DistributorCTABanner() {
             <div className="dcb-shade" />
 
             <div className="dcb-copy">
-              <span className="dcb-badge">
+              {/* <span className="dcb-badge">
                 <i>W</i>WoodCraft Partners
-              </span>
+              </span> */}
 
               <h2 id="distributor-cta-heading" className="dcb-title">
                 Grow your business with India&apos;s trusted plywood brand
