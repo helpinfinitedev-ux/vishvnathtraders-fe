@@ -10,47 +10,21 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 export function HeroBanner() {
   return (
     <section
-      className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#fafaf8] py-20 lg:py-28"
+      className="relative min-h-[85vh] flex items-center justify-center overflow-hidden py-20 lg:py-28"
       aria-label="Hero banner"
+      style={{
+        backgroundImage: "url('/banner.avif')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
       {/* ── Background ── */}
       <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#fafaf8] to-[var(--ivory)]" />
-
-        {/* Wood-grain SVG texture overlay */}
-        <svg
-          className="absolute inset-0 w-full h-full opacity-[0.03]"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <filter id="grain">
-              <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-              <feColorMatrix type="saturate" values="0" />
-            </filter>
-          </defs>
-          <rect width="100%" height="100%" filter="url(#grain)" />
-        </svg>
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/60" />
 
         {/* Ambient warm glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] rounded-full bg-[var(--burgundy)]/10 blur-[140px]" />
-
-        {/* Diagonal wood plank lines */}
-        <div className="absolute right-0 top-0 bottom-0 w-[45%] opacity-25 hidden lg:block">
-          {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="absolute w-full"
-              style={{
-                top: `${i * 16 - 4}%`,
-                height: "14%",
-                background: `linear-gradient(180deg, transparent, rgba(111, 23, 38,${0.04 + i * 0.01}), transparent)`,
-                transform: "skewY(-3deg)",
-              }}
-            />
-          ))}
-        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] rounded-full bg-[var(--burgundy)]/20 blur-[140px]" />
       </div>
 
       {/* ── Content ── */}
@@ -59,18 +33,18 @@ export function HeroBanner() {
 
           {/* Headline */}
           <h1
-            className="font-serif text-[var(--ink)] font-semibold tracking-tight leading-[1.08] mb-8 animate-fade-up"
-            style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)", animationDelay: "80ms", marginTop: "5rem" }}
+            className="font-serif text-white font-semibold tracking-tight leading-[1.08] mb-8 animate-fade-up"
+            style={{ fontSize: "clamp(2.8rem, 6.5vw, 5.8rem)", animationDelay: "80ms", marginTop: "5rem", color: "#baada0ff" }}
           >
             Engineered for{" "}
-            <span className="italic text-[var(--burgundy)] font-normal">Excellence.</span>
+            <span className="italic text-[#e8ddd4] font-normal">Excellence.</span>
             <br />
             Built to Last.
           </h1>
 
           {/* Subtext */}
           <p
-            className="text-[#4b5563] text-lg sm:text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl font-normal animate-fade-up"
+            className="text-white/80 text-lg sm:text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl font-normal animate-fade-up"
             style={{ animationDelay: "160ms" }}
           >
             Premium plywood, blockboard, veneer, and laminates crafted to the highest ISI standards

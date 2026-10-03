@@ -4,112 +4,221 @@
 
 import Link from "next/link";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
-import { formatDate, cn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import type { BlogPost } from "@/types";
 
 interface BlogCardProps {
   post: BlogPost;
   featured?: boolean; // larger hero card variant
-  className?: string;
 }
 
-export function BlogCard({ post, featured = false, className }: BlogCardProps) {
-  return (
-    <article
-      className={cn(
-        "group flex flex-col h-full bg-white rounded-[20px] overflow-hidden border border-[#f0e8de]",
-        "shadow-[0_2px_12px_rgba(33, 26, 25,0.05)]",
-        "hover:shadow-[0_6px_24px_rgba(111, 23, 38,0.12)]",
-        "hover:-translate-y-0.5 transition-all duration-300",
-        className
-      )}
-    >
-      {/* Cover image */}
-      <Link href={`/blogs/${post.slug}`} aria-label={`Read: ${post.title}`}>
-        <div
-          className={cn(
-            "relative overflow-hidden bg-gradient-to-br from-[var(--maroon)] to-[var(--ink)]",
-            featured ? "h-[300px] md:h-[400px] lg:h-[480px]" : "aspect-[16/10]"
-          )}
-        >
-          {/* Wood-grain decorative overlay */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-[0.12]"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-            aria-hidden="true"
-          >
-            {[0, 1, 2, 3, 4].map((i) => (
-              <path
-                key={i}
-                d={`M0 ${i * 20} Q50 ${i * 20 - 8} 100% ${i * 20}`}
-                stroke="var(--burgundy)"
-                strokeWidth="2"
-                fill="none"
-              />
-            ))}
-          </svg>
+const CSS = `
+.bc-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid #EADFCB;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+  text-decoration: none;
+}
+.bc-card * {
+  box-sizing: border-box;
+}
+.bc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px -8px rgba(111, 23, 38, 0.15);
+}
+.bc-card:hover .bc-img {
+  transform: scale(1.05);
+}
+.bc-img-wrap {
+  position: relative;
+  height: 210px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #6F1726, #52121D, #D8C3A5);
+  flex-shrink: 0;
+}
+.bc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.bc-body {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  flex-grow: 1;
+}
+.bc-cat {
+  color: #6F1726;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+.bc-title {
+  color: #52121D;
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 0 0 12px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: inherit;
+  font-weight: 700;
+}
+.bc-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #6B5A55;
+  font-size: 13px;
+  margin: 0 0 20px 0;
+}
+.bc-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bc-excerpt {
+  display: none;
+}
+.bc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #EADFCB;
+  padding-top: 16px;
+  margin-top: auto;
+}
+.bc-author {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #2A1A1D;
+  font-size: 14px;
+}
+.bc-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #6F1726;
+  color: #F7F1E7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+.bc-read-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6F1726;
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 44px;
+}
 
-          {/* Category pill */}
-          <div className="absolute bottom-4 left-5">
-            <div className="bg-[var(--burgundy)] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium shadow-md">
-              {post.category}
+/* Featured variation */
+.bc-card.is-featured {
+  flex-direction: row;
+}
+.bc-card.is-featured .bc-img-wrap {
+  width: 46%;
+  height: auto;
+  min-height: 340px;
+}
+.bc-card.is-featured .bc-body {
+  width: 54%;
+  padding: 32px;
+  justify-content: center;
+}
+.bc-card.is-featured .bc-title {
+  font-size: 42px;
+  margin: 0 0 16px 0;
+  -webkit-line-clamp: 2;
+}
+.bc-card.is-featured .bc-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #6B5A55;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+@media (max-width: 699px) {
+  .bc-card.is-featured {
+    flex-direction: column;
+  }
+  .bc-card.is-featured .bc-img-wrap {
+    width: 100%;
+    height: 240px;
+    min-height: 240px;
+  }
+  .bc-card.is-featured .bc-body {
+    width: 100%;
+    padding: 24px;
+  }
+  .bc-card.is-featured .bc-title {
+    font-size: 28px;
+  }
+}
+`;
+
+export function BlogCard({ post, featured = false }: BlogCardProps) {
+  return (
+    <>
+      <style>{CSS}</style>
+      <Link
+        href={`/blogs/${post.slug}`}
+        className={`bc-card ${featured ? "is-featured" : ""}`}
+        aria-label={`Read article: ${post.title}`}
+      >
+        <div className="bc-img-wrap">
+          {(post as any).image || (post as any).coverImage ? (
+            <img src={(post as any).image || (post as any).coverImage} alt="" className="bc-img" />
+          ) : (
+            <div className="bc-img" /> /* Fallback gradient shown via container */
+          )}
+        </div>
+
+        <div className="bc-body">
+          <div className="bc-cat">{post.category}</div>
+          <h3 className="bc-title">{post.title}</h3>
+          
+          <p className="bc-excerpt">{post.excerpt}</p>
+          
+          <div className="bc-meta">
+            <span>
+              <Calendar size={14} aria-hidden="true" />
+              {formatDate(post.date)}
+            </span>
+            <span>
+              <Clock size={14} aria-hidden="true" />
+              {post.readTime} min read
+            </span>
+          </div>
+
+          <div className="bc-footer">
+            <div className="bc-author">
+              <div className="bc-avatar" aria-hidden="true">
+                {post.author.charAt(0).toUpperCase()}
+              </div>
+              <span>{post.author}</span>
+            </div>
+            <div className="bc-read-more">
+              Read more <ArrowRight size={16} aria-hidden="true" />
             </div>
           </div>
         </div>
       </Link>
-
-      {/* Content — padded so nothing touches card edges */}
-      <div
-        className="flex flex-col flex-1"
-        style={{ padding: featured ? '32px' : '24px' }}
-      >
-        {/* Meta */}
-        <div className={cn("flex items-center gap-4", featured ? "mb-3" : "mb-2.5")}>
-          <div className="flex items-center gap-1.5 text-xs text-[var(--ink-soft)]">
-            <Calendar className="w-3 h-3" />
-            {formatDate(post.date)}
-          </div>
-          <div className="flex items-center gap-1.5 text-xs text-[var(--ink-soft)]">
-            <Clock className="w-3 h-3" />
-            {post.readTime} min read
-          </div>
-        </div>
-
-        {/* Title */}
-        <Link href={`/blogs/${post.slug}`}>
-          <h3
-            className={cn(
-              "font-serif font-semibold text-[var(--ink)] leading-snug line-clamp-2",
-              "hover:text-[var(--burgundy)] transition-colors duration-200",
-              featured ? "text-2xl md:text-3xl lg:text-4xl mb-3" : "text-lg md:text-xl mb-2"
-            )}
-          >
-            {post.title}
-          </h3>
-        </Link>
-
-        {/* Excerpt */}
-        <p className="text-sm text-[var(--ink-soft)] leading-relaxed mb-5 line-clamp-3">
-          {post.excerpt}
-        </p>
-
-        {/* Author + Read more */}
-        <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#f5f0ea]">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--burgundy)] to-[#a8744e] flex items-center justify-center shrink-0">
-              <span className="text-white text-[10px] font-semibold">{post.author.charAt(0)}</span>
-            </div>
-            <span className="text-xs text-[var(--ink-soft)] truncate max-w-[120px]">{post.author}</span>
-          </div>
-          <Link
-            href={`/blogs/${post.slug}`}
-            className="flex items-center gap-1 text-xs font-medium text-[var(--burgundy)] hover:gap-2 transition-all duration-200"
-          >
-            Read More <ArrowRight className="w-3 h-3" />
-          </Link>
-        </div>
-      </div>
-    </article>
+    </>
   );
 }

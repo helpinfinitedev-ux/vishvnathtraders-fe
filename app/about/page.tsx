@@ -59,6 +59,7 @@ export default function AboutPage() {
       {/* ── Page Banner ── */}
       <PageBanner
         title="About Us"
+        backgroundImage="/plywood.avif"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "About" },

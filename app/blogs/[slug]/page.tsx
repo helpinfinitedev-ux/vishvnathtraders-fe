@@ -1,12 +1,14 @@
 // =============================================================================
-// BLOG DETAIL PAGE — /blogs/[slug]
+// BLOG DETAIL PAGE — /blogs/[slug]   (Option B theme)
+// Theme: #6F1726 maroon · #52121D deep maroon · #F7F1E7 cream · #D8C3A5 sand
+// All layout/spacing is in the scoped CSS below (.bd-*), so your global reset
+// cannot remove padding or margins. Article HTML is styled via .bd-prose.
 // =============================================================================
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
-import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { Badge } from "@/components/ui/Badge";
+import Image from "next/image";
+import { Calendar, Clock, ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import { getBlogBySlug, getRecentBlogs } from "@/data/blogs";
 import { formatDate } from "@/lib/utils";
 
@@ -24,6 +26,102 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
+const FALLBACKS = [
+  "radial-gradient(circle at 72% 38%,#D8C3A5 0 16%,transparent 17%),linear-gradient(135deg,#6F1726,#2A0A10)",
+  "linear-gradient(160deg,transparent 55%,#D8C3A5 55%),linear-gradient(135deg,#8A2236,#52121D)",
+  "radial-gradient(circle at 30% 70%,#F7F1E7 0 14%,transparent 15%),linear-gradient(135deg,#52121D,#2A0A10)",
+  "linear-gradient(90deg,transparent 60%,#6F1726 60%),linear-gradient(135deg,#D8C3A5,#B39A78)",
+];
+
+const CSS = `
+.bd{background:#F7F1E7;color:#2A1A1D;min-height:100vh;padding:48px 0 96px}
+.bd *{box-sizing:border-box}
+.bd a{color:inherit;text-decoration:none}
+.bd-w{max-width:1480px;width:96%;margin:0 auto;padding:0 32px}
+
+/* header */
+.bd-crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 24px;font-size:14px;color:#6B5A55}
+.bd-crumbs a:hover{color:#6F1726}
+.bd-crumbs [aria-current]{color:#52121D;font-weight:600;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd-head{max-width:860px;margin:0 0 36px}
+.bd-pill{display:inline-block;margin:0 0 18px;padding:7px 14px;border-radius:999px;background:#6F1726;color:#F7F1E7;font-size:13px;font-weight:700}
+.bd h1.bd-title{margin:0 0 22px;color:#52121D;font-size:clamp(2.2rem,5vw,3.75rem);line-height:1.04;font-weight:700}
+.bd-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;font-size:14px;color:#6B5A55}
+.bd-meta span{display:inline-flex;align-items:center;gap:7px}
+.bd-by{display:inline-flex;align-items:center;gap:10px}
+.bd-av{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#6F1726;color:#F7F1E7;font-size:13px;font-weight:700}
+
+/* cover */
+.bd-cover{position:relative;overflow:hidden;height:440px;margin:0 0 40px;border-radius:28px}
+
+/* layout */
+.bd-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:40px;align-items:start}
+.bd-article{padding:48px;background:#fff;border:1px solid #EADFCB;border-radius:24px}
+.bd-lead{margin:0 0 36px;padding:0 0 32px;border-bottom:1px solid #EADFCB;color:#4A3A37;font-size:20px;line-height:1.65}
+
+/* article html */
+.bd-prose{font-size:17px;line-height:1.8;color:#2A1A1D;max-width:720px}
+.bd-prose>*:first-child{margin-top:0}
+.bd-prose h2{margin:44px 0 14px;color:#52121D;font-size:34px;line-height:1.1;font-weight:700}
+.bd-prose h3{margin:32px 0 10px;color:#6F1726;font-size:26px;line-height:1.15;font-weight:700}
+.bd-prose p{margin:0 0 20px}
+.bd-prose a{color:#6F1726;text-decoration:underline;text-underline-offset:3px}
+.bd-prose ul,.bd-prose ol{margin:0 0 22px;padding:0 0 0 24px}
+.bd-prose li{margin:0 0 8px}
+.bd-prose li::marker{color:#6F1726}
+.bd-prose blockquote{margin:28px 0;padding:22px 26px;border-radius:18px;background:#F7F1E7;color:#52121D;font-size:20px;line-height:1.55}
+.bd-prose img{display:block;max-width:100%;height:auto;margin:28px 0;border-radius:20px}
+.bd-prose table{width:100%;margin:28px 0;border-collapse:separate;border-spacing:0;font-size:15px;border:1px solid #EADFCB;border-radius:16px;overflow:hidden}
+.bd-prose th{padding:14px 16px;background:#52121D;color:#F7F1E7;text-align:left;font-weight:700}
+.bd-prose td{padding:14px 16px;border-top:1px solid #EADFCB}
+.bd-prose tr:nth-child(even) td{background:#FBF7F0}
+.bd-prose hr{margin:36px 0;border:0;border-top:1px solid #EADFCB}
+
+/* tags / author / nav */
+.bd-tags{display:flex;flex-wrap:wrap;gap:10px;margin:40px 0 0;padding:28px 0 0;border-top:1px solid #EADFCB}
+.bd-tag{display:inline-flex;align-items:center;min-height:36px;padding:0 16px;border:1px solid #D8C3A5;border-radius:999px;color:#52121D;font-size:13px;font-weight:600}
+.bd-author{display:flex;align-items:flex-start;gap:16px;margin:32px 0 0;padding:24px;border-radius:20px;background:#EFE4D2}
+.bd-author .bd-av{width:52px;height:52px;font-size:20px}
+.bd-author b{display:block;color:#52121D;font-size:16px}
+.bd-author em{display:block;margin:2px 0 8px;color:#6F1726;font-size:13px;font-style:normal;font-weight:600}
+.bd-author p{margin:0;font-size:14px;line-height:1.6;color:#4A3A37}
+.bd-back{display:inline-flex;align-items:center;gap:8px;min-height:48px;margin:32px 0 0;padding:0 24px;border:1px solid #D8C3A5;border-radius:999px;color:#52121D;font-size:14px;font-weight:700;transition:background .2s}
+.bd-back:hover{background:#EFE4D2}
+
+/* sidebar */
+.bd-side{position:sticky;top:110px;display:flex;flex-direction:column;gap:24px}
+.bd-box{padding:28px;background:#fff;border:1px solid #EADFCB;border-radius:24px}
+.bd-box h2{margin:0 0 18px;color:#52121D;font-size:28px;line-height:1.1;font-weight:700}
+.bd-recent{display:flex;flex-direction:column;gap:18px}
+.bd-recent a{display:flex;align-items:flex-start;gap:14px}
+.bd-thumb{position:relative;flex-shrink:0;overflow:hidden;width:76px;height:76px;border-radius:14px}
+.bd-recent b{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;color:#52121D;font-size:15px;line-height:1.35;font-weight:700}
+.bd-recent a:hover b{color:#6F1726}
+.bd-recent small{display:block;margin-top:6px;color:#6B5A55;font-size:12px}
+.bd-cta{padding:28px;border-radius:24px;background:#52121D;color:#F7F1E7}
+.bd-cta h3{margin:0 0 10px;color:#F7F1E7;font-size:30px;line-height:1.05;font-weight:700}
+.bd-cta p{margin:0 0 20px;font-size:14px;line-height:1.6;color:#E7D9C4}
+.bd-cta a{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 22px;border-radius:999px;background:#D8C3A5;color:#52121D;font-size:14px;font-weight:700;transition:background .2s}
+.bd-cta a:hover{background:#F7F1E7}
+.bd a:focus-visible{outline:3px solid rgba(111,23,38,.4);outline-offset:3px}
+
+@media (max-width:1023px){
+  .bd-layout{grid-template-columns:1fr}
+  .bd-side{position:static}
+  .bd-cover{height:320px}
+}
+@media (max-width:640px){
+  .bd{padding-top:28px}
+  .bd-w{padding:0 16px}
+  .bd-article{padding:26px 20px}
+  .bd-cover{height:220px;border-radius:20px}
+  .bd-lead{font-size:18px}
+  .bd-prose{font-size:16px}
+  .bd-prose h2{font-size:28px}
+  .bd-prose table{display:block;overflow-x:auto}
+}
+`;
+
 export default async function BlogDetailPage({ params }: Props) {
   const { slug } = await params;
   const post = getBlogBySlug(slug);
@@ -31,124 +129,140 @@ export default async function BlogDetailPage({ params }: Props) {
 
   const recent = getRecentBlogs(3).filter((b) => b.slug !== slug).slice(0, 2);
 
+  // optional cover field — works if your post has `image` or `coverImage`
+  const cover =
+    (post as typeof post & { coverImage?: string; image?: string }).coverImage ??
+    (post as typeof post & { image?: string }).image;
+
   return (
-    <div className="bg-[#fafaf8] min-h-screen">
-      {/* Hero */}
-      <div className="bg-[var(--ink)] relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a18] to-[var(--maroon)]" aria-hidden="true" />
-        <div className="absolute top-0 right-0 w-[500px] h-[400px] bg-[var(--burgundy)]/8 rounded-full blur-[100px]" aria-hidden="true" />
-        <div className="container-site relative z-10 max-w-3xl">
-          <Breadcrumb
-            items={[{ label: "Blogs", href: "/blogs" }, { label: post.category, href: "/blogs" }, { label: post.title }]}
-            className="mb-6 [&_*]:text-white/50 [&_a]:hover:text-[var(--burgundy)]"
-          />
-          <Badge variant="wood" className="mb-4">{post.category}</Badge>
-          <h1
-            className="font-serif text-white font-semibold leading-tight mb-5"
-            style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.5rem)" }}
-          >
-            {post.title}
-          </h1>
-          <div className="flex flex-wrap items-center gap-5 text-sm text-white/50">
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" />
+    <div className="bd">
+      <style>{CSS}</style>
+
+      <div className="bd-w">
+        {/* Breadcrumb */}
+        <nav className="bd-crumbs" aria-label="Breadcrumb">
+          <Link href="/blogs">Blog</Link>
+          <ChevronRight size={14} aria-hidden="true" />
+          <Link href="/blogs">{post.category}</Link>
+          <ChevronRight size={14} aria-hidden="true" />
+          <span aria-current="page">{post.title}</span>
+        </nav>
+
+        {/* Header */}
+        <header className="bd-head">
+          {/* <span className="bd-pill">{post.category}</span> */}
+          <h1 className="bd-title">{post.title}</h1>
+          <div className="bd-meta">
+            <span className="bd-by">
+              <i className="bd-av" style={{ fontStyle: "normal" }}>{post.author.charAt(0)}</i>
+              {post.author}
+            </span>
+            <span>
+              <Calendar size={15} aria-hidden="true" />
               {formatDate(post.date)}
             </span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5" />
+            <span>
+              <Clock size={15} aria-hidden="true" />
               {post.readTime} min read
             </span>
-            <span>By {post.author}</span>
           </div>
+        </header>
+
+        {/* Cover */}
+        <div className="bd-cover" style={{ background: FALLBACKS[0] }}>
+          {cover && (
+            <Image
+              src={cover}
+              alt={post.title}
+              fill
+              priority
+              sizes="(max-width: 1023px) 100vw, 1136px"
+              style={{ objectFit: "cover" }}
+            />
+          )}
         </div>
-      </div>
 
-      {/* Body */}
-      <div className="container-site py-12 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 md:gap-16">
+        {/* Body */}
+        <div className="bd-layout">
+          <article className="bd-article">
+            <p className="bd-lead">{post.excerpt}</p>
 
-          {/* Article body */}
-          <article>
-            {/* Excerpt */}
-            <p className="text-lg text-[#4b5563] leading-relaxed border-l-4 border-[var(--burgundy)] pl-5 mb-8 italic">
-              {post.excerpt}
-            </p>
-
-            {/* Content */}
             <div
-              className="prose-woodcraft"
+              className="bd-prose"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
 
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mt-10 pt-8 border-t border-[#f0e8de]">
-              {post.tags.map((tag) => (
-                <Badge key={tag} variant="outline">#{tag}</Badge>
-              ))}
-            </div>
-
-            {/* Author card */}
-            <div className="bg-[#f2e8dc] rounded-[16px] flex items-start gap-4" style={{ marginTop: '32px', padding: '24px' }}>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--burgundy)] to-[#a8744e] flex items-center justify-center shrink-0">
-                <span className="text-white font-semibold text-lg">{post.author.charAt(0)}</span>
+            {post.tags?.length > 0 && (
+              <div className="bd-tags">
+                {post.tags.map((tag) => (
+                  <span key={tag} className="bd-tag">#{tag}</span>
+                ))}
               </div>
+            )}
+
+            <div className="bd-author">
+              <i className="bd-av" style={{ fontStyle: "normal" }}>{post.author.charAt(0)}</i>
               <div>
-                <p className="font-semibold text-[var(--ink)] text-sm">{post.author}</p>
-                <p className="text-xs text-[var(--burgundy)]">{post.authorRole}</p>
-                <p className="text-xs text-[var(--ink-soft)] mt-1 leading-relaxed">
-                  Expert contributor at WoodCraft Premium — sharing knowledge on engineered wood products, quality standards, and interior design best practices.
+                <b>{post.author}</b>
+                <em>{post.authorRole}</em>
+                <p>
+                  Expert contributor at WoodCraft Premium, sharing knowledge on
+                  engineered wood products, quality standards and interior design
+                  best practices.
                 </p>
               </div>
             </div>
 
-            {/* Navigation */}
-            <div className="flex gap-4" style={{ marginTop: '40px', paddingTop: '24px', borderTop: '1px solid #f0e8de', paddingBottom: '16px' }}>
-              <Link href="/blogs" className="flex items-center gap-2 text-sm text-[var(--ink-soft)] hover:text-[var(--burgundy)] transition-colors">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Blogs
-              </Link>
-            </div>
+            <Link href="/blogs" className="bd-back">
+              <ArrowLeft size={16} aria-hidden="true" />
+              Back to blog
+            </Link>
           </article>
 
           {/* Sidebar */}
-          <aside className="lg:sticky lg:top-24 self-start" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            {/* Recent posts */}
-            <div className="bg-white rounded-[18px] border border-[#f0e8de]" style={{ padding: '28px' }}>
-              <h2 className="font-serif text-base font-semibold text-[var(--ink)] mb-5">Recent Articles</h2>
-              <div className="flex flex-col gap-4">
-                {recent.map((b) => (
-                  <Link key={b.slug} href={`/blogs/${b.slug}`} className="group flex gap-3 items-start">
-                    <div className="w-16 h-16 rounded-[10px] bg-gradient-to-br from-[#f2e8dc] to-[#e8ddd4] shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium text-[var(--ink)] leading-snug group-hover:text-[var(--burgundy)] transition-colors line-clamp-2">
-                        {b.title}
-                      </p>
-                      <p className="text-xs text-[var(--ink-soft)] mt-1">{formatDate(b.date)}</p>
-                    </div>
-                  </Link>
-                ))}
+          <aside className="bd-side">
+            {recent.length > 0 && (
+              <div className="bd-box">
+                <h2>Recent articles</h2>
+                <div className="bd-recent">
+                  {recent.map((b, i) => {
+                    const img =
+                      (b as typeof b & { coverImage?: string; image?: string }).coverImage ??
+                      (b as typeof b & { image?: string }).image;
+                    return (
+                      <Link key={b.slug} href={`/blogs/${b.slug}`}>
+                        <span
+                          className="bd-thumb"
+                          style={{ background: FALLBACKS[(i + 1) % FALLBACKS.length] }}
+                        >
+                          {img && (
+                            <Image src={img} alt="" fill sizes="76px" style={{ objectFit: "cover" }} />
+                          )}
+                        </span>
+                        <span>
+                          <b>{b.title}</b>
+                          <small>{formatDate(b.date)}</small>
+                        </span>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* CTA sidebar card */}
-            <div className="bg-gradient-to-br from-[#7c4a2a] to-[var(--burgundy)] rounded-[18px] text-white" style={{ padding: '28px' }}>
-              <h3 className="font-serif text-lg font-semibold mb-2">Need Product Advice?</h3>
-              <p className="text-sm text-white/75 leading-relaxed mb-4">
-                Our technical team can help you choose the right plywood grade for your project.
+            <div className="bd-cta">
+              <h3>Need product advice?</h3>
+              <p>
+                Our technical team can help you choose the right plywood grade
+                for your project.
               </p>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-white bg-white/20 hover:bg-white/30 px-4 py-2 rounded-[8px] transition-colors"
-              >
-                Get Expert Advice <ArrowRight className="w-3.5 h-3.5" />
+              <Link href="/contact">
+                Get expert advice <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>
           </aside>
         </div>
       </div>
-
-      {/* Bottom spacer before footer */}
-      <div style={{ height: '48px' }} />
     </div>
   );
 }

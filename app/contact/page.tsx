@@ -72,6 +72,7 @@ export default function ContactPage() {
       {/* ── Page Banner ── */}
       <PageBanner
         title="Contact Us"
+        backgroundImage="/plywood2.avif"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Contact" },

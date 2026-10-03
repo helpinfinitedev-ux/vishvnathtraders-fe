@@ -10,9 +10,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, ChevronDown, ExternalLink, ShoppingCart } from "lucide-react";
+import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { SearchAndActions } from "@/components/layout/SearchAndActions";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -155,7 +156,7 @@ export function Navbar() {
 
   // Scroll shadow
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 48);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -215,12 +216,11 @@ export function Navbar() {
       <header
         role="banner"
         style={{
-          position: "fixed",
+          position: "sticky",
           top: 0,
           left: 0,
           right: 0,
           zIndex: 50,
-          height: "4.5rem",
           background: scrolled ? "rgba(250,250,248,0.94)" : "rgba(250,250,248,0.80)",
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
@@ -229,10 +229,16 @@ export function Navbar() {
           transition: "box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease",
         }}
       >
+        <div style={{ background: "#222222" }}>
+          <div className="container-site" style={{ padding: "0.75rem 0" }}>
+            <SearchAndActions />
+          </div>
+        </div>
+
         <div
           className="container-site"
           style={{
-            height: "100%",
+            height: "4.5rem",
             display: "flex",
             alignItems: "center",
           }}
@@ -416,46 +422,6 @@ export function Navbar() {
                 </Link>
               ))}
 
-              {/* Desktop Cart Icon */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="nav-link-hover"
-                aria-label={`Shopping Cart with ${cartCount} items`}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  color: "var(--color-primary)",
-                  display: "flex",
-                  alignItems: "center",
-                  position: "relative",
-                }}
-              >
-                <ShoppingCart size={22} />
-                {cartCount > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-8px",
-                      right: "-8px",
-                      background: "var(--color-accent)",
-                      color: "white",
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                      minWidth: "18px",
-                      height: "18px",
-                      borderRadius: "9px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "0 4px",
-                    }}
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-
               {/* Distributor CTA pill */}
               <Link
                 href="/distributor"
@@ -488,48 +454,8 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Actions: Cart + Hamburger */}
+            {/* Mobile Actions: Hamburger */}
             <div className="mobile-actions" style={{ display: "none", alignItems: "center", gap: "1rem" }}>
-              {/* Mobile Cart Icon */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                aria-label={`Shopping Cart with ${cartCount} items`}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  color: "var(--color-primary)",
-                  display: "flex",
-                  alignItems: "center",
-                  position: "relative",
-                  padding: "0.2rem",
-                }}
-              >
-                <ShoppingCart size={22} />
-                {cartCount > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-4px",
-                      right: "-6px",
-                      background: "var(--color-accent)",
-                      color: "white",
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                      minWidth: "18px",
-                      height: "18px",
-                      borderRadius: "9px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "0 4px",
-                    }}
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-
               {/* Hamburger — visible only on mobile */}
               <button
                 id="mobile-menu-toggle"

@@ -268,7 +268,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </button>
 
               {/* Trust Badges */}
-              <TrustBadges warranty={product.warranty} />
+              {/* <TrustBadges warranty={product.warranty} /> */}
             </div>
           </div>
         </div>
