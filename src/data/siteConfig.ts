@@ -6,14 +6,14 @@
 import type { NavLink, Certification } from "@/types";
 
 export const SITE_CONFIG = {
-  name: "WoodCraft Premium",
+  name: "Vishvnath Traders",
   tagline: "Engineered for Excellence. Built to Last.",
   description:
-    "WoodCraft Premium is India's trusted manufacturer of ISI-certified plywood, blockboard, veneer, laminates, and flush doors — supplying architects, interior designers, builders, and distributors across the country.",
-  url: "https://woodcraftpremium.com",
-  email: "info@woodcraftpremium.com",
-  phone: "+91 98765 43210",
-  whatsapp: "+919876543210",
+    "Vishvnath Traders is India's trusted supplier of  plywood, blockboard, veneer, laminates, and flush doors — supplying architects, interior designers, builders, and distributors across the country.",
+  url: "https://vishvnathtraders.com",
+  email: "Bishwanathrajju@gmail.com",
+  phone: "9415207028",
+  whatsapp: "7571868042",
   address: {
     line1: "WoodCraft Premium Industries Ltd.",
     line2: "Plot No. 42, Industrial Area Phase II",
