@@ -364,7 +364,7 @@ export function Navbar() {
                   margin: 0,
                 }}
               >
-                WoodCraft
+                vishvnath
               </p>
               <p
                 style={{
@@ -378,7 +378,7 @@ export function Navbar() {
                   marginTop: "3px",
                 }}
               >
-                Premium
+                traders
               </p>
             </div>
           </Link>
@@ -544,10 +544,10 @@ export function Navbar() {
             <LogoMark size={30} />
             <div style={{ lineHeight: 1 }}>
               <p style={{ fontFamily: "var(--font-heading)", fontSize: "1rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--color-primary)", margin: 0 }}>
-                WoodCraft
+                Vishvnath
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.5rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--color-accent)", fontWeight: 500, margin: 0, marginTop: "3px" }}>
-                Premium
+                Traders
               </p>
             </div>
           </Link>
