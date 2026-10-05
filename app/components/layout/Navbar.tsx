@@ -10,11 +10,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
+import { Menu, X, ChevronDown, ExternalLink, Heart, ShoppingCart, User } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WishlistModal } from "@/components/WishlistModal";
 import { SearchAndActions } from "@/components/layout/SearchAndActions";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -147,6 +149,8 @@ export function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const productsButtonRef = useRef<HTMLButtonElement>(null);
   const { cartCount, setIsCartOpen } = useCart();
+  const { wishlistItems, setIsWishlistOpen } = useWishlist();
+  const { openModal: openAuthModal } = useAuthModal();
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -212,15 +216,23 @@ export function Navbar() {
   return (
     <>
       {/* ================================================================
+          TOP UTILITY BAR (Scrolls away)
+      ================================================================ */}
+      <div className="top-black-bar" style={{ background: "#222222" }}>
+        <div className="container-site" style={{ padding: "0.75rem 0" }}>
+          <SearchAndActions />
+        </div>
+      </div>
+
+      {/* ================================================================
           FIXED HEADER
       ================================================================ */}
       <header
         role="banner"
+        className="main-header"
         style={{
           position: "sticky",
           top: 0,
-          left: 0,
-          right: 0,
           zIndex: 50,
           background: scrolled ? "rgba(250,250,248,0.94)" : "rgba(250,250,248,0.80)",
           backdropFilter: "blur(18px)",
@@ -230,12 +242,6 @@ export function Navbar() {
           transition: "box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease",
         }}
       >
-        <div style={{ background: "#222222" }}>
-          <div className="container-site" style={{ padding: "0.75rem 0" }}>
-            <SearchAndActions />
-          </div>
-        </div>
-
         <div
           className="container-site"
           style={{
@@ -351,9 +357,12 @@ export function Navbar() {
               transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
           >
-            <LogoMark size={40} />
+            <div className="logo-svg-wrapper" style={{ display: "flex" }}>
+              <LogoMark size={40} />
+            </div>
             <div style={{ lineHeight: 1 }}>
               <p
+                className="logo-text-main"
                 style={{
                   fontFamily: "var(--font-heading)",
                   fontSize: "1.3rem",
@@ -367,6 +376,7 @@ export function Navbar() {
                 vishvnath
               </p>
               <p
+                className="logo-text-sub"
                 style={{
                   fontFamily: "var(--font-body)",
                   fontSize: "0.9rem",
@@ -455,8 +465,43 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Actions: Hamburger */}
-            <div className="mobile-actions" style={{ display: "none", alignItems: "center", gap: "1rem" }}>
+            {/* Mobile Actions: Icons + Hamburger */}
+            <div className="mobile-actions" style={{ display: "none", alignItems: "center", gap: "1.2rem" }}>
+              {/* Mobile Icons Group */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                <button
+                  onClick={() => setIsWishlistOpen(true)}
+                  aria-label="Wishlist"
+                  style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", position: "relative", display: "flex", alignItems: "center", padding: "0.1rem" }}
+                >
+                  <Heart size={20} strokeWidth={1.5} />
+                  {wishlistItems?.length > 0 && (
+                    <span aria-hidden="true" style={{ position: "absolute", top: "-4px", right: "-6px", background: "#E30613", color: "#fff", fontSize: "0.6rem", fontWeight: 700, minWidth: "16px", height: "16px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 3px" }}>
+                      {wishlistItems.length}
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  aria-label="Shopping Cart"
+                  style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", position: "relative", display: "flex", alignItems: "center", padding: "0.1rem" }}
+                >
+                  <ShoppingCart size={20} strokeWidth={1.5} />
+                  {cartCount > 0 && (
+                    <span aria-hidden="true" style={{ position: "absolute", top: "-4px", right: "-6px", background: "#E30613", color: "#fff", fontSize: "0.6rem", fontWeight: 700, minWidth: "16px", height: "16px", borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 3px" }}>
+                      {cartCount}
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={() => openAuthModal("signin")}
+                  aria-label="Sign in"
+                  style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.1rem" }}
+                >
+                  <User size={20} strokeWidth={1.5} />
+                </button>
+              </div>
+
               {/* Hamburger — visible only on mobile */}
               <button
                 id="mobile-menu-toggle"
@@ -466,18 +511,16 @@ export function Navbar() {
                 onClick={() => setMobileOpen((v) => !v)}
                 style={{
                   background: "transparent",
-                  border: "1px solid var(--color-border)",
+                  border: "none",
                   cursor: "pointer",
                   color: "var(--color-primary)",
-                  padding: "0.4rem",
-                  borderRadius: "var(--radius-sm)",
+                  padding: "0.2rem",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  transition: "border-color var(--transition)",
                 }}
               >
-                {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+                {mobileOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </nav>
@@ -741,6 +784,23 @@ export function Navbar() {
           .nav-left { display: none !important; }
           .nav-right-links { display: none !important; }
           .mobile-actions { display: flex !important; }
+          
+          /* Logo adjustments for mobile */
+          .logo-link {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            gap: 8px !important;
+          }
+          .logo-svg-wrapper svg {
+            width: 32px !important;
+            height: 32px !important;
+          }
+          .logo-text-main {
+            font-size: 1.1rem !important;
+          }
+          .logo-text-sub {
+            font-size: 0.75rem !important;
+          }
         }
 
         /* Logo hover lift */
