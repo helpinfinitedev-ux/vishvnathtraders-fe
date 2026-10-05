@@ -6,6 +6,8 @@ import { FloatingContactIcons } from "@/components/layout/FloatingContactIcons";
 import { SITE_CONFIG } from "@/data/siteConfig";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
+import { AuthModalProvider } from "@/context/AuthModalContext";
+import { AuthModal } from "@/components/AuthModal";
 
 // =============================================================================
 // ROOT METADATA — shared across all pages, each page can override
@@ -61,23 +63,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-[#fafaf8] antialiased">
-        <WishlistProvider>
-          <CartProvider>
-          {/* Global header — sticky, fixed */}
-          <Navbar />
+        <AuthModalProvider>
+          <WishlistProvider>
+            <CartProvider>
+            {/* Global header — sticky, fixed */}
+            <Navbar />
 
-          {/* Page content — pt accounts for fixed header height */}
-          <main className="flex-1" id="main-content">
-            {children}
-          </main>
+            {/* Page content — pt accounts for fixed header height */}
+            <main className="flex-1" id="main-content">
+              {children}
+            </main>
 
-          {/* Global footer */}
-          <Footer />
+            {/* Global footer */}
+            <Footer />
 
-          {/* Floating WhatsApp / Call / Email icons */}
-          <FloatingContactIcons />
-          </CartProvider>
-        </WishlistProvider>
+            {/* Floating WhatsApp / Call / Email icons */}
+            <FloatingContactIcons />
+
+            <AuthModal />
+            </CartProvider>
+          </WishlistProvider>
+        </AuthModalProvider>
       </body>
     </html>
   );

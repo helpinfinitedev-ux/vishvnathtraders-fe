@@ -16,7 +16,7 @@ import { useWishlist } from "@/context/WishlistContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { WishlistModal } from "@/components/WishlistModal";
 import { SearchAndActions } from "@/components/layout/SearchAndActions";
-import { SignInModal } from "./SignInModal";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -150,7 +150,7 @@ export function Navbar() {
   const productsButtonRef = useRef<HTMLButtonElement>(null);
   const { cartCount, setIsCartOpen } = useCart();
   const { wishlistItems, setIsWishlistOpen } = useWishlist();
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const { openModal: openAuthModal } = useAuthModal();
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -494,7 +494,7 @@ export function Navbar() {
                   )}
                 </button>
                 <button
-                  onClick={() => setIsSignInOpen(true)}
+                  onClick={() => openAuthModal("signin")}
                   aria-label="Sign in"
                   style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.1rem" }}
                 >
@@ -769,7 +769,6 @@ export function Navbar() {
       {/* Cart & Wishlist Components */}
       <CartDrawer />
       <WishlistModal />
-      <SignInModal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
 
       {/* ================================================================
           SCOPED CSS — responsive rules + hover effects

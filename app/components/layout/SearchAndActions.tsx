@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Search, Mic, Heart, ShoppingCart, User, ChevronDown, X, Phone, Mail } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
-import { SignInModal } from "./SignInModal";
+import { useAuthModal } from "@/context/AuthModalContext";
 
 // Check for Web Speech API support
 const SpeechRecognition = typeof window !== "undefined" && ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
@@ -14,10 +14,10 @@ export function SearchAndActions() {
   const router = useRouter();
   const { cartCount, setIsCartOpen } = useCart();
   const { wishlistItems, setIsWishlistOpen } = useWishlist();
+  const { openModal: openAuthModal } = useAuthModal();
   const [searchQuery, setSearchQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState("");
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
@@ -332,15 +332,13 @@ export function SearchAndActions() {
 
         {/* User */}
         <button
-          onClick={() => setIsSignInOpen(true)}
+          onClick={() => openAuthModal("signin")}
           aria-label="Sign in"
           style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.2rem" }}
         >
           <User size={22} strokeWidth={1.5} />
         </button>
       </div>
-
-        <SignInModal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} />
       </div>
 
       <style dangerouslySetInnerHTML={{
