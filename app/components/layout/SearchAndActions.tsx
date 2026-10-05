@@ -379,7 +379,7 @@ export function SearchAndActions() {
             min-width: 100%;
           }
           .icons-group {
-            order: 2;
+            display: none !important;
           }
         }
       `}} />
