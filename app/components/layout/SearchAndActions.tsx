@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Mic, Heart, ShoppingCart, User, ChevronDown, X, Phone, Mail } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { SignInModal } from "./SignInModal";
 
 // Check for Web Speech API support
@@ -12,6 +13,7 @@ const SpeechRecognition = typeof window !== "undefined" && ((window as any).Spee
 export function SearchAndActions() {
   const router = useRouter();
   const { cartCount, setIsCartOpen } = useCart();
+  const { wishlistItems, setIsWishlistOpen } = useWishlist();
   const [searchQuery, setSearchQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState("");
@@ -272,28 +274,31 @@ export function SearchAndActions() {
       <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }} className="icons-group">
         {/* Wishlist */}
         <button
-          aria-label="Wishlist (0 items)"
+          onClick={() => setIsWishlistOpen(true)}
+          aria-label={`Wishlist (${wishlistItems.length} items)`}
           style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", position: "relative", display: "flex", alignItems: "center", padding: "0.2rem" }}
         >
           <Heart size={22} strokeWidth={1.5} />
-          <span aria-hidden="true" style={{
-            position: "absolute",
-            top: "-4px",
-            right: "-6px",
-            background: "#E30613",
-            color: "#fff",
-            fontSize: "0.65rem",
-            fontWeight: 700,
-            minWidth: "18px",
-            height: "18px",
-            borderRadius: "9px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "0 4px",
-          }}>
-            0
-          </span>
+          {wishlistItems.length > 0 && (
+            <span aria-hidden="true" style={{
+              position: "absolute",
+              top: "-4px",
+              right: "-6px",
+              background: "#E30613",
+              color: "#fff",
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              minWidth: "18px",
+              height: "18px",
+              borderRadius: "9px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "0 4px",
+            }}>
+              {wishlistItems.length}
+            </span>
+          )}
         </button>
 
         {/* Cart */}

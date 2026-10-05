@@ -27,16 +27,12 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { ProductImageGallery } from "@/components/products/ProductImageGallery";
 import { VariantSelector } from "@/components/products/VariantSelector";
 import { PriceBlock } from "@/components/products/PriceBlock";
-import { SpecsTable } from "@/components/products/SpecsTable";
-import { TrustBadges } from "@/components/products/TrustBadges";
-import { FAQAccordion } from "@/components/products/FAQAccordion";
-import { ProductReviews } from "@/components/products/ProductReviews";
-import { EnquiryBox } from "@/components/products/EnquiryBox";
 import { StickyActionBar } from "@/components/products/StickyActionBar";
 import { getProductBySlug, getRelatedProducts } from "@/data/products";
 import { getCategoryBySlug } from "@/data/categories";
 import { SITE_CONFIG } from "@/data/siteConfig";
 import { useCart } from "@/context/CartContext";
+import { ProductInfoSections } from "@/components/ProductInfoSections";
 
 // ── Icon map for benefits ─────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -274,104 +270,19 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      {/* ── 3. Technical Specifications ── */}
-      <section className="pdp-section bg-white">
-        <div className="container-site">
-          <h2 className="pdp-heading">Technical Specifications</h2>
-          <div className="pdp-card" style={{ maxWidth: "720px" }}>
-            <SpecsTable specs={product.specifications} />
-          </div>
-        </div>
-      </section>
+      {/* ── 3. Product Info Sections ── */}
+      <ProductInfoSections product={{
+        ...product,
+        type: product.specifications?.["Moisture Resistance"],
+        brand: brand,
+        productLine: product.warranty ? `${product.warranty} Warranty` : undefined,
+        subcategory: product.specifications?.["Certification"],
+        careInstructions: faqs.find(f => f.question.toLowerCase().includes("cutting") || f.question.toLowerCase().includes("care"))?.answer,
+        deliveryInfo: faqs.find(f => f.question.toLowerCase().includes("delivery"))?.answer,
+        warrantyTerms: benefits.find(b => b.title.toLowerCase().includes("warranty"))?.description,
+      }} />
 
-      {/* ── 4. Description + Use Cases + Benefits ── */}
-      <section className="pdp-section">
-        <div className="container-site">
-          <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: "var(--space-8)" }}>
-            {/* Left — Description + Use Cases */}
-            <div>
-              <h2 className="pdp-heading">About This Product</h2>
-              <p className="text-[#4b5563] leading-relaxed mb-6" style={{ maxWidth: "60ch" }}>
-                {product.description}
-              </p>
-
-              {/* Tags */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {product.tags.map((tag) => (
-                  <Badge key={tag} variant="outline">#{tag}</Badge>
-                ))}
-              </div>
-
-              {/* Use Cases */}
-              {useCases.length > 0 && (
-                <div>
-                  <h3 className="font-serif text-lg font-semibold text-[var(--ink)] mb-4">
-                    Ideal Use Cases
-                  </h3>
-                  <div className="pdp-usecases">
-                    {useCases.map((uc) => (
-                      <span key={uc} className="pdp-usecase-pill">{uc}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Right — Key Benefits */}
-            <div>
-              <h2 className="pdp-heading">Key Benefits</h2>
-              <div className="pdp-benefits">
-                {benefits.map(({ icon, title, description }) => {
-                  const IconComp = ICON_MAP[icon] ?? Award;
-                  return (
-                    <div key={title} className="pdp-benefit">
-                      <div className="pdp-benefit__icon">
-                        <IconComp className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="pdp-benefit__title">{title}</p>
-                        <p className="pdp-benefit__desc">{description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. Trust Section ── */}
-      {/* Already shown inline above via TrustBadges */}
-
-      {/* ── 6. Bulk Enquiry + Brochure ── */}
-      {/* <section className="pdp-section bg-white">
-        <div className="container-site" style={{ maxWidth: "720px" }}>
-          <EnquiryBox productName={product.name} />
-        </div>
-      </section> */}
-
-      {/* ── 7. Reviews ── */}
-      <section className="pdp-section">
-        <div className="container-site">
-          <h2 className="pdp-heading">Customer Reviews</h2>
-          <div className="pdp-card" style={{ maxWidth: "720px" }}>
-            <ProductReviews reviews={reviews} />
-          </div>
-        </div>
-      </section>
-
-      {/* ── 8. FAQs ── */}
-      <section className="pdp-section bg-white">
-        <div className="container-site">
-          <h2 className="pdp-heading">Frequently Asked Questions</h2>
-          <div className="pdp-card" style={{ maxWidth: "720px" }}>
-            <FAQAccordion faqs={faqs} />
-          </div>
-        </div>
-      </section>
-
-      {/* ── 9. Related Products ── */}
+      {/* ── 4. Related Products ── */}
       {related.length > 0 && (
         <section className="pdp-section" aria-labelledby="related-heading">
           <div className="container-site">
@@ -388,24 +299,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
       )}
-
-      {/* ── 10. Shipping & Return Policy ── */}
-      <section className="pdp-section bg-white">
-        <div className="container-site" style={{ maxWidth: "720px" }}>
-          <div className="pdp-shipping">
-            <h3 className="pdp-shipping__title">Shipping & Return Policy</h3>
-            <ul className="pdp-shipping__list">
-              <li>Dispatched within 3–5 business days from our Yamuna Nagar plant.</li>
-              <li>Delivery via dedicated freight partners to all 28 states.</li>
-              <li>Freight charges calculated based on delivery location and order volume.</li>
-              <li>Bulk orders (50+ sheets) qualify for free freight on select routes.</li>
-            </ul>
-            <p className="pdp-shipping__warning">
-              ⚠ Cut-to-size sheets cannot be returned or exchanged. Please verify all measurements before placing your order.
-            </p>
-          </div>
-        </div>
-      </section>
 
       <StickyActionBar
         productId={product.slug}

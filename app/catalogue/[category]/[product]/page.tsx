@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getCatalogueProductBySlug } from "@/data/catalogue";
 import { getCategoryBySlug } from "@/data/categories";
 import { ProductDetail } from "@/components/ProductDetail";
+import { ProductInfoSections } from "@/components/ProductInfoSections";
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string; product: string }> }) {
   const resolvedParams = await params;
@@ -23,16 +24,20 @@ export default async function CatalogueProductPage({ params }: { params: Promise
   }
 
   return (
-    <ProductDetail 
-      name={product.name}
-      brand={product.brand}
-      tag={product.type || product.productLine || "Premium Quality"}
-      description={product.description}
-      warranty="5 years warranty"
-      images={product.images}
-      price={(product as any).price || 1450}
-      sizes={product.sizes}
-      thicknesses={product.thickness}
-    />
+    <>
+      <ProductDetail 
+        name={product.name}
+        brand={product.brand}
+        tag={product.type || product.productLine || "Premium Quality"}
+        description={product.description}
+        warranty="5 years warranty"
+        images={product.images}
+        price={(product as any).price || 1450}
+        sizes={product.sizes}
+        thicknesses={product.thickness}
+        slug={product.slug}
+      />
+      <ProductInfoSections product={product} />
+    </>
   );
 }
