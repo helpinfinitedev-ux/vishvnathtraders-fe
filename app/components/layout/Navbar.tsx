@@ -13,6 +13,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { WishlistModal } from "@/components/WishlistModal";
 import { SearchAndActions } from "@/components/layout/SearchAndActions";
 
 // ---------------------------------------------------------------------------
@@ -722,8 +723,9 @@ export function Navbar() {
         />
       </aside>
 
-      {/* Cart Drawer Component */}
+      {/* Cart & Wishlist Components */}
       <CartDrawer />
+      <WishlistModal />
 
       {/* ================================================================
           SCOPED CSS — responsive rules + hover effects

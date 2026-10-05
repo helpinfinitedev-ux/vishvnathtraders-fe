@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingContactIcons } from "@/components/layout/FloatingContactIcons";
 import { SITE_CONFIG } from "@/data/siteConfig";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 
 // =============================================================================
 // ROOT METADATA — shared across all pages, each page can override
@@ -60,7 +61,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-[#fafaf8] antialiased">
-        <CartProvider>
+        <WishlistProvider>
+          <CartProvider>
           {/* Global header — sticky, fixed */}
           <Navbar />
 
@@ -74,7 +76,8 @@ export default function RootLayout({
 
           {/* Floating WhatsApp / Call / Email icons */}
           <FloatingContactIcons />
-        </CartProvider>
+          </CartProvider>
+        </WishlistProvider>
       </body>
     </html>
   );

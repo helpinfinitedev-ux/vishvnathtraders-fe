@@ -33,6 +33,7 @@ export default async function CatalogueProductPage({ params }: { params: Promise
       price={(product as any).price || 1450}
       sizes={product.sizes}
       thicknesses={product.thickness}
+      slug={product.slug}
     />
   );
 }

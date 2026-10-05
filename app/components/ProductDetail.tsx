@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Search, Heart, Share2, Minus, Plus, X } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 interface ProductDetailProps {
   name: string;
@@ -17,6 +19,7 @@ interface ProductDetailProps {
   getPrice?: (selection: any, product: any) => number;
   onAddToCart?: (selection: any) => void;
   cartLabel?: string;
+  slug?: string;
 }
 
 const CSS = `
@@ -403,7 +406,8 @@ export function ProductDetail({
   thicknesses = [],
   getPrice,
   onAddToCart,
-  cartLabel = "Add to cart"
+  cartLabel = "Add to cart",
+  slug = ""
 }: ProductDetailProps) {
   const [imgError, setImgError] = useState(false);
   const [activeViewIdx, setActiveViewIdx] = useState(0);
@@ -413,8 +417,12 @@ export function ProductDetail({
   const [selectedThickness, setSelectedThickness] = useState(thicknesses[0] || "");
   const [quantity, setQuantity] = useState(1);
   
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [toastMsg, setToastMsg] = useState("");
+  const { addToCart } = useCart();
+  
+  const resolvedProductId = slug || name.toLowerCase().replace(/\s+/g, '-');
+  const isWishlisted = isInWishlist(resolvedProductId);
 
   const allImages = images;
   const isSingleImage = allImages.length === 1 && !imgError;
@@ -625,16 +633,44 @@ export function ProductDetail({
               <button 
                 type="button"
                 className="pd-add-btn"
-                onClick={() => onAddToCart?.({ size: selectedSize, thickness: selectedThickness, quantity })}
+                onClick={() => {
+                  if (onAddToCart) {
+                    onAddToCart({ size: selectedSize, thickness: selectedThickness, quantity });
+                  } else {
+                    addToCart({
+                      productId: resolvedProductId,
+                      name,
+                      price: currentPrice,
+                      mrp: currentPrice,
+                      image: images[0] || "",
+                      quantity,
+                      thickness: selectedThickness,
+                      size: selectedSize
+                    });
+                  }
+                }}
               >
                 {cartLabel}
               </button>
               <button 
                 type="button"
                 className="pd-icon-btn" 
-                aria-label="Add to wishlist"
+                aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
                 aria-pressed={isWishlisted}
-                onClick={() => setIsWishlisted(!isWishlisted)}
+                onClick={() => {
+                  if (isWishlisted) {
+                    removeFromWishlist(resolvedProductId);
+                  } else {
+                    addToWishlist({
+                      productId: resolvedProductId,
+                      name,
+                      price: currentPrice,
+                      mrp: currentPrice,
+                      image: images[0] || "",
+                      category: tag || "Products"
+                    });
+                  }
+                }}
               >
                 <Heart size={20} className={isWishlisted ? "fill-current" : ""} />
               </button>
