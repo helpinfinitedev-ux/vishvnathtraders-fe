@@ -179,6 +179,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="text-xs text-white/40 hover:text-white/70 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="text-xs text-white/40 hover:text-white/70 transition-colors">Terms of Use</Link>
+            <a href={process.env.NEXT_PUBLIC_ADMIN_URL || "http://localhost:3001"} target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-[var(--burgundy)] transition-colors">Admin Portal</a>
           </div>
         </div>
       </div>
