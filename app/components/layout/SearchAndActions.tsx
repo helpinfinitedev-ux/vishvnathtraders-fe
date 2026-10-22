@@ -14,7 +14,7 @@ export function SearchAndActions() {
   const router = useRouter();
   const { cartCount, setIsCartOpen } = useCart();
   const { wishlistItems, setIsWishlistOpen } = useWishlist();
-  const { openModal: openAuthModal } = useAuthModal();
+  const { openModal: openAuthModal, user, isAuthenticated, logout } = useAuthModal();
   const [searchQuery, setSearchQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState("");
@@ -330,14 +330,49 @@ export function SearchAndActions() {
             )}
           </button>
 
-          {/* User */}
-          <button
-            onClick={() => openAuthModal("signin")}
-            aria-label="Sign in"
-            style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.2rem" }}
-          >
-            <User size={22} strokeWidth={1.5} />
-          </button>
+          {/* User Account / Sign In */}
+          {isAuthenticated && user ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span
+                style={{
+                  fontSize: "0.8rem",
+                  color: "#fff",
+                  fontWeight: 600,
+                  maxWidth: "90px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                title={user.firstName}
+              >
+                {user.firstName}
+              </span>
+              <button
+                onClick={logout}
+                aria-label="Sign out"
+                title="Sign out"
+                style={{
+                  background: "rgba(255,255,255,0.15)",
+                  border: "none",
+                  color: "#fff",
+                  cursor: "pointer",
+                  borderRadius: "4px",
+                  padding: "2px 6px",
+                  fontSize: "0.7rem",
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => openAuthModal("signin")}
+              aria-label="Sign in"
+              style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.2rem" }}
+            >
+              <User size={22} strokeWidth={1.5} />
+            </button>
+          )}
         </div>
       </div>
 

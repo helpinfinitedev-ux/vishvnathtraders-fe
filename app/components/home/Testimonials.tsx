@@ -8,23 +8,40 @@ import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StarRating } from "@/components/ui/StarRating";
-import { testimonials } from "@/data/testimonials";
+import { testimonials as fallbackTestimonials } from "@/data/testimonials";
+import { testimonialService } from "@/services/testimonialService";
+import type { Testimonial } from "@/types";
 import { cn } from "@/lib/utils";
 
 export function Testimonials() {
+  const [items, setItems] = useState<Testimonial[]>(fallbackTestimonials);
   const [active, setActive] = useState(0);
-  const total = testimonials.length;
+
+  useEffect(() => {
+    let isMounted = true;
+    testimonialService.getTestimonials().then((live) => {
+      if (isMounted && live && live.length > 0) {
+        setItems(live);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const total = items.length;
 
   const next = useCallback(() => setActive((prev) => (prev + 1) % total), [total]);
   const prev = () => setActive((prev) => (prev - 1 + total) % total);
 
   // Auto-advance every 5s
   useEffect(() => {
+    if (total <= 1) return;
     const timer = setInterval(next, 5000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, total]);
 
-  const current = testimonials[active];
+  const current = items[active] || items[0] || fallbackTestimonials[0];
 
   return (
     <section
@@ -92,7 +109,7 @@ export function Testimonials() {
 
               {/* Dot indicators */}
               <div className="flex items-center gap-2" role="tablist" aria-label="Testimonial navigation">
-                {testimonials.map((_, i) => (
+                {items.map((_, i: number) => (
                   <button
                     key={i}
                     role="tab"

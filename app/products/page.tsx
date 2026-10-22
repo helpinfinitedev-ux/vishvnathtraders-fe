@@ -5,16 +5,18 @@
 // All filtering/sorting is client-side on static data
 // =============================================================================
 
-import { useState, useMemo } from "react";
-import { LayoutGrid, List, SlidersHorizontal, X } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { LayoutGrid, List, SlidersHorizontal, X, Loader2 } from "lucide-react";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { Button } from "@/components/ui/Button";
 import { FilterSidebar } from "@/components/products/FilterSidebar";
 import { ProductCard } from "@/components/products/ProductCard";
-import { products, PRICE_RANGE } from "@/data/products";
-import { categories } from "@/data/categories";
+import { products as fallbackProducts, PRICE_RANGE } from "@/data/products";
+import { categories as fallbackCategories } from "@/data/categories";
+import { productService } from "@/services/productService";
+import { categoryService } from "@/services/categoryService";
 import { cn } from "@/lib/utils";
-import type { ProductFilters, SortOption } from "@/types";
+import type { Product, Category, ProductFilters, SortOption } from "@/types";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -39,6 +41,11 @@ function ProductsPageInner() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category");
 
+  const [productList, setProductList] = useState<Product[]>(fallbackProducts);
+  const [categoryList, setCategoryList] = useState<Category[]>(fallbackCategories);
+  const [thicknessList, setThicknessList] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+
   const [filters, setFilters] = useState<ProductFilters>({
     ...DEFAULT_FILTERS,
     categories: initialCategory ? [initialCategory] : [],
@@ -48,16 +55,46 @@ function ProductsPageInner() {
   const [page, setPage] = useState(1);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
+  // Fetch live products, categories, and filter options from backend
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    Promise.all([
+      productService.getAllProducts().catch(() => fallbackProducts),
+      categoryService.getCategories().catch(() => fallbackCategories),
+      productService.getProductFilters().catch(() => null),
+    ])
+      .then(([liveProducts, liveCats, liveFilters]) => {
+        if (!isMounted) return;
+        if (liveProducts && liveProducts.length > 0) {
+          setProductList(liveProducts);
+        }
+        if (liveCats && liveCats.length > 0) {
+          setCategoryList(liveCats);
+        }
+        if (liveFilters?.thickness && liveFilters.thickness.length > 0) {
+          setThicknessList(liveFilters.thickness);
+        }
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // ── Filtering ──────────────────────────────────────────────────────────────
   const filtered = useMemo(() => {
-    return products.filter((p) => {
+    return productList.filter((p) => {
       if (filters.categories.length && !filters.categories.includes(p.category)) return false;
-      // if (filters.grades.length && !filters.grades.includes(p.grade)) return false;
       if (filters.thicknesses.length && !p.thickness.some((t) => filters.thicknesses.includes(t))) return false;
       if (p.price < filters.priceRange[0] || p.price > filters.priceRange[1]) return false;
       return true;
     });
-  }, [filters]);
+  }, [productList, filters]);
 
   // ── Sorting ────────────────────────────────────────────────────────────────
   const sorted = useMemo(() => {
@@ -88,7 +125,7 @@ function ProductsPageInner() {
 
   // Active filter tags
   const activeTags = [
-    ...filters.categories.map((c) => ({ label: categories.find((cat) => cat.slug === c)?.name ?? c, key: `cat:${c}`, clear: () => setFilters((f) => ({ ...f, categories: f.categories.filter((v) => v !== c) })) })),
+    ...filters.categories.map((c) => ({ label: categoryList.find((cat) => cat.slug === c)?.name ?? c, key: `cat:${c}`, clear: () => setFilters((f) => ({ ...f, categories: f.categories.filter((v) => v !== c) })) })),
     ...filters.grades.map((g) => ({ label: g, key: `grade:${g}`, clear: () => setFilters((f) => ({ ...f, grades: f.grades.filter((v) => v !== g) })) })),
     ...filters.thicknesses.map((t) => ({ label: t, key: `thickness:${t}`, clear: () => setFilters((f) => ({ ...f, thicknesses: f.thicknesses.filter((v) => v !== t) })) })),
   ];
@@ -129,6 +166,12 @@ function ProductsPageInner() {
                 {sorted.length}
               </span>{" "}
               products
+              {loading && (
+                <span className="inline-flex items-center gap-1.5 ml-3 text-xs text-[var(--burgundy)] font-medium">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  Updating...
+                </span>
+              )}
             </p>
 
             {/* Right — controls */}
@@ -328,7 +371,13 @@ function ProductsPageInner() {
         <div className="flex gap-8">
           {/* Desktop sidebar */}
           <div className="hidden lg:block w-64 shrink-0">
-            <FilterSidebar filters={filters} onChange={handleFilterChange} onClear={clearFilters} />
+            <FilterSidebar
+              filters={filters}
+              onChange={handleFilterChange}
+              onClear={clearFilters}
+              categories={categoryList}
+              thicknesses={thicknessList.length > 0 ? thicknessList : undefined}
+            />
           </div>
 
           {/* Product grid */}
@@ -424,7 +473,13 @@ function ProductsPageInner() {
                 <X className="w-5 h-5 text-[var(--ink-soft)]" />
               </button>
             </div>
-            <FilterSidebar filters={filters} onChange={handleFilterChange} onClear={clearFilters} />
+            <FilterSidebar
+              filters={filters}
+              onChange={handleFilterChange}
+              onClear={clearFilters}
+              categories={categoryList}
+              thicknesses={thicknessList.length > 0 ? thicknessList : undefined}
+            />
           </div>
         </div>
       )}

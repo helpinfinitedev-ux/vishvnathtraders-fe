@@ -6,12 +6,14 @@
 // empty state, clear-all, and checkout button.
 // =============================================================================
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { X, Trash2, ShoppingBag, Minus, Plus } from "lucide-react";
+import { X, Trash2, ShoppingBag, Minus, Plus, CheckCircle2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useAuthModal } from "@/context/AuthModalContext";
 import { formatPrice } from "@/lib/utils";
+import type { Order } from "@/services/orderService";
 
 export function CartDrawer() {
   const {
@@ -23,9 +25,26 @@ export function CartDrawer() {
     updateQuantity,
     removeFromCart,
     clearCart,
+    checkout,
   } = useCart();
+  const { user, isAuthenticated, openModal: openAuthModal } = useAuthModal();
+
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutAddress, setCheckoutAddress] = useState("");
+  const [checkoutPhone, setCheckoutPhone] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+  const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
 
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Sync user profile with checkout form
+  useEffect(() => {
+    if (user) {
+      if (user.address) setCheckoutAddress(user.address);
+      if (user.phoneNumber) setCheckoutPhone(user.phoneNumber);
+    }
+  }, [user]);
 
   // Close when pressing Esc
   useEffect(() => {
@@ -359,56 +378,148 @@ export function CartDrawer() {
               </span>
             </div>
 
-            <p
-              className="text-xs text-center"
-              style={{
-                color: "var(--ink-soft)",
-                marginBottom: "var(--space-4)",
-              }}
-            >
-              Shipping and taxes calculated at checkout.
-            </p>
+            {placedOrder ? (
+              <div className="flex flex-col items-center text-center py-6 gap-3">
+                <CheckCircle2 className="w-12 h-12 text-[#25D366]" />
+                <h3 className="font-semibold text-lg text-[var(--color-primary)]">
+                  Order Placed Successfully!
+                </h3>
+                <p className="text-xs text-[var(--color-muted)]">
+                  Order ID: <span className="font-mono font-bold text-[var(--color-primary)]">{placedOrder._id}</span>
+                </p>
+                <p className="text-xs text-[var(--color-muted)]">
+                  Total: <strong className="text-[var(--color-primary)]">{formatPrice(placedOrder.totalAmount)}</strong>
+                </p>
+                <p className="text-xs text-[var(--ink-soft)]">
+                  Our team will contact you at {checkoutPhone || placedOrder.phoneNumber} regarding delivery schedule.
+                </p>
+                <button
+                  onClick={() => {
+                    setPlacedOrder(null);
+                    setIsCheckingOut(false);
+                    setIsCartOpen(false);
+                  }}
+                  className="mt-3 w-full py-2.5 rounded-lg text-sm font-semibold bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-dark)] transition-colors"
+                >
+                  Continue Shopping
+                </button>
+              </div>
+            ) : isCheckingOut ? (
+              <div className="flex flex-col gap-3 py-2">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-sm text-[var(--color-primary)]">Delivery Details</h4>
+                  <button
+                    onClick={() => setIsCheckingOut(false)}
+                    className="text-xs text-[var(--color-accent)] hover:underline"
+                  >
+                    Back to Cart
+                  </button>
+                </div>
 
-            {/* Checkout CTA */}
-            <button
-              className="w-full font-bold tracking-wide uppercase transition-all duration-200"
-              style={{
-                background: "var(--color-accent)",
-                color: "#fff",
-                padding: "var(--space-4)",
-                borderRadius: "var(--radius-md)",
-                fontFamily: "var(--font-heading)",
-                fontSize: "0.875rem",
-                fontWeight: 700,
-                letterSpacing: "0.06em",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0 4px 14px -2px rgba(111, 23, 38,0.35)",
-                minHeight: "48px",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background =
-                  "var(--color-accent-dark)";
-                (e.currentTarget as HTMLElement).style.transform =
-                  "translateY(-1px)";
-                (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 8px 24px -4px rgba(111, 23, 38,0.45)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background =
-                  "var(--color-accent)";
-                (e.currentTarget as HTMLElement).style.transform =
-                  "translateY(0)";
-                (e.currentTarget as HTMLElement).style.boxShadow =
-                  "0 4px 14px -2px rgba(111, 23, 38,0.35)";
-              }}
-              onClick={() => {
-                alert("Checkout functionality to be implemented.");
-                setIsCartOpen(false);
-              }}
-            >
-              Proceed to Checkout
-            </button>
+                {checkoutError && (
+                  <div className="p-2 rounded bg-red-50 text-red-700 text-xs">{checkoutError}</div>
+                )}
+
+                <div>
+                  <label className="block text-xs font-medium text-[var(--color-primary)] mb-1">
+                    Phone Number (10 digits) *
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="10-digit mobile number"
+                    className="w-full text-xs p-2 rounded border border-[#e0e0e0] outline-none focus:border-[var(--color-accent)]"
+                    value={checkoutPhone}
+                    onChange={(e) => setCheckoutPhone(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-[var(--color-primary)] mb-1">
+                    Delivery Address *
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder="Full street address, locality, city"
+                    className="w-full text-xs p-2 rounded border border-[#e0e0e0] outline-none focus:border-[var(--color-accent)]"
+                    value={checkoutAddress}
+                    onChange={(e) => setCheckoutAddress(e.target.value)}
+                  />
+                </div>
+
+                <button
+                  disabled={isSubmitting}
+                  onClick={async () => {
+                    const cleanPhone = checkoutPhone.replace(/\D/g, "").slice(-10);
+                    if (!cleanPhone || cleanPhone.length !== 10) {
+                      setCheckoutError("Valid 10-digit phone number is required");
+                      return;
+                    }
+                    if (!checkoutAddress.trim() || checkoutAddress.trim().length < 10) {
+                      setCheckoutError("Please enter a complete delivery address (min 10 characters)");
+                      return;
+                    }
+
+                    setCheckoutError("");
+                    setIsSubmitting(true);
+                    try {
+                      const order = await checkout({
+                        address: checkoutAddress.trim(),
+                        phoneNumber: cleanPhone,
+                      });
+                      setPlacedOrder(order);
+                    } catch (err: any) {
+                      setCheckoutError(err.message || "Failed to place order. Please try again.");
+                    } finally {
+                      setIsSubmitting(false);
+                    }
+                  }}
+                  className="w-full mt-2 py-3 rounded-lg text-sm font-bold uppercase tracking-wider bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-dark)] transition-all disabled:opacity-50"
+                >
+                  {isSubmitting ? "Placing Order..." : `Confirm Order (${formatPrice(cartTotal)})`}
+                </button>
+              </div>
+            ) : (
+              <>
+                <p
+                  className="text-xs text-center"
+                  style={{
+                    color: "var(--ink-soft)",
+                    marginBottom: "var(--space-4)",
+                  }}
+                >
+                  Shipping and taxes calculated at checkout.
+                </p>
+
+                {/* Checkout CTA */}
+                <button
+                  className="w-full font-bold tracking-wide uppercase transition-all duration-200"
+                  style={{
+                    background: "var(--color-accent)",
+                    color: "#fff",
+                    padding: "var(--space-4)",
+                    borderRadius: "var(--radius-md)",
+                    fontFamily: "var(--font-heading)",
+                    fontSize: "0.875rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.06em",
+                    border: "none",
+                    cursor: "pointer",
+                    boxShadow: "0 4px 14px -2px rgba(111, 23, 38,0.35)",
+                    minHeight: "48px",
+                  }}
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      setIsCartOpen(false);
+                      openAuthModal("signin");
+                    } else {
+                      setIsCheckingOut(true);
+                    }
+                  }}
+                >
+                  Proceed to Checkout
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>
