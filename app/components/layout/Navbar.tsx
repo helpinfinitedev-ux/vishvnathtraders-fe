@@ -150,7 +150,7 @@ export function Navbar() {
   const productsButtonRef = useRef<HTMLButtonElement>(null);
   const { cartCount, setIsCartOpen } = useCart();
   const { wishlistItems, setIsWishlistOpen } = useWishlist();
-  const { openModal: openAuthModal } = useAuthModal();
+  const { openModal: openAuthModal, user, isAuthenticated, logout } = useAuthModal();
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -493,13 +493,24 @@ export function Navbar() {
                     </span>
                   )}
                 </button>
-                <button
-                  onClick={() => openAuthModal("signin")}
-                  aria-label="Sign in"
-                  style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.1rem" }}
-                >
-                  <User size={20} strokeWidth={1.5} />
-                </button>
+                {isAuthenticated && user ? (
+                  <button
+                    onClick={logout}
+                    aria-label="Sign out"
+                    title={`Signed in as ${user.firstName}. Click to logout.`}
+                    style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.1rem", fontSize: "0.75rem", fontWeight: 600 }}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => openAuthModal("signin")}
+                    aria-label="Sign in"
+                    style={{ background: "none", border: "none", color: "var(--color-primary)", cursor: "pointer", display: "flex", alignItems: "center", padding: "0.1rem" }}
+                  >
+                    <User size={20} strokeWidth={1.5} />
+                  </button>
+                )}
               </div>
 
               {/* Hamburger — visible only on mobile */}

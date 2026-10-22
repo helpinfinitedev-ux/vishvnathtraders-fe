@@ -7,15 +7,17 @@
 
 import { useState } from "react";
 import { ChevronDown, X } from "lucide-react";
-import { categories } from "@/data/categories";
+import { categories as defaultCategories } from "@/data/categories";
 import { getAllThicknesses, PRICE_RANGE } from "@/data/products";
 import { cn } from "@/lib/utils";
-import type { ProductFilters } from "@/types";
+import type { ProductFilters, Category } from "@/types";
 
 interface FilterSidebarProps {
   filters: ProductFilters;
   onChange: (filters: ProductFilters) => void;
   onClear: () => void;
+  categories?: Category[];
+  thicknesses?: string[];
 }
 
 // ── Collapsible filter group ──────────────────────────────────────────────────
@@ -96,9 +98,13 @@ function CheckItem({
   );
 }
 
-export function FilterSidebar({ filters, onChange, onClear }: FilterSidebarProps) {
-  const thicknesses = getAllThicknesses();
-
+export function FilterSidebar({
+  filters,
+  onChange,
+  onClear,
+  categories = defaultCategories,
+  thicknesses = getAllThicknesses(),
+}: FilterSidebarProps) {
   const toggleArray = (arr: string[], value: string): string[] =>
     arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value];
 

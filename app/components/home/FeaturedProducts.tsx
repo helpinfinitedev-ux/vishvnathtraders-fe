@@ -1,16 +1,27 @@
 // =============================================================================
 // FeaturedProducts — home section showcasing hand-picked best sellers
+// Connected to backend productService
 // =============================================================================
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProductCard } from "@/components/products/ProductCard";
-import { Button } from "@/components/ui/Button";
 import { getFeaturedProducts } from "@/data/products";
+import { productService } from "@/services/productService";
+import type { Product } from "@/types";
 
-export function FeaturedProducts() {
-  const featured = getFeaturedProducts();
+export async function FeaturedProducts() {
+  let featured: Product[] = getFeaturedProducts();
+
+  try {
+    const res = await productService.getProducts({ featured: true, limit: 6 });
+    if (res?.products && res.products.length > 0) {
+      featured = res.products;
+    }
+  } catch (err) {
+    console.warn("Failed to load live featured products, using fallback:", err);
+  }
 
   return (
     <section

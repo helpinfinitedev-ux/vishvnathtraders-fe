@@ -1,5 +1,6 @@
 // =============================================================================
 // CategoryHighlights — simple icon tiles (active / hovered tile fills with tan)
+// Connected to backend categoryService
 // =============================================================================
 
 import Link from "next/link";
@@ -13,8 +14,10 @@ import {
   Ruler,
   type LucideIcon,
 } from "lucide-react";
-import { categories } from "@/data/categories";
+import { categories as fallbackCategories } from "@/data/categories";
+import { categoryService } from "@/services/categoryService";
 import { cn } from "@/lib/utils";
+import type { Category } from "@/types";
 
 // One lucide icon per category slug
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -35,23 +38,30 @@ type CategoryHighlightsProps = {
   activeSlug?: string;
 };
 
-export function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
+export async function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
+  let categories: Category[] = fallbackCategories;
+
+  try {
+    const liveCategories = await categoryService.getCategories();
+    if (liveCategories && liveCategories.length > 0) {
+      categories = liveCategories;
+    }
+  } catch (err) {
+    console.warn("Failed to load live categories in CategoryHighlights, using fallback:", err);
+  }
+
   return (
     <section
       className="bg-white"
-      // inline so no global "section" CSS can override the spacing
       style={{ paddingTop: "3.5rem", paddingBottom: "3.5rem" }}
       aria-label="Product categories"
     >
       <div className="container-site">
-        {/* One box around all tiles: equal padding inside = equal gap between tiles */}
         <div className="rounded-[28px] border border-[var(--ivory)] bg-[#faf5ef] p-4 md:p-5 shadow-[0_8px_30px_rgba(74,55,40,0.08)]">
           <div
             className={cn(
               "grid grid-cols-2 gap-4 md:gap-5",
-              // desktop: one row, every tile exactly the same width (works for 5 or 6 categories)
               "md:grid-flow-col md:auto-cols-fr",
-              // mobile: if the last tile is alone in its row, stretch it across both columns
               "max-md:[&>*:last-child:nth-child(odd)]:col-span-2"
             )}
           >
@@ -71,10 +81,8 @@ export function CategoryHighlights({ activeSlug }: CategoryHighlightsProps) {
                     "transition-colors duration-200",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--burgundy)] focus-visible:ring-offset-2",
                     isActive
-                      ? // active = dark brown, so it stands out from the tan tiles
-                      "bg-[var(--maroon)] border-[var(--maroon)] text-white"
-                      : // default = tan filled, hover = white with tan border
-                      "bg-[var(--burgundy)] border-[var(--burgundy)] text-white hover:bg-white hover:text-[var(--burgundy)]"
+                      ? "bg-[var(--maroon)] border-[var(--maroon)] text-white"
+                      : "bg-[var(--burgundy)] border-[var(--burgundy)] text-white hover:bg-white hover:text-[var(--burgundy)]"
                   )}
                 >
                   <Icon className="w-9 h-9 md:w-12 md:h-12" strokeWidth={1.6} aria-hidden="true" />

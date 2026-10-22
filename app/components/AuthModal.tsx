@@ -5,48 +5,37 @@ import { createPortal } from "react-dom";
 import { X, Eye, EyeOff, Check } from "lucide-react";
 import { useAuthModal } from "@/context/AuthModalContext";
 
+import { authService } from "@/services/authService";
+
 interface AuthModalProps {
-  onSignIn?: (email: string, pass: string) => Promise<void>;
-  onSignUp?: (name: string, email: string, pass: string) => Promise<void>;
+  onSignIn?: (phone: string, pass: string) => Promise<void>;
+  onSignUp?: (data: { name: string; phone: string; address: string; email?: string; pass: string }) => Promise<void>;
   onGoogle?: () => Promise<void>;
-  onResetPassword?: (email: string) => Promise<void>;
+  onResetPassword?: (phone: string) => Promise<void>;
 }
 
-export function AuthModal({
-  onSignIn = async (email, pass) => {
-    console.log("Placeholder onSignIn:", email, pass);
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === "test@example.com") resolve();
-        else reject(new Error("Wrong email or password."));
-      }, 1000);
-    });
-  },
-  onSignUp = async (name, email, pass) => {
-    console.log("Placeholder onSignUp:", name, email, pass);
-    return new Promise((resolve) => setTimeout(resolve, 1000));
-  },
-  onResetPassword = async (email) => {
-    console.log("Placeholder onResetPassword:", email);
-    return new Promise((resolve) => setTimeout(resolve, 1000));
-  },
-}: AuthModalProps) {
-  const { isOpen, mode, closeModal, openModal } = useAuthModal();
+export function AuthModal(props: AuthModalProps) {
+  const { isOpen, mode, closeModal, openModal, signIn, registerUser } = useAuthModal();
   const [mounted, setMounted] = useState(false);
   const [activeMode, setActiveMode] = useState<"signin" | "signup">(mode);
   const [isResetMode, setIsResetMode] = useState(false);
+  const [resetTokenSent, setResetTokenSent] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   // Form states
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [resetToken, setResetToken] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
   // Status states
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [validationErrors, setValidationErrors] = useState<{name?: string, email?: string, password?: string}>({});
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const firstInputRef = useRef<HTMLInputElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
@@ -61,15 +50,15 @@ export function AuthModal({
     if (isOpen) {
       setActiveMode(mode);
       setIsResetMode(false);
+      setResetTokenSent(false);
       setIsSuccess(false);
       setErrorMsg("");
       setValidationErrors({});
-      // Keep email, reset password
       setPassword("");
+      setNewPassword("");
       
       document.body.style.overflow = "hidden";
       setTimeout(() => {
-        // Focus first input on open
         if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
           closeBtnRef.current?.focus();
         } else {
@@ -87,26 +76,36 @@ export function AuthModal({
   const switchMode = (m: "signin" | "signup") => {
     setActiveMode(m);
     setIsResetMode(false);
+    setResetTokenSent(false);
     setErrorMsg("");
     setValidationErrors({});
     openModal(m);
   };
 
   const validate = () => {
-    const errs: any = {};
+    const errs: Record<string, string> = {};
+
+    if (!phone.trim() || !/^\d{10}$/.test(phone.trim().replace(/\D/g, "").slice(-10))) {
+      errs.phone = "Valid 10-digit phone number required";
+    }
+
     if (activeMode === "signup" && !isResetMode) {
-      if (!name.trim()) errs.name = "Required";
-    }
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errs.email = "Valid email required";
-    }
-    if (!isResetMode) {
+      if (!name.trim()) errs.name = "Full name is required";
+      if (!address.trim()) errs.address = "Address is required";
+      if (!password || password.length < 6) {
+        errs.password = "Password must be at least 6 characters";
+      }
+    } else if (activeMode === "signin" && !isResetMode) {
       if (!password) {
-        errs.password = "Required";
-      } else if (activeMode === "signup" && password.length < 8) {
-        errs.password = "Use at least 8 characters";
+        errs.password = "Password is required";
+      }
+    } else if (isResetMode && resetTokenSent) {
+      if (!resetToken.trim()) errs.resetToken = "Reset token is required";
+      if (!newPassword || newPassword.length < 6) {
+        errs.newPassword = "New password must be at least 6 characters";
       }
     }
+
     setValidationErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -120,18 +119,45 @@ export function AuthModal({
     setLoading(true);
 
     try {
+      const cleanPhone = phone.trim().replace(/\D/g, "").slice(-10);
+
       if (isResetMode) {
-        await onResetPassword(email);
-        setIsSuccess(true);
+        if (!resetTokenSent) {
+          const res = await authService.forgotPassword(cleanPhone);
+          setResetTokenSent(true);
+          if (res?.resetToken) {
+            setResetToken(res.resetToken);
+          }
+        } else {
+          await authService.resetPassword(cleanPhone, resetToken.trim(), newPassword);
+          setIsSuccess(true);
+        }
       } else if (activeMode === "signin") {
-        await onSignIn(email, password);
-        closeModal();
+        if (props.onSignIn) {
+          await props.onSignIn(cleanPhone, password);
+        } else {
+          await signIn({ phoneNumber: cleanPhone, password });
+        }
       } else {
-        await onSignUp(name, email, password);
-        setIsSuccess(true);
+        const parts = name.trim().split(" ");
+        const firstName = parts[0] || "Customer";
+        const lastName = parts.slice(1).join(" ") || "User";
+
+        if (props.onSignUp) {
+          await props.onSignUp({ name, phone: cleanPhone, address, email, pass: password });
+        } else {
+          await registerUser({
+            firstName,
+            lastName,
+            phoneNumber: cleanPhone,
+            address: address.trim() || "Vishwanath Traders Customer",
+            password,
+            emailAddress: email.trim() || undefined,
+          });
+        }
       }
     } catch (err: any) {
-      setErrorMsg(err.message || "An unexpected error occurred.");
+      setErrorMsg(err.message || "An unexpected error occurred. Please check your credentials.");
     } finally {
       setLoading(false);
     }
@@ -240,6 +266,7 @@ export function AuthModal({
                 </div>
               )}
 
+              {/* Full name (Sign Up only) */}
               {activeMode === "signup" && !isResetMode && (
                 <div className="am-field">
                   <label htmlFor="am-name" className="am-label">Full name</label>
@@ -249,6 +276,7 @@ export function AuthModal({
                     type="text"
                     autoComplete="name"
                     className="am-input"
+                    placeholder="Enter your full name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     aria-invalid={!!validationErrors.name}
@@ -260,25 +288,103 @@ export function AuthModal({
                 </div>
               )}
 
+              {/* Phone number (Required for both signin, signup, and reset) */}
               <div className="am-field">
-                <label htmlFor="am-email" className="am-label">Email</label>
+                <label htmlFor="am-phone" className="am-label">Phone number</label>
                 <input
-                  id="am-email"
+                  id="am-phone"
                   ref={activeMode === "signin" || isResetMode ? firstInputRef : null}
-                  type="email"
-                  autoComplete="email"
-                  placeholder="you@company.com"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="10-digit mobile number"
                   className="am-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  aria-invalid={!!validationErrors.email}
-                  aria-describedby={validationErrors.email ? "am-email-error" : undefined}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  aria-invalid={!!validationErrors.phone}
+                  aria-describedby={validationErrors.phone ? "am-phone-error" : undefined}
                 />
-                {validationErrors.email && (
-                  <span id="am-email-error" className="am-field-error">{validationErrors.email}</span>
+                {validationErrors.phone && (
+                  <span id="am-phone-error" className="am-field-error">{validationErrors.phone}</span>
                 )}
               </div>
 
+              {/* Address (Sign Up only) */}
+              {activeMode === "signup" && !isResetMode && (
+                <div className="am-field">
+                  <label htmlFor="am-address" className="am-label">Delivery Address / City</label>
+                  <input
+                    id="am-address"
+                    type="text"
+                    autoComplete="street-address"
+                    className="am-input"
+                    placeholder="Street, locality, city"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    aria-invalid={!!validationErrors.address}
+                    aria-describedby={validationErrors.address ? "am-address-error" : undefined}
+                  />
+                  {validationErrors.address && (
+                    <span id="am-address-error" className="am-field-error">{validationErrors.address}</span>
+                  )}
+                </div>
+              )}
+
+              {/* Optional Email (Sign Up only) */}
+              {activeMode === "signup" && !isResetMode && (
+                <div className="am-field">
+                  <label htmlFor="am-email" className="am-label">Email (Optional)</label>
+                  <input
+                    id="am-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@company.com"
+                    className="am-input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              )}
+
+              {/* Reset token and new password when token is sent */}
+              {isResetMode && resetTokenSent && (
+                <>
+                  <div className="am-field">
+                    <label htmlFor="am-token" className="am-label">Reset Token</label>
+                    <input
+                      id="am-token"
+                      type="text"
+                      placeholder="Enter the reset token"
+                      className="am-input"
+                      value={resetToken}
+                      onChange={(e) => setResetToken(e.target.value)}
+                      aria-invalid={!!validationErrors.resetToken}
+                      aria-describedby={validationErrors.resetToken ? "am-token-error" : undefined}
+                    />
+                    {validationErrors.resetToken && (
+                      <span id="am-token-error" className="am-field-error">{validationErrors.resetToken}</span>
+                    )}
+                  </div>
+
+                  <div className="am-field">
+                    <label htmlFor="am-new-password" className="am-label">New Password</label>
+                    <input
+                      id="am-new-password"
+                      type="password"
+                      placeholder="Minimum 6 characters"
+                      className="am-input"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      aria-invalid={!!validationErrors.newPassword}
+                      aria-describedby={validationErrors.newPassword ? "am-new-password-error" : undefined}
+                    />
+                    {validationErrors.newPassword && (
+                      <span id="am-new-password-error" className="am-field-error">{validationErrors.newPassword}</span>
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* Password (Sign In and Sign Up) */}
               {!isResetMode && (
                 <div className="am-field">
                   <div className="am-label-row">
@@ -289,6 +395,7 @@ export function AuthModal({
                         className="am-forgot-btn"
                         onClick={() => {
                           setIsResetMode(true);
+                          setResetTokenSent(false);
                           setErrorMsg("");
                           setValidationErrors({});
                         }}
@@ -331,13 +438,10 @@ export function AuthModal({
                 disabled={loading}
               >
                 {loading
-                  ? (isResetMode ? "Sending..." : activeMode === "signin" ? "Signing in..." : "Creating account...")
-                  : (isResetMode ? "Send reset link" : activeMode === "signin" ? "Sign in" : "Create account")}
+                  ? (isResetMode ? (resetTokenSent ? "Resetting..." : "Sending...") : activeMode === "signin" ? "Signing in..." : "Creating account...")
+                  : (isResetMode ? (resetTokenSent ? "Reset password" : "Send reset token") : activeMode === "signin" ? "Sign in" : "Create account")}
                 {loading && <span className="am-spinner"></span>}
               </button>
-
-              {/* Removed Google button and divider as per instructions if no auth exists */}
-
             </form>
 
             <div className="am-footer-text">

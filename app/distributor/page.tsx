@@ -10,6 +10,8 @@ import { CheckCircle2, TrendingUp, Headphones, Package, MapPin } from "lucide-re
 import { FormField } from "@/components/ui/FormField";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SITE_CONFIG } from "@/data/siteConfig";
+import { whatsappService } from "@/services/whatsappService";
 import type { EnquiryFormData } from "@/types";
 
 const INITIAL_FORM: EnquiryFormData = {
@@ -50,10 +52,18 @@ export default function DistributorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate network delay — replace with real API call
-    await new Promise((r) => setTimeout(r, 1500));
-    setSubmitted(true);
-    setLoading(false);
+    try {
+      await whatsappService.sendMessage({
+        to: SITE_CONFIG.whatsapp || SITE_CONFIG.phone,
+        body: `*New Distributor/Dealer Enquiry:*\nName: ${form.name}\nBusiness: ${form.businessName}\nPhone: ${form.phone}\nEmail: ${form.email}\nCity: ${form.city}\nState: ${form.state}\nType: ${form.enquiryType}\nMessage: ${form.message || "N/A"}`,
+      });
+    } catch (err) {
+      console.warn("Distributor enquiry notification via backend whatsapp service skipped:", err);
+      await new Promise((r) => setTimeout(r, 600));
+    } finally {
+      setSubmitted(true);
+      setLoading(false);
+    }
   };
 
   return (

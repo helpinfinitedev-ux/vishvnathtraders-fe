@@ -1,11 +1,12 @@
 // =============================================================================
 // PRODUCT DETAIL PAGE — /products/[slug]
 // Dynamic template — renders any product from data by slug
+// Fetches live data from backend; falls back to static data if unavailable
 // =============================================================================
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
 import { use } from "react";
 import {
@@ -18,6 +19,7 @@ import {
   Timer,
   Truck,
   AlertTriangle,
+  Loader2,
 } from "lucide-react";
 import { PageBanner } from "@/components/ui/PageBanner";
 import { Badge } from "@/components/ui/Badge";
@@ -28,11 +30,13 @@ import { ProductImageGallery } from "@/components/products/ProductImageGallery";
 import { VariantSelector } from "@/components/products/VariantSelector";
 import { PriceBlock } from "@/components/products/PriceBlock";
 import { StickyActionBar } from "@/components/products/StickyActionBar";
-import { getProductBySlug, getRelatedProducts } from "@/data/products";
+import { getProductBySlug as getStaticProductBySlug, getRelatedProducts as getStaticRelatedProducts } from "@/data/products";
 import { getCategoryBySlug } from "@/data/categories";
 import { SITE_CONFIG } from "@/data/siteConfig";
 import { useCart } from "@/context/CartContext";
 import { ProductInfoSections } from "@/components/ProductInfoSections";
+import { productService } from "@/services/productService";
+import type { Product } from "@/types";
 
 // ── Icon map for benefits ─────────────────────────────────────────────────────
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -62,17 +66,62 @@ const DEFAULT_BENEFITS = [
 // =============================================================================
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
-  const product = getProductBySlug(slug);
 
-  if (!product) notFound();
+  // Start with static fallback immediately
+  const staticProduct = getStaticProductBySlug(slug);
+  const staticRelated = staticProduct ? getStaticRelatedProducts(staticProduct) : [];
 
-  const [selectedThickness, setSelectedThickness] = useState(product.thickness[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  const [product, setProduct] = useState<Product | null>(staticProduct ?? null);
+  const [related, setRelated] = useState<Product[]>(staticRelated);
+  const [loadingProduct, setLoadingProduct] = useState(true);
+
+  const [selectedThickness, setSelectedThickness] = useState(staticProduct?.thickness[0] ?? "");
+  const [selectedSize, setSelectedSize] = useState(staticProduct?.sizes[0] ?? "");
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
 
+  // Fetch live product from backend; fall back to static data on error
+  useEffect(() => {
+    let isMounted = true;
+    setLoadingProduct(true);
+
+    productService.getProductBySlug(slug)
+      .then((liveProduct) => {
+        if (!isMounted) return;
+        if (liveProduct) {
+          setProduct(liveProduct);
+          // Sync variant selectors to first option from live data
+          if (liveProduct.thickness?.length) setSelectedThickness(liveProduct.thickness[0]);
+          if (liveProduct.sizes?.length) setSelectedSize(liveProduct.sizes[0]);
+          // Fetch related products using backend ID
+          return productService.getRelatedProducts(liveProduct.id, 4);
+        }
+        return null;
+      })
+      .then((liveRelated) => {
+        if (!isMounted) return;
+        if (liveRelated && liveRelated.length > 0) setRelated(liveRelated);
+      })
+      .catch(() => { /* keep static fallback */ })
+      .finally(() => { if (isMounted) setLoadingProduct(false); });
+
+    return () => { isMounted = false; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
+
+  // If no product at all (static + live both missing), show 404
+  if (!product && !loadingProduct) notFound();
+
+  // While loading live data with no static fallback — show spinner
+  if (!product) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#fafaf8]">
+        <Loader2 className="w-10 h-10 animate-spin text-[var(--burgundy)]" />
+      </div>
+    );
+  }
+
   const category = getCategoryBySlug(product.category);
-  const related = getRelatedProducts(product);
   const brand = product.brand ?? "WoodCraft Premium";
   const faqs = product.faqs?.length ? product.faqs : DEFAULT_FAQS;
   const benefits = product.benefits?.length ? product.benefits : DEFAULT_BENEFITS;
