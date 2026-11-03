@@ -58,6 +58,23 @@ export function adaptProduct(raw: any): Product {
     warranty: raw.warranty || "15 Years",
     brand: raw.brand || "WoodCraft Premium",
     pricePerSqFt: raw.pricePerSqFt ? Number(raw.pricePerSqFt) : undefined,
+    sku: raw.sku,
+    stock: raw.stock !== undefined ? Number(raw.stock) : undefined,
+    series: raw.series,
+    grade: raw.grade,
+    subCategory: raw.subCategory,
+    pricePerSheet: raw.pricePerSheet ? Number(raw.pricePerSheet) : undefined,
+    pricePerPiece: raw.pricePerPiece ? Number(raw.pricePerPiece) : undefined,
+    pricePerRunningFt: raw.pricePerRunningFt ? Number(raw.pricePerRunningFt) : undefined,
+    designCode: raw.designCode,
+    finish: raw.finish,
+    subType: raw.subType,
+    doorThickness: raw.doorThickness ? Number(raw.doorThickness) : undefined,
+    material: raw.material,
+    width: raw.width,
+    length: raw.length,
+    isPremium: raw.isPremium !== undefined ? Boolean(raw.isPremium) : undefined,
+    type: raw.type,
   };
 }
 

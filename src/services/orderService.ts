@@ -4,19 +4,28 @@ export interface CreateOrderPayload {
   userId: string;
   cartId: string;
   address: string;
+  deliveryAddress?: string;
   phoneNumber: string;
   expectedDeliveryDate?: string | null;
   expectedDeliveryTime?: string | null;
   totalAmount?: number;
+  notes?: string;
+  paymentMethod?: string;
+  paymentStatus?: "pending" | "paid" | "failed" | "refunded";
 }
 
 export interface Order {
   _id: string;
+  orderNo?: string;
   userId: any;
   items: any[];
   address: string;
+  deliveryAddress?: string;
   phoneNumber: string;
   totalAmount: number;
+  paymentStatus?: "pending" | "paid" | "failed" | "refunded";
+  paymentMethod?: string;
+  notes?: string;
   status: "preparing" | "shipped" | "in-transit" | "delivered";
   acceptanceStatus: "pending" | "accepted" | "rejected";
   createdAt: string;

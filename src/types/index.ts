@@ -22,7 +22,24 @@ export interface Product {
   slug: string;
   name: string;
   category: string; // matches Category.slug
-  // grade: string; // e.g. "MR Grade", "BWP Grade", "Marine"
+  sku?: string;
+  brand?: string;
+  series?: string;
+  grade?: string;
+  subCategory?: string;
+  pricePerSheet?: number;
+  pricePerPiece?: number;
+  pricePerRunningFt?: number;
+  designCode?: string;
+  finish?: string;
+  subType?: string;
+  doorThickness?: number;
+  material?: string;
+  width?: string;
+  length?: string;
+  stock?: number;
+  isPremium?: boolean;
+  type?: string;
   thickness: string[]; // e.g. ["6mm", "9mm", "12mm", "18mm"]
   sizes: string[]; // e.g. ["8x4 ft", "7x4 ft"]
   price: number; // base price (INR)
@@ -41,7 +58,6 @@ export interface Product {
   faqs?: ProductFAQ[];
   warranty?: string; // e.g. "15 Years"
   reviews?: ProductReview[];
-  brand?: string;
   pricePerSqFt?: number;
 }
 
