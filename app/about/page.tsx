@@ -74,7 +74,7 @@ export default function AboutPage() {
               <SectionHeading eyebrow="Our Story" title="Built from the Ground Up" />
               <div className="space-y-4 text-[#4b5563] leading-relaxed ">
                 <p className="text-md">
-                  WoodCraft Premium was founded in 1994 in Yamuna Nagar, Haryana — the heartland of India&apos;s plywood manufacturing
+                  Vishwanath Traders was founded in 1994 in Yamuna Nagar, Haryana — the heartland of India&apos;s plywood manufacturing
                   industry. What started as a single production line has grown into a state-of-the-art manufacturing facility
                   spanning over 12 acres, with an annual production capacity of 2 million square metres.
                 </p>

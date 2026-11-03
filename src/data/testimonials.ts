@@ -12,7 +12,7 @@ export const testimonials: Testimonial[] = [
     role: "Senior Interior Designer",
     company: "Archaus Design Studio, Mumbai",
     message:
-      "WoodCraft's BWP plywood is consistently flat and void-free. We've switched our entire luxury residential portfolio to their panels — the quality is simply unmatched in this price bracket.",
+      "Vishwanath Traders plywood is consistently flat and void-free. We've switched our entire luxury residential portfolio to their panels — the quality is simply unmatched in this price bracket.",
     rating: 5,
     avatar: "/images/testimonials/avatar-1.jpg",
   },
@@ -32,7 +32,7 @@ export const testimonials: Testimonial[] = [
     role: "Owner",
     company: "Sharma Furniture Works, Delhi",
     message:
-      "As a furniture manufacturer, I need reliability above all else. WoodCraft delivers the same quality batch after batch. Their MR plywood machines beautifully with zero delamination.",
+      "As a furniture manufacturer, I need reliability above all else. Vishwanath Traders delivers the same quality batch after batch. Their MR plywood machines beautifully with zero delamination.",
     rating: 5,
     avatar: "/images/testimonials/avatar-3.jpg",
   },
@@ -42,7 +42,7 @@ export const testimonials: Testimonial[] = [
     role: "Procurement Manager",
     company: "Prestige Constructions, Chennai",
     message:
-      "Pan-India logistics on schedule, ISI-certified quality, and a responsive account team. WoodCraft has been our go-to plywood vendor for three large commercial projects.",
+      "Pan-India logistics on schedule, ISI-certified quality, and a responsive account team. Vishwanath Traders has been our go-to plywood vendor for three large commercial projects.",
     rating: 4,
     avatar: "/images/testimonials/avatar-4.jpg",
   },
@@ -62,7 +62,7 @@ export const testimonials: Testimonial[] = [
     role: "Architect",
     company: "Nair & Associates, Kochi",
     message:
-      "Switched to WoodCraft after a recommendation from a colleague. The difference in quality is night and day. Their HPL laminates have an incredible depth of finish that clients notice.",
+      "Switched to Vishwanath Traders after a recommendation from a colleague. The difference in quality is night and day. Their HPL laminates have an incredible depth of finish that clients notice.",
     rating: 5,
     avatar: "/images/testimonials/avatar-6.jpg",
   },
