@@ -118,7 +118,7 @@ export function SearchAndActions() {
           }}
           className="hover-opacity"
         >
-          <Phone size={16} />
+          <Phone size={14} />
           <span>9415207028</span>
         </a>
 
@@ -138,7 +138,7 @@ export function SearchAndActions() {
           }}
           className="hover-opacity hide-tablet"
         >
-          <Mail size={16} />
+          <Mail size={14} />
           <span>Bishwanathrajju@gmail.com</span>
         </a>
       </div>
@@ -191,7 +191,7 @@ export function SearchAndActions() {
           borderRadius: "9999px",
           padding: "0.25rem 1rem",
           flex: "1",
-          maxWidth: "500px",
+          maxWidth: "300px",
           position: "relative",
         }}>
           <input
@@ -205,9 +205,9 @@ export function SearchAndActions() {
               background: "transparent",
               outline: "none",
               width: "100%",
-              fontSize: "0.9rem",
+              fontSize: "0.7rem",
               color: "#333",
-              padding: "0.5rem 0",
+              padding: "0.2rem 0",
             }}
           />
 

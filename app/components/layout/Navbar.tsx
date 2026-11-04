@@ -8,6 +8,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Menu, X, ChevronDown, ExternalLink, Heart, ShoppingCart, User } from "lucide-react";
@@ -43,23 +44,20 @@ const RIGHT_LINKS = [
 // ---------------------------------------------------------------------------
 // Logo mark — same SVG as Footer for brand consistency
 // ---------------------------------------------------------------------------
-function LogoMark({ size = 34 }: { size?: number }) {
+function LogoMark({ size = 48 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 38 38" fill="none" aria-hidden="true">
-      <rect width="38" height="38" rx="8" fill="var(--burgundy)" />
-      <path d="M8 12 Q19 10 30 12" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-      <path d="M8 17 Q19 15 30 17" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-      <path d="M8 22 Q19 20 30 22" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-      <path d="M8 27 Q19 25 30 27" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-      <path
-        d="M10 10 L14 26 L19 18 L24 26 L28 10"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
+    <Image
+      src="/logo.png"
+      alt="Vishvnath Traders Logo"
+      width={size}
+      height={size}
+      style={{
+        width: `${size}px`,
+        height: `${size}px`,
+        objectFit: "contain",
+      }}
+      priority
+    />
   );
 }
 
@@ -345,7 +343,7 @@ export function Navbar() {
           {/* ── CENTER LOGO ───────────────────────────────────── */}
           <Link
             href="/"
-            aria-label="WoodCraft Premium – go to homepage"
+            aria-label="Vishvnath Traders – go to homepage"
             className="logo-link"
             style={{
               display: "flex",
@@ -358,7 +356,7 @@ export function Navbar() {
             }}
           >
             <div className="logo-svg-wrapper" style={{ display: "flex" }}>
-              <LogoMark size={40} />
+              <LogoMark size={48} />
             </div>
             <div style={{ lineHeight: 1 }}>
               <p
@@ -373,7 +371,7 @@ export function Navbar() {
                   margin: 0,
                 }}
               >
-                vishvnath
+                Vishwanath
               </p>
               <p
                 className="logo-text-sub"
@@ -388,7 +386,7 @@ export function Navbar() {
                   marginTop: "3px",
                 }}
               >
-                traders
+                Traders
               </p>
             </div>
           </Link>
@@ -595,10 +593,10 @@ export function Navbar() {
             onClick={() => setMobileOpen(false)}
             style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}
           >
-            <LogoMark size={30} />
+            <LogoMark size={36} />
             <div style={{ lineHeight: 1 }}>
               <p style={{ fontFamily: "var(--font-heading)", fontSize: "1rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--color-primary)", margin: 0 }}>
-                Vishvnath
+                Vishwanath
               </p>
               <p style={{ fontFamily: "var(--font-body)", fontSize: "0.5rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--color-accent)", fontWeight: 500, margin: 0, marginTop: "3px" }}>
                 Traders
@@ -802,6 +800,7 @@ export function Navbar() {
             padding-right: 0 !important;
             gap: 8px !important;
           }
+          .logo-svg-wrapper img,
           .logo-svg-wrapper svg {
             width: 32px !important;
             height: 32px !important;

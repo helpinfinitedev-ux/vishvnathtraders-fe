@@ -3,7 +3,7 @@
 // =============================================================================
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+  process.env.NEXT_PUBLIC_API_URL || "https://vw-backend.vercel.app";
 
 export interface ApiResponse<T = any> {
   success?: boolean;

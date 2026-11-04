@@ -12,9 +12,9 @@ import { DistributorCTABanner } from "@/components/home/DistributorCTABanner";
 import { BlogHighlights } from "@/components/home/BlogHighlights";
 
 export const metadata: Metadata = {
-  title: "WoodCraft Premium | ISI Certified Plywood & Wood Products",
+  title: "Vishwanath Traders plywood & Hardware center jaunpur",
   description:
-    "Buy ISI-certified plywood, blockboard, veneer, laminates, and flush doors from WoodCraft Premium — India's trusted manufacturer with 30+ years of excellence.",
+    "Buy ISI-certified plywood, blockboard, veneer, laminates, and flush doors from Vishwanath Traders— India's trusted manufacturer with 30+ years of excellence.",
 };
 
 export default function HomePage() {

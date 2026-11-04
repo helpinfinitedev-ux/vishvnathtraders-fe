@@ -32,6 +32,7 @@ export function CartDrawer() {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [checkoutAddress, setCheckoutAddress] = useState("");
   const [checkoutPhone, setCheckoutPhone] = useState("");
+  const [checkoutNotes, setCheckoutNotes] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [checkoutError, setCheckoutError] = useState("");
   const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
@@ -385,7 +386,7 @@ export function CartDrawer() {
                   Order Placed Successfully!
                 </h3>
                 <p className="text-xs text-[var(--color-muted)]">
-                  Order ID: <span className="font-mono font-bold text-[var(--color-primary)]">{placedOrder._id}</span>
+                  Order Reference: <span className="font-mono font-bold text-[var(--color-primary)]">{placedOrder.orderNo || placedOrder._id}</span>
                 </p>
                 <p className="text-xs text-[var(--color-muted)]">
                   Total: <strong className="text-[var(--color-primary)]">{formatPrice(placedOrder.totalAmount)}</strong>
@@ -446,6 +447,29 @@ export function CartDrawer() {
                   />
                 </div>
 
+                <div>
+                  <label className="block text-xs font-medium text-[var(--color-primary)] mb-1">
+                    Special Instructions / Notes (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Floor 2, site gate contact, deliver morning"
+                    className="w-full text-xs p-2 rounded border border-[#e0e0e0] outline-none focus:border-[var(--color-accent)]"
+                    value={checkoutNotes}
+                    onChange={(e) => setCheckoutNotes(e.target.value)}
+                  />
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-[#f8f5f0] border border-[#e8dfd5] text-xs flex items-center justify-between">
+                  <div>
+                    <span className="font-semibold text-[var(--color-primary)] block">Payment Mode</span>
+                    <span className="text-[var(--color-muted)] text-[11px]">Pay on Site Delivery / Direct Invoice</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-[#2e7d32] text-white">
+                    COD
+                  </span>
+                </div>
+
                 <button
                   disabled={isSubmitting}
                   onClick={async () => {
@@ -465,6 +489,8 @@ export function CartDrawer() {
                       const order = await checkout({
                         address: checkoutAddress.trim(),
                         phoneNumber: cleanPhone,
+                        notes: checkoutNotes.trim() || undefined,
+                        paymentMethod: "cod",
                       });
                       setPlacedOrder(order);
                     } catch (err: any) {

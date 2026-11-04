@@ -3,6 +3,7 @@
 // =============================================================================
 
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SITE_CONFIG } from "@/data/siteConfig";
 import { categories } from "@/data/categories";
@@ -63,20 +64,19 @@ export function Footer() {
           {/* ── Brand Column ── */}
           <div className="lg:col-span-1">
             {/* Logo */}
-            <div className="flex items-center gap-2.5 mb-5">
-              <svg width="36" height="36" viewBox="0 0 38 38" fill="none" aria-hidden="true">
-                <rect width="38" height="38" rx="8" fill="var(--burgundy)" />
-                <path d="M8 12 Q19 10 30 12" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-                <path d="M8 17 Q19 15 30 17" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-                <path d="M8 22 Q19 20 30 22" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-                <path d="M8 27 Q19 25 30 27" stroke="white" strokeWidth="1.5" fill="none" opacity="0.6" />
-                <path d="M10 10 L14 26 L19 18 L24 26 L28 10" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-              </svg>
+            <Link href="/" className="flex items-center gap-2.5 mb-5 inline-flex" aria-label="Vishvnath Traders – Home">
+              <Image
+                src="/logo.png"
+                alt="Vishvnath Traders Logo"
+                width={42}
+                height={42}
+                style={{ width: "42px", height: "42px", objectFit: "contain" }}
+              />
               <div className="flex flex-col">
-                <span className="font-serif text-[1.05rem] font-semibold text-white">WoodCraft</span>
-                <span className="text-[0.6rem] text-[var(--burgundy)] tracking-[0.12em] uppercase font-medium">Premium</span>
+                <span className="font-serif text-[1.05rem] font-semibold text-white">Vishvnath</span>
+                <span className="text-[0.65rem] text-[var(--burgundy)] tracking-[0.15em] uppercase font-medium">Traders</span>
               </div>
-            </div>
+            </Link>
 
             <p className="text-sm text-white/60 leading-relaxed mb-6 max-w-[240px]">
               India&apos;s trusted manufacturer of ISI-certified plywood, blockboard, veneer, and laminates.
@@ -179,7 +179,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="text-xs text-white/40 hover:text-white/70 transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="text-xs text-white/40 hover:text-white/70 transition-colors">Terms of Use</Link>
-            <a href={process.env.NEXT_PUBLIC_ADMIN_URL || "http://localhost:3001"} target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-[var(--burgundy)] transition-colors">Admin Portal</a>
+            <a href={process.env.NEXT_PUBLIC_ADMIN_URL || "https://vishvnath-traders-admin.vercel.app"} target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-[var(--burgundy)] transition-colors">Admin Portal</a>
           </div>
         </div>
       </div>

@@ -45,6 +45,8 @@ interface CartContextType {
     phoneNumber: string;
     expectedDeliveryDate?: string;
     expectedDeliveryTime?: string;
+    notes?: string;
+    paymentMethod?: string;
   }) => Promise<Order>;
 }
 
@@ -244,6 +246,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       phoneNumber: string;
       expectedDeliveryDate?: string;
       expectedDeliveryTime?: string;
+      notes?: string;
+      paymentMethod?: string;
     }): Promise<Order> => {
       const user = authService.getCurrentUser();
       const userId = user?.id || user?._id;
@@ -285,10 +289,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
         userId,
         cartId,
         address: details.address,
+        deliveryAddress: details.address,
         phoneNumber: details.phoneNumber,
         expectedDeliveryDate: details.expectedDeliveryDate,
         expectedDeliveryTime: details.expectedDeliveryTime,
         totalAmount,
+        notes: details.notes,
+        paymentMethod: details.paymentMethod || "cod",
+        paymentStatus: "pending",
       });
 
       // Clear cart on successful order creation
